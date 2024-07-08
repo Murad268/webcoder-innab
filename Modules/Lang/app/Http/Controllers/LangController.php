@@ -5,16 +5,21 @@ namespace Modules\Lang\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Modules\Lang\Repositories\ModelRepository;
 
 class LangController extends Controller
 {
+    public function __construct(public ModelRepository $repository)
+    {
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('lang::index');
+        $langs = $this->repository->all();
+        return view('lang::index', compact('langs'));
     }
 
     /**

@@ -1,4 +1,4 @@
-composer require spatie/laravel-translatable<?php
+<?php
 
 return [
 
