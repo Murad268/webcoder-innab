@@ -16,8 +16,16 @@
 
     <link rel="stylesheet" href="{{asset('panel/assets/css/tailwind2.css')}}">
     <style>
-        th:after, th:before {
+        th:after,
+        th:before {
             display: none !important;
         }
+
+        .pagination .flex .justify-between,
+        .pagination .hidden>div:first-child {
+            display: none !important;
+        }
+
+
     </style>
 </head>

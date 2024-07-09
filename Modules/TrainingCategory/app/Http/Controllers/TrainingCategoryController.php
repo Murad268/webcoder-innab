@@ -50,7 +50,7 @@ class TrainingCategoryController extends Controller
     {
         return $this->executeSafely(function () use ($request) {
             $this->crudService->create(new TrainingCategory(), $request);
-            return redirect()->route('trainingcategory.index')->with('status', 'Dil uğurla əlavə edildi');
+            return redirect()->route('trainingcategory.index')->with('status', 'Kateqoriya uğurla əlavə edildi');
         }, 'trainingcategory.index');
     }
 
@@ -79,7 +79,7 @@ class TrainingCategoryController extends Controller
     {
         return $this->executeSafely(function () use ($request, $trainingcategory) {
             $this->crudService->update($trainingcategory, $request);
-            return redirect()->route('trainingcategory.index')->with('status', 'Dil uğurla yeniləndi');
+            return redirect()->route('trainingcategory.index')->with('status', 'Kateqoriya uğurla yeniləndi');
         }, 'trainingcategory.index');
     }
 
@@ -92,23 +92,13 @@ class TrainingCategoryController extends Controller
     }
 
 
-    public function changeDefault($id)
-    {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->defaultService->changeDefault($model, new TrainingCategory());
-            return redirect()->route('trainingcategory.index')->with('status', 'Dil uğurla əsas dil olaraq təyin edildi');
-        }, 'trainingcategory.index');
-    }
-
-
 
     public function changeStatusTrue($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
             $this->statusService->changeStatusTrue($model, new TrainingCategory());
-            return redirect()->route('trainingcategory.index')->with('status', 'Dilin statusu uğurla yeniləndi');
+            return redirect()->route('trainingcategory.index')->with('status', 'Kateqoriya statusu uğurla yeniləndi');
         }, 'trainingcategory.index');
     }
 
@@ -117,7 +107,7 @@ class TrainingCategoryController extends Controller
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
             $this->statusService->changeStatusFalse($model, new TrainingCategory());
-            return redirect()->route('trainingcategory.index')->with('status', 'Dilin statusu uğurla yeniləndi');
+            return redirect()->route('trainingcategory.index')->with('status', 'Kateqoriya statusu uğurla yeniləndi');
         }, 'trainingcategory.index');
     }
 

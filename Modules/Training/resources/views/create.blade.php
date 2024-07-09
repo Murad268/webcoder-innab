@@ -5,14 +5,14 @@
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16">kateroqiya əlavə et</h5>
+                <h5 class="text-16">Təlim əlavə et</h5>
             </div>
         </div>
         <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-10">
             <div class="card col-span-2">
                 <div class="card-body">
                     <div>
-                        <form method="post" action="{{route('trainingcategory.store')}}">
+                        <form method="post" action="{{route('training.store')}}">
                             @csrf
                             <ul class="flex flex-wrap w-full text-sm font-medium text-center border-b border-slate-200 dark:border-zink-500 nav-tabs">
                                 @php
@@ -26,8 +26,6 @@
                                 $isFirst = false;
                                 @endphp
                                 @endforeach
-
-
                             </ul>
 
                             <div style="border: 1px solid black; padding: 30px" class="mt-5 mb-4 tab-content ">
@@ -56,20 +54,38 @@
                                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Meta açıqlama ({{$language->code}})</label>
                                                 <textarea name="seo_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('seo_description.' . $language->code) }}</textarea>
                                             </div>
+                                            <div class="mb-3">
+                                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Qısa təsvir ({{$language->code}})</label>
+                                                <textarea name="short_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('short_description.' . $language->code) }}</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="inputText1" class="inline-block mb-2 text-base font-medium">Siyahı ({{$language->code}})</label>
+                                                <textarea name="list[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('list.' . $language->code) }}</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="inputText1" class="inline-block mb-2 text-base font-medium">Yuxarı mətnin başlığı ({{$language->code}})</label>
+                                                <input type="text" id="inputText1" name="top_text_title[{{ $language->code }}]" value="{{ old('top_text_title.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="inputText1" class="inline-block mb-2 text-base font-medium">Aşağı mətnin başlığı ({{$language->code}})</label>
+                                                <input type="text" id="inputText1" name="bottom_text_title[{{ $language->code }}]" value="{{ old('bottom_text_title.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağı mətn ({{$language->code}})</label>
+                                                <textarea name="top_text[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('top_text.' . $language->code) }}</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağı mətn ({{$language->code}})</label>
+                                                <textarea name="bottom_text[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('bottom_text.' . $language->code) }}</textarea>
+                                            </div>
+
                                         </div>
                                     </div>
                                     @php
                                     $isFirst = false;
                                     @endphp
                                     @endforeach
-
-
                                 </div>
-
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputText1" class="inline-block mb-2 text-base font-medium">Alt başlıq<span class="text-red-500">*</span></label>
-                                <input type="text" id="inputText1" name="subtitle" value="{{ old('subtitle') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                             </div>
 
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
@@ -82,8 +98,14 @@
                                     <textarea name="seo_scripts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('seo_scripts') }}</textarea>
                                 </div>
                             </div>
-
-
+                            <div class="mb-3">
+                                <select name="category_id" class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                    <option value="0">Heç bir kateqoriyası yoxdur</option>
+                                    @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                                 Əlavə et
                             </button>
@@ -91,8 +113,40 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- container-fluid -->
     </div>
     @endsection
+    @push('scripts')
+
+    <script>
+        document.querySelectorAll('.ckeditortext').forEach((textarea) => {
+            CKEDITOR.replace(textarea);
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const tabLinks = document.querySelectorAll(".tab-link");
+            const tabPanes = document.querySelectorAll(".tab-pane");
+            tabLinks.forEach((elem) => {
+                elem.addEventListener("click", () => {
+                    const check = elem.getAttribute('data-check');
+                    const id = elem.getAttribute('data-id');
+
+                    tabLinks.forEach(link => {
+                        if (link.getAttribute('data-check') === check) {
+                            link.classList.remove("active");
+                        }
+                    });
+
+                    elem.classList.add("active");
+
+                    tabPanes.forEach(tab => {
+                        if (tab.getAttribute('data-check') === check) {
+                            tab.style.display = tab.getAttribute('data-id') === id ? "block" : "none";
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    @endpush

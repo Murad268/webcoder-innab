@@ -8,12 +8,12 @@ class SimleCrudService {
     public function create($model, $request)
     {
         $data = $request->all();
-
         if($data['title']) {
+
             $data['slug'] = $this->slugService->sluggableArray($data['title']);
         }
 
-        $model::create($request->all());
+        $model::create($data);
     }
 
     public function update($model, $request)

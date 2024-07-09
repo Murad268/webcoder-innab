@@ -14,4 +14,5 @@
 
 <!-- App js -->
 <script src="{{asset('panel/assets/js/app.js')}}"></script>
+<script src="{{asset('panel/assets/libs/ckeditor/ckeditor.js')}}"></script>
 @stack('scripts')

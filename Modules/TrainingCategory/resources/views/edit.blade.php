@@ -79,7 +79,7 @@
                         </div>
 
                         <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 focus:text-white focus:bg-custom-600">
-                            {{ __('Add') }}
+                            Yenilə
                         </button>
                     </form>
                 </div>
