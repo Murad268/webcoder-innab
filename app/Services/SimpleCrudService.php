@@ -8,7 +8,7 @@ class SimpleCrudService {
         public FileService $fileService
     ) {}
 
-    public function create($model, $request)
+    public function create($model, $request, $model_type)
     {
         $data = $request->except(array_keys($request->file()));
 
@@ -18,10 +18,10 @@ class SimpleCrudService {
 
         $entity = $model::create($data);
 
-        $this->handleFilesAndImages($request, $entity->id, 'trainings');
+        $this->handleFilesAndImages($request, $entity->id, $model_type);
     }
 
-    public function update($model, $request)
+    public function update($model, $request, $model_type)
     {
         $data = $request->except(array_keys($request->file()));
 
@@ -31,7 +31,7 @@ class SimpleCrudService {
 
         $model->update($data);
 
-        $this->handleFilesAndImages($request, $model->id, 'trainings');
+        $this->handleFilesAndImages($request, $model->id, $model_type);
     }
 
     private function handleFilesAndImages($request, $entityId, $folder)

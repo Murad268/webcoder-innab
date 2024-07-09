@@ -102,10 +102,13 @@
                                 </div>
 
                             </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
-                                <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                            </div>
+
+                            @if($training->images->count()<1)
+                                <div class="mb-3">
+                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
+                                    <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                </div>
+                            @endif
                             <div style="display: flex; column-gap: 35px">
                                 @foreach($training->files as $file)
                                     <div style="position: relative; width: 250px; height: 250px;">
@@ -126,10 +129,12 @@
                                 @endforeach
                             </div>
 
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Tədris planı</label>
-                                <input multiple name="education_plan[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                            </div>
+                            @if($training->files->count()<1)
+                                <div class="mb-3">
+                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">Tədris planı</label>
+                                    <input multiple name="education_plan[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                </div>
+                            @endif
 
 
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">

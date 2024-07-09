@@ -1,5 +1,6 @@
 {
     "Lang": true,
     "TrainingCategory": true,
-    "Training": true
+    "Training": true,
+    "Partners": true
 }

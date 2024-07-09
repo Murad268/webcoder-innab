@@ -11,7 +11,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Training extends Model
 {
-    use HasFactory;
+
 
     /**
      * The attributes that are mass assignable.
@@ -38,12 +38,12 @@ class Training extends Model
     }
     public function images()
     {
-        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'trainings')->where('file_type', 'image');
+        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'training')->where('file_type', 'image');
     }
 
     public function files()
     {
-        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'trainings')->where('file_type', 'application');
+        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'training')->where('file_type', 'application');
     }
     protected static function newFactory(): TrainingFactory
     {

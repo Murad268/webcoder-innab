@@ -11,8 +11,12 @@ class RemoveService
     public function removeAll($models) {
         foreach ($models as $model) {
             $model->delete();
-            $this->imageService->deleteImages($model);
-            $this->fileService->deleteFiles($model);
+            if($model->images) {
+                $this->imageService->deleteImages($model);
+            }
+            if($model->files) {
+                $this->fileService->deleteFiles($model);
+            }
         }
 
     }

@@ -22,7 +22,7 @@
                                     seçilənləri sil
                                 </a>
                                 <label> @if (session('status'))
-                                    <div style="width: max-content" class="px-4 py-3 text-sm text-green-500 bg-white border border-green-300 rounded-md dark:bg-zink-700 dark:border-green-500" role="alert">{{ session('saveImage') }}</div>
+                                    <div style="width: max-content" class="px-4 py-3 text-sm text-green-500 bg-white border border-green-300 rounded-md dark:bg-zink-700 dark:border-green-500" role="alert">{{ session('status') }}</div>
                                     @endif
 
                                     @if (session('error'))
