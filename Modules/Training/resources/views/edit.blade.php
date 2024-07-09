@@ -60,7 +60,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="inputText1" class="inline-block mb-2 text-base font-medium">Siyahı ({{$language->code}})</label>
-                                                <textarea name="list[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('list.' . $language->code, $training->getTranslation('list', $language->code)) }}</textarea>
+                                                <textarea name="list[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('list.' . $language->code, $training->getTranslation('list', $language->code)) }}</textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="inputText1" class="inline-block mb-2 text-base font-medium">Yuxarı mətnin başlığı ({{$language->code}})</label>
