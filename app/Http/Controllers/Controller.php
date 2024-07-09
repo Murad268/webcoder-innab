@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Modules\Lang\Repositories\ModelRepository as LangRepository;
 abstract class Controller
 {
+
+
+
     protected function executeSafely(callable $callback, $route = null, $ajax = null)
     {
         try {

@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/trainingcategory",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\TrainingCategory\\": "app/",
+            "Modules\\TrainingCategory\\Database\\Factories\\": "database/factories/",
+            "Modules\\TrainingCategory\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\TrainingCategory\\Tests\\": "tests/"
+        }
+    }
+}

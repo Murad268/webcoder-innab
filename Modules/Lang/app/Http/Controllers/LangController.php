@@ -25,12 +25,12 @@ class LangController extends Controller
     {
         $q = $request->q;
         if ($q) {
-            $langs = $this->repository->search($q);
+            $items = $this->repository->search($q);
         } else {
-            $langs = $this->repository->all();
+            $items = $this->repository->all();
         }
         $activeLangsCount = $this->repository->all()->count();
-        return view('lang::index', compact('langs', 'activeLangsCount', 'q'));
+        return view('lang::index', compact('items', 'activeLangsCount', 'q'));
     }
 
     /**
@@ -88,14 +88,6 @@ class LangController extends Controller
     {
         //
     }
-
-
-
-
-
-
-
-
 
 
      public function changeDefault($id)

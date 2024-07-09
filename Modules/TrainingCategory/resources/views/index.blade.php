@@ -17,8 +17,8 @@
                     <div class="grid grid-cols-12 lg:grid-cols-12 gap-3">
                         <div class="self-center col-span-12 lg:col-span-6">
                             <div style="display: flex; column-gap: 10px" class="dataTables_length" id="alternativePagination_length">
-                                <a href="{{route('lang.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
-                                <a data-link="{{route('api.lang.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
+                                <a href="{{route('trainingcategory.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
+                                <a data-link="{{route('api.trainingcategory.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
                                     seçilənləri sil
                                 </a>
                                 <label> @if (session('success'))
@@ -49,15 +49,13 @@
                                     <tr>
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500 sorting_asc" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 270.867px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">seç
                                         </th>
-                                        <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 415.15px;" aria-label="Position: activate to sort column ascending">dil
+                                        <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 415.15px;" aria-label="Position: activate to sort column ascending">başlıq
                                         </th>
-                                        <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 211.333px;" aria-label="Office: activate to sort column ascending">dil kodu
+                                        <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 211.333px;" aria-label="Office: activate to sort column ascending">alt başlıq
                                         </th>
 
-                                        <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 188.433px;" aria-label="Start date: activate to sort column ascending">dilin veb saytda görünəcək forması
-                                        </th>
-                                        <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 165.517px;" aria-label="Salary: activate to sort column ascending">əsas dildir
-                                        </th>
+
+
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 165.517px;" aria-label="Salary: activate to sort column ascending">status
                                         </th>
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 165.517px;" aria-label="Salary: activate to sort column ascending">əməliyyatlar
@@ -67,38 +65,20 @@
                                 <tbody>
                                     @foreach($items as $item)
                                     <tr class="group-[.stripe]:even:bg-slate-50 group-[.stripe]:dark:even:bg-zink-600 transition-all duration-150 ease-linear group-[.hover]:hover:bg-slate-50 dark:group-[.hover]:hover:bg-zink-600 [&amp;.selected]:bg-custom-500 dark:[&amp;.selected]:bg-custom-500 [&amp;.selected]:text-custom-50 dark:[&amp;.selected]:text-custom-50">
-                                        @if(!$item->is_default)
+
                                         <td class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting_1">
                                             <input data-id='{{$item->id}}' id="checkboxCircle2" class="select-lang border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-green-500 checked:border-green-500 dark:checked:bg-green-500 dark:checked:border-green-500 checked:disabled:bg-green-400 checked:disabled:border-green-400" type="checkbox" value="">
                                         </td>
-                                        @else
-                                        <td class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting_1">
-                                            <input data-id='{{$item->id}}' style="display: none" id="checkboxCircle2" class="select-lang border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-green-500 checked:border-green-500 dark:checked:bg-green-500 dark:checked:border-green-500 checked:disabled:bg-green-400 checked:disabled:border-green-400" type="checkbox" value="">
-                                        </td>
-                                        @endif
+
 
 
                                         <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
-                                            {{$item->name}}
+                                            {{$item->title}}
                                         </td>
                                         <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
-                                            {{$item->code}}
-                                        </td>
-                                        <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
-                                            {{$item->site_code}}
+                                            {{$item->subtitle}}
                                         </td>
 
-                                        <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
-                                            @if($item->is_default)
-                                            <div class="px-4 py-3 text-sm text-green-500 border border-transparent rounded-md bg-green-50 dark:bg-green-400/20">
-                                                əsas dildir
-                                            </div>
-                                            @else
-                                            <div class="px-4 py-3 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20">
-                                                əsas dil deyil
-                                            </div>
-                                            @endif
-                                        </td>
                                         <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
                                             @if($item->status)
                                             <div class="px-4 py-3 text-sm text-green-500 border border-transparent rounded-md bg-green-50 dark:bg-green-400/20">
@@ -112,27 +92,13 @@
                                         </td>
                                         <td>
                                             <div class="d-flex">
-                                                <a href="{{route('lang.edit', $item->id)}}" class="btn btn-phoenix-success me-1 mb-1" type="button">
+                                                <a href="{{route('trainingcategory.edit', $item->id)}}" class="btn btn-phoenix-success me-1 mb-1" type="button">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen">
                                                         <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                                         <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
                                                     </svg>
                                                 </a>
-                                                @if($item->is_default)
-                                                <a class="btn btn-phoenix-info me-1 mb-1 set_default_lang" style="cursor: none" class="btn btn-phoenix-info me-1 mb-1" type="button">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark-check">
-                                                        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z" />
-                                                        <path d="m9 10 2 2 4-4" />
-                                                    </svg>
-                                                </a>
-                                                @else
-                                                <a href="{{route('lang.changeDefault',$item->id)}}" class="btn btn-phoenix-info me-1 mb-1 set_default_lang" class="btn btn-phoenix-info me-1 mb-1" type="button">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark-minus">
-                                                        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
-                                                        <line x1="15" x2="9" y1="10" y2="10" />
-                                                    </svg>
-                                                </a>
-                                                @endif
+
                                                 @if($item->status)
                                                 @if($activeLangsCount < 2 or $items->count() < 2) <a style="cursor: none" class="btn btn-phoenix-danger me-1 mb-1" type="link">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
@@ -142,7 +108,7 @@
                                                         </svg>
                                                         </a>
                                                         @else
-                                                        <a href="{{route('lang.changeStatusFalse',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_false" type="link">
+                                                        <a href="{{route('trainingcategory.changeStatusFalse',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_false" type="link">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-down">
                                                                 <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
                                                                 <polyline points="16 17 22 17 22 11" />
@@ -151,7 +117,7 @@
                                                         @endif
 
                                                         @else
-                                                        <a href="{{route('lang.changeStatusTrue',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_true" type="button">
+                                                        <a href="{{route('trainingcategory.changeStatusTrue',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_true" type="button">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up">
                                                                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
                                                                 <polyline points="16 7 22 7 22 13" />
