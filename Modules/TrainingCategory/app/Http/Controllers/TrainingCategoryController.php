@@ -4,7 +4,7 @@ namespace Modules\TrainingCategory\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\RemoveService;
-use App\Services\SimleCrudService;
+use App\Services\SimpleCrudService;
 use App\Services\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class TrainingCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct(public ModelRepository $repository, public SimleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService)
+    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService)
     {
     }
     /**

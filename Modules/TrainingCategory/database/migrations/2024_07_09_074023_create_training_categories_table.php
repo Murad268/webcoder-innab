@@ -22,7 +22,7 @@ return new class extends Migration
             $table->longText('seo_links')->nullable();
             $table->longText('seo_scripts')->nullable();
             $table->unsignedBigInteger('order')->default(0);
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

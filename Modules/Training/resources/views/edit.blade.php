@@ -12,8 +12,9 @@
             <div class="card col-span-2">
                 <div class="card-body">
                     <div>
-                        <form method="post" action="{{route('training.store')}}">
+                        <form enctype="multipart/form-data" method="post" action="{{route('training.update', $training->id)}}">
                             @csrf
+                            @method("PATCH")
                             <ul class="flex flex-wrap w-full text-sm font-medium text-center border-b border-slate-200 dark:border-zink-500 nav-tabs">
                                 @php
                                 $isFirst = true;
@@ -93,7 +94,7 @@
                                         <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
                                             <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
                                         </a>
-                                        <a href="{{route('training.deleteImage', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
                                             X
                                         </a>
                                     </div>
@@ -105,6 +106,32 @@
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
                                 <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                             </div>
+                            <div style="display: flex; column-gap: 35px">
+                                @foreach($training->files as $file)
+                                    <div style="position: relative; width: 250px; height: 250px;">
+                                        @if(in_array(pathinfo($file->url, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif', 'svg']))
+                                            <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $file->url) }}">
+                                                <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $file->url) }}" alt="">
+                                            </a>
+                                        @elseif(pathinfo($file->url, PATHINFO_EXTENSION) == 'pdf')
+                                            <iframe style="width: 100%; height: 100%;" src="{{ asset('storage/' . $file->url) }}"></iframe>
+                                            <button type="button" onclick="openPdf('{{ asset('storage/' . $file->url) }}')" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.5); color: white; padding: 10px; border: none; cursor: pointer;">
+                                                Open PDF
+                                            </button>
+                                        @endif
+                                        <a href="{{route('training.deleteFile', $file->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $file->id }}">
+                                            X
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Tədris planı</label>
+                                <input multiple name="education_plan[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                            </div>
+
+
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
                                 <div class="mb-3">
                                     <label for="textArea" class="inline-block mb-2 text-base font-medium">Seo linklər</label>
@@ -124,7 +151,7 @@
                                 </select>
                             </div>
                             <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
-                                Əlavə et
+                                Yenilə
                             </button>
                         </form>
                     </div>
@@ -138,6 +165,9 @@
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        function openPdf(url) {
+            window.open(url, '_blank');
+        }
         document.querySelectorAll('.ckeditortext').forEach((textarea) => {
             CKEDITOR.replace(textarea);
         });

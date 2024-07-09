@@ -21,8 +21,8 @@
                                 <a data-link="{{route('api.lang.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
                                     seçilənləri sil
                                 </a>
-                                <label> @if (session('success'))
-                                    <div style="width: max-content" class="px-4 py-3 text-sm text-green-500 bg-white border border-green-300 rounded-md dark:bg-zink-700 dark:border-green-500" role="alert">{{ session('success') }}</div>
+                                <label> @if (session('status'))
+                                    <div style="width: max-content" class="px-4 py-3 text-sm text-green-500 bg-white border border-green-300 rounded-md dark:bg-zink-700 dark:border-green-500" role="alert">{{ session('saveImage') }}</div>
                                     @endif
 
                                     @if (session('error'))

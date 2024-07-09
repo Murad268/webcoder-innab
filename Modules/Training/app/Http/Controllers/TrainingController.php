@@ -5,7 +5,7 @@ namespace Modules\Training\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Services\ImageService;
 use App\Services\RemoveService;
-use App\Services\SimleCrudService;
+use App\Services\SimpleCrudService;
 use App\Services\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class TrainingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct(public ModelRepository $repository, public SimleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public TrainingCategory $trainingCategory, public ImageService $imageService)
+    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public TrainingCategory $trainingCategory, public ImageService $imageService)
     {
     }
     public function index(Request $request)
@@ -49,12 +49,16 @@ class TrainingController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-            $newRequest = new Request($request->except('image'));
-            $training = $this->crudService->create(new Training(), $newRequest, 'training');
-            $this->imageService->handleImages($request, 'image', $training->id, 'trainings', 'image', 'trainings');
+
+           $this->crudService->create(new Training(), $request);
+
+
+
             return redirect()->route('training.index')->with('status', 'Təlim uğurla əlavə edildi');
         }, 'training.index');
     }
+
+
     /**
      * Show the specified resource.
      */
@@ -68,7 +72,6 @@ class TrainingController extends Controller
      */
     public function edit(Request $request, Training $training)
     {
-
         $languages = $this->langRepository->all_active();
         $categories = $this->trainingCategory->all_active();
         return view('training::edit', compact('training', 'languages', 'categories'));
@@ -77,9 +80,11 @@ class TrainingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, Training $training): RedirectResponse
     {
-        //
+
+        $this->crudService->update($training, $request, 'training');
+        return redirect()->route('training.index')->with('status', 'Təlim uğurla əlavə edildi');
     }
 
     /**
@@ -119,9 +124,9 @@ class TrainingController extends Controller
         }, 'training.index', true);
     }
 
-    public function deleteImage($id) {
+    public function deleteFile($id) {
         return $this->executeSafely(function () use ($id) {
-            $result = $this->imageService->deleteImage($id);
+            $this->imageService->deleteImage($id);
 
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
         }, 'training.index', true);

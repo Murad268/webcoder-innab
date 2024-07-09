@@ -91,6 +91,10 @@
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
                                 <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                             </div>
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Tədris planı</label>
+                                <input multiple name="education_plan[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                            </div>
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
                                 <div class="mb-3">
                                     <label for="textArea" class="inline-block mb-2 text-base font-medium">Seo linklər</label>
@@ -127,6 +131,6 @@
             CKEDITOR.replace(textarea);
         });
 
-   
+
     </script>
     @endpush

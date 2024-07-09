@@ -5,7 +5,7 @@ namespace Modules\Lang\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Services\DefaultService;
 use App\Services\RemoveService;
-use App\Services\SimleCrudService;
+use App\Services\SimpleCrudService;
 use App\Services\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ use Modules\Lang\Repositories\ModelRepository;
 
 class LangController extends Controller
 {
-    public function __construct(public ModelRepository $repository, public SimleCrudService $crudService, public DefaultService $defaultService, public StatusService $statusService, public RemoveService $removeService)
+    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public DefaultService $defaultService, public StatusService $statusService, public RemoveService $removeService)
     {
 
     }

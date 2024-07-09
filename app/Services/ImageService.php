@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Services;
 
 use App\Models\SystemFiles;
@@ -7,37 +8,33 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageService
 {
-    public function handleImages($request, $fileField, $relation_id, $directory, $type, $model_type)
+    public function handleImages($file, $relation_id, $directory, $type, $model_type)
     {
-        if ($request->hasFile($fileField)) {
-            foreach ($request->file($fileField) as $image) {
-                $extension = $image->getClientOriginalExtension();
-                $uniqueName = uniqid();
-                $imagePath = 'images/' . $directory . '/' . $uniqueName . '.' . $extension;
+        $extension = $file->getClientOriginalExtension();
+        $uniqueName = uniqid();
+        $imagePath = 'images/' . $directory . '/' . $uniqueName . '.' . $extension;
 
-                $directoryPath = storage_path('app/public/images/' . $directory);
-                if (!file_exists($directoryPath)) {
-                    mkdir($directoryPath, 0755, true);
-                }
-
-                if ($extension == 'svg') {
-                    // Directly move SVG files without resizing
-                    $image->storeAs('public/images/' . $directory, $uniqueName . '.' . $extension);
-                } else {
-                    // Handle resizing for other image types
-                    $tempPath = $image->storeAs('temp', $uniqueName . '.' . $extension, 'public');
-                    $this->resizeImage(storage_path('app/public/' . $tempPath), storage_path('app/public/' . $imagePath));
-                    Storage::disk('public')->delete($tempPath);
-                }
-
-                SystemFiles::create([
-                    'url' => $imagePath,
-                    'file_type' => $type,
-                    'relation_id' => $relation_id,
-                    'model_type' => $model_type
-                ]);
-            }
+        $directoryPath = storage_path('app/public/images/' . $directory);
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0755, true);
         }
+
+        if ($extension == 'svg') {
+            // Directly move SVG files without resizing
+            $file->storeAs('public/images/' . $directory, $uniqueName . '.' . $extension);
+        } else {
+            // Handle resizing for other image types
+            $tempPath = $file->storeAs('temp', $uniqueName . '.' . $extension, 'public');
+            $this->resizeImage(storage_path('app/public/' . $tempPath), storage_path('app/public/' . $imagePath));
+            Storage::disk('public')->delete($tempPath);
+        }
+
+        SystemFiles::create([
+            'url' => $imagePath,
+            'file_type' => $type,
+            'relation_id' => $relation_id,
+            'model_type' => $model_type
+        ]);
     }
 
     private function resizeImage($sourcePath, $destinationPath)
@@ -93,14 +90,20 @@ class ImageService
         imagedestroy($resizedImage);
     }
 
-    public function saveImage($request, $fileField, $relation_id, $directory, $type, $model_type) {
+    public function saveImage($request, $fileField, $relation_id, $directory, $type, $model_type)
+    {
         if ($request->hasFile($fileField)) {
-            foreach ($request->file($fileField) as $file) {
-                $this->handleImages($request, $fileField, $relation_id, $directory, $type, $model_type);
+            $files = $request->file($fileField);
+
+            if (!is_array($files)) {
+                $files = [$files];
+            }
+
+            foreach ($files as $file) {
+                $this->handleImages($file, $relation_id, $directory, $type, $model_type);
             }
         }
     }
-
 
     public function deleteImage($id)
     {
@@ -116,5 +119,14 @@ class ImageService
         $image->delete();
 
         return ['success' => true];
+    }
+
+    public function deleteImages($model)
+    {
+        $images = $model->images;
+        foreach ($images as $image) {
+            Storage::disk('public')->delete($image->url);
+            $image->delete();
+        }
     }
 }
