@@ -2,6 +2,7 @@
 
 namespace Modules\Training\Models;
 
+use App\Models\SystemFiles;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Training\Database\Factories\TrainingFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +36,10 @@ class Training extends Model
     public function category() {
         return $this->belongsTo(TrainingCategory::class);
     }
-
+    public function images()
+    {
+        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'trainings')->where('file_type', 'image');
+    }
     protected static function newFactory(): TrainingFactory
     {
         //return TrainingFactory::new();

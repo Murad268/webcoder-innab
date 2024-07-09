@@ -18,4 +18,5 @@ Route::group(['prefix' => "admin"], function () {
     Route::resource('training', TrainingController::class)->names('training');
     Route::get('/training/changeStatusFalse/{id}', [TrainingController::class, 'changeStatusFalse'])->name('training.changeStatusFalse');
     Route::get('/training/changeStatusTrue/{id}', [TrainingController::class, 'changeStatusTrue'])->name('training.changeStatusTrue');
+    Route::get('/training/deleteImage/{id}', [TrainingController::class, 'deleteImage'])->name('training.deleteImage');
 });

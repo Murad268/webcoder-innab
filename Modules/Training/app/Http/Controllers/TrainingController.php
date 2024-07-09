@@ -3,12 +3,12 @@
 namespace Modules\Training\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Services\ImageService;
 use App\Services\RemoveService;
 use App\Services\SimleCrudService;
 use App\Services\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\Training\Repositories\ModelRepository;
 use Modules\Lang\Repositories\ModelRepository as LangRepository;
 use Modules\Training\Models\Training;
@@ -18,7 +18,7 @@ class TrainingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct(public ModelRepository $repository, public SimleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public TrainingCategory $trainingCategory)
+    public function __construct(public ModelRepository $repository, public SimleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public TrainingCategory $trainingCategory, public ImageService $imageService)
     {
     }
     public function index(Request $request)
@@ -49,7 +49,9 @@ class TrainingController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new Training(), $request);
+            $newRequest = new Request($request->except('image'));
+            $training = $this->crudService->create(new Training(), $newRequest, 'training');
+            $this->imageService->handleImages($request, 'image', $training->id, 'trainings', 'image', 'trainings');
             return redirect()->route('training.index')->with('status', 'Təlim uğurla əlavə edildi');
         }, 'training.index');
     }
@@ -66,6 +68,7 @@ class TrainingController extends Controller
      */
     public function edit(Request $request, Training $training)
     {
+
         $languages = $this->langRepository->all_active();
         $categories = $this->trainingCategory->all_active();
         return view('training::edit', compact('training', 'languages', 'categories'));
@@ -113,6 +116,14 @@ class TrainingController extends Controller
             $models = $this->repository->findWhereInGet($request->ids);
             $this->removeService->removeAll($models);
             return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
+        }, 'training.index', true);
+    }
+
+    public function deleteImage($id) {
+        return $this->executeSafely(function () use ($id) {
+            $result = $this->imageService->deleteImage($id);
+
+            return redirect()->back()->with('success', 'şəkil uğurla silindi');
         }, 'training.index', true);
     }
 }

@@ -12,7 +12,7 @@
             <div class="card col-span-2">
                 <div class="card-body">
                     <div>
-                        <form method="post" action="{{route('training.store')}}">
+                        <form enctype="multipart/form-data" method="post" action="{{route('training.store')}}">
                             @csrf
                             <ul class="flex flex-wrap w-full text-sm font-medium text-center border-b border-slate-200 dark:border-zink-500 nav-tabs">
                                 @php
@@ -87,7 +87,10 @@
                                     @endforeach
                                 </div>
                             </div>
-
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
+                                <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                            </div>
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
                                 <div class="mb-3">
                                     <label for="textArea" class="inline-block mb-2 text-base font-medium">Seo linklər</label>
@@ -124,29 +127,6 @@
             CKEDITOR.replace(textarea);
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const tabLinks = document.querySelectorAll(".tab-link");
-            const tabPanes = document.querySelectorAll(".tab-pane");
-            tabLinks.forEach((elem) => {
-                elem.addEventListener("click", () => {
-                    const check = elem.getAttribute('data-check');
-                    const id = elem.getAttribute('data-id');
-
-                    tabLinks.forEach(link => {
-                        if (link.getAttribute('data-check') === check) {
-                            link.classList.remove("active");
-                        }
-                    });
-
-                    elem.classList.add("active");
-
-                    tabPanes.forEach(tab => {
-                        if (tab.getAttribute('data-check') === check) {
-                            tab.style.display = tab.getAttribute('data-id') === id ? "block" : "none";
-                        }
-                    });
-                });
-            });
-        });
+   
     </script>
     @endpush

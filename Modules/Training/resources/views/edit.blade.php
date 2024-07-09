@@ -86,7 +86,25 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
+                                    @foreach($training->images as $image)
+                                    <div style="position: relative; width: 250px; height: 250px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
+                                            <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
+                                        </a>
+                                        <a href="{{route('training.deleteImage', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                            X
+                                        </a>
+                                    </div>
+                                    @endforeach
+                                </div>
 
+                            </div>
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
+                                <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                            </div>
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
                                 <div class="mb-3">
                                     <label for="textArea" class="inline-block mb-2 text-base font-medium">Seo linklər</label>
@@ -118,34 +136,32 @@
     @endsection
 
     @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.querySelectorAll('.ckeditortext').forEach((textarea) => {
             CKEDITOR.replace(textarea);
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const tabLinks = document.querySelectorAll(".tab-link");
-            const tabPanes = document.querySelectorAll(".tab-pane");
-            tabLinks.forEach((elem) => {
-                elem.addEventListener("click", () => {
-                    const check = elem.getAttribute('data-check');
-                    const id = elem.getAttribute('data-id');
-
-                    tabLinks.forEach(link => {
-                        if (link.getAttribute('data-check') === check) {
-                            link.classList.remove("active");
-                        }
-                    });
-
-                    elem.classList.add("active");
-
-                    tabPanes.forEach(tab => {
-                        if (tab.getAttribute('data-check') === check) {
-                            tab.style.display = tab.getAttribute('data-id') === id ? "block" : "none";
-                        }
-                    });
+        document.querySelectorAll('.delete_image').forEach((button) => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault()
+                const href = this.getAttribute('href');
+                Swal.fire({
+                    title: 'Əminsiniz?',
+                    text: "Bu şəkli silmək istədiyinizdən əminsiniz?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Bəli, silin!',
+                    cancelButtonText: 'Xeyr, ləğv et!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = href;
+                    }
                 });
             });
         });
     </script>
+
     @endpush
