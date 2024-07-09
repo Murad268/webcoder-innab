@@ -15,4 +15,9 @@
 
 
     <link rel="stylesheet" href="{{asset('panel/assets/css/tailwind2.css')}}">
+    <style>
+        th:after, th:before {
+            display: none !important;
+        }
+    </style>
 </head>

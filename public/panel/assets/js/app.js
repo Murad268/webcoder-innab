@@ -421,8 +421,16 @@ function setDefaultAttribute() {
 }
 /*** Set value updateRadio id ***/
 function updateRadio(radioId) {
-    document.getElementById(radioId).checked = true;
+    const radioElement = document.getElementById(radioId);
+
+    if (!radioElement) {
+        // console.error(`Radio button with ID ${radioId} not found.`);
+        return;
+    }
+
+    radioElement.checked = true;
 }
+
 /*** Set value Attribute ***/
 function setAttrItemAndTag(attr, val) {
     document.documentElement.setAttribute(attr, val)
@@ -560,34 +568,49 @@ function layoutSetting() {
     });
 
     const customDefaultSwitch = document.getElementById('customDefaultSwitch');
-    customDefaultSwitch.addEventListener('change', function (e) {
-        if (document.documentElement.getAttribute("data-layout") == "vertical") {
-            if (document.getElementById('customDefaultSwitch').checked) {
-                document.documentElement.setAttribute("data-sidebar", "dark")
-                document.documentElement.setAttribute("data-topbar", "dark")
+    if(customDefaultSwitch){
+        customDefaultSwitch.addEventListener('change', function (e) {
+            if (document.documentElement.getAttribute("data-layout") == "vertical") {
+                if (document.getElementById('customDefaultSwitch').checked) {
+                    document.documentElement.setAttribute("data-sidebar", "dark")
+                    document.documentElement.setAttribute("data-topbar", "dark")
+                } else {
+                    document.documentElement.setAttribute("data-sidebar", "light")
+                    document.documentElement.setAttribute("data-topbar", "light")
+                }
             } else {
-                document.documentElement.setAttribute("data-sidebar", "light")
-                document.documentElement.setAttribute("data-topbar", "light")
+                if (document.getElementById('customDefaultSwitch').checked) {
+                    document.documentElement.setAttribute("data-topbar", "dark")
+                } else {
+                    document.documentElement.setAttribute("data-topbar", "light")
+                }
             }
-        } else {
-            if (document.getElementById('customDefaultSwitch').checked) {
-                document.documentElement.setAttribute("data-topbar", "dark")
-            } else {
-                document.documentElement.setAttribute("data-topbar", "light")
-            }
-        }
-    });
+        });
+    }
 }
 // Update Active
 function updateActiveBtn(btnId) {
-    const elemName = document.getElementById(btnId).getAttribute("name");
-    const allElem = document.querySelector("#customizerButton")?.querySelectorAll('button[name="' + elemName + '"]');
-    allElem.forEach(function (elem) {
-        elem.classList.remove('active')
-    });
-    document.getElementById(btnId).classList.add("active");
-}
+    const btnElement = document.getElementById(btnId);
 
+    if (!btnElement) {
+        // console.error(`Element with ID ${btnId} not found.`);
+        return;
+    }
+
+    const elemName = btnElement.getAttribute("name");
+    const customizerButton = document.getElementById("customizerButton");
+
+    if (!customizerButton) {
+        console.error(`Element with ID customizerButton not found.`);
+        return;
+    }
+
+    const allElem = customizerButton.querySelectorAll('button[name="' + elemName + '"]');
+    allElem.forEach(function (elem) {
+        elem.classList.remove('active');
+    });
+    btnElement.classList.add("active");
+}
 //set full layout
 function layoutSwitch(isLayoutAttributes) {
     switch (isLayoutAttributes) {

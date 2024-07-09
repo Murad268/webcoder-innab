@@ -14,3 +14,4 @@
 
 <!-- App js -->
 <script src="{{asset('panel/assets/js/app.js')}}"></script>
+@stack('scripts')

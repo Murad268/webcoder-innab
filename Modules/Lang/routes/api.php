@@ -17,3 +17,5 @@ use Modules\Lang\Http\Controllers\LangController;
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('lang', LangController::class)->names('lang');
 });
+
+Route::post('lang/delete_selected_items', [LangController::class, 'delete_selected_items'])->name('lang.delete_selected_items');

@@ -34,39 +34,49 @@ function rgbToHex(rgb) {
 // common function to get charts colors from class
 function getChartColorsArray(chartId) {
     const chartElement = document.getElementById(chartId);
-    if (chartElement) {
-        const colors = chartElement.dataset.chartColors;
-        if (colors) {
-            const parsedColors = JSON.parse(colors);
-            const mappedColors = parsedColors.map((value) => {
-                const newValue = value.replace(/\s/g, "");
-                if (!newValue.includes("#")) {
-                    const element = document.querySelector(newValue);
-                    if (element) {
-                        const styles = window.getComputedStyle(element);
-                        const backgroundColor = styles.backgroundColor;
-                        return backgroundColor || newValue;
-                    } else {
-                        const divElement = document.createElement('div');
-                        divElement.className = newValue;
-                        document.body.appendChild(divElement);
+    if (!chartElement) {
+        // console.error(`Element with ID ${chartId} not found.`);
+        return [];
+    }
 
-                        const styles = window.getComputedStyle(divElement);
-                        const backgroundColor = styles.backgroundColor.includes("#") ? styles.backgroundColor : rgbToHex(styles.backgroundColor);
-                        return backgroundColor || newValue;
-                    }
+    const colors = chartElement.dataset.chartColors;
+    if (!colors) {
+        console.warn(`data-chart-colors attribute not found on element with ID: ${chartId}`);
+        return [];
+    }
+
+    try {
+        const parsedColors = JSON.parse(colors);
+        const mappedColors = parsedColors.map((value) => {
+            const newValue = value.replace(/\s/g, "");
+            if (!newValue.includes("#")) {
+                const element = document.querySelector(newValue);
+                if (element) {
+                    const styles = window.getComputedStyle(element);
+                    const backgroundColor = styles.backgroundColor;
+                    return backgroundColor || newValue;
                 } else {
-                    return newValue;
+                    const divElement = document.createElement('div');
+                    divElement.className = newValue;
+                    document.body.appendChild(divElement);
+
+                    const styles = window.getComputedStyle(divElement);
+                    const backgroundColor = styles.backgroundColor.includes("#") ? styles.backgroundColor : rgbToHex(styles.backgroundColor);
+                    document.body.removeChild(divElement);
+                    return backgroundColor || newValue;
                 }
-            });
-            return mappedColors;
-        } else {
-            console.warn(`chart-colors attribute not found on: ${chartId}`);
-        }
+            } else {
+                return newValue;
+            }
+        });
+        return mappedColors;
+    } catch (e) {
+        console.error(`Error parsing chart colors for element with ID ${chartId}:`, e);
+        return [];
     }
 }
 
-//Response Times
+// Example usage:
 var options = {
     series: [{
         name: "Response Times",
@@ -555,7 +565,7 @@ var dataLabelOptions = {
         size: 1
     },
     yaxis: {
-      show: false  
+      show: false
     },
     xaxis: {
         categories: ['Mar', 'Apr', 'May', 'Jun', 'Jul'],

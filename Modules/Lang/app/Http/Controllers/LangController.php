@@ -3,23 +3,34 @@
 namespace Modules\Lang\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Services\DefaultService;
+use App\Services\RemoveService;
+use App\Services\SimleCrudService;
+use App\Services\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Modules\Lang\Models\Lang;
 use Modules\Lang\Repositories\ModelRepository;
 
 class LangController extends Controller
 {
-    public function __construct(public ModelRepository $repository)
+    public function __construct(public ModelRepository $repository, public SimleCrudService $crudService, public DefaultService $defaultService, public StatusService $statusService, public RemoveService $removeService)
     {
 
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $langs = $this->repository->all();
-        return view('lang::index', compact('langs'));
+        $q = $request->q;
+        if ($q) {
+            $langs = $this->repository->search($q);
+        } else {
+            $langs = $this->repository->all();
+        }
+        $activeLangsCount = $this->repository->all()->count();
+        return view('lang::index', compact('langs', 'activeLangsCount', 'q'));
     }
 
     /**
@@ -35,7 +46,10 @@ class LangController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //
+        return $this->executeSafely(function () use ($request) {
+            $this->crudService->create(new Lang(), $request);
+            return redirect()->route('lang.index')->with('status', 'Dil uğurla əlavə edildi');
+        }, 'lang.index');
     }
 
     /**
@@ -43,23 +57,28 @@ class LangController extends Controller
      */
     public function show($id)
     {
+
         return view('lang::show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Request$request, Lang $lang)
     {
-        return view('lang::edit');
+
+        return view('lang::edit', compact('lang'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, Lang $lang): RedirectResponse
     {
-        //
+        return $this->executeSafely(function () use ($request, $lang) {
+            $this->crudService->update($lang, $request);
+            return redirect()->route('lang.index')->with('status', 'Dil uğurla yeniləndi');
+        }, 'lang.index');
     }
 
     /**
@@ -68,5 +87,56 @@ class LangController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+
+
+
+
+
+
+
+
+     public function changeDefault($id)
+    {
+        return $this->executeSafely(function () use ($id) {
+            $model = $this->repository->find($id);
+            $this->defaultService->changeDefault($model, new Lang());
+            return redirect()->route('lang.index')->with('status', 'Dil uğurla əsas dil olaraq təyin edildi');
+        }, 'lang.index');
+    }
+
+
+
+    public function changeStatusTrue($id)
+    {
+        return $this->executeSafely(function () use ($id) {
+            $model = $this->repository->find($id);
+            $this->statusService->changeStatusTrue($model, new Lang());
+            return redirect()->route('lang.index')->with('status', 'Dilin statusu uğurla yeniləndi');
+        }, 'lang.index');
+
+
+
+
+    }
+
+    public function changeStatusFalse($id)
+    {
+        return $this->executeSafely(function () use ($id) {
+            $model = $this->repository->find($id);
+            $this->statusService->changeStatusFalse($model, new Lang());
+            return redirect()->route('lang.index')->with('status', 'Dilin statusu uğurla yeniləndi');
+        }, 'lang.index');
+    }
+
+
+    public function delete_selected_items(Request $request) {
+        return $this->executeSafely(function () use ($request) {
+            $models = $this->repository->findWhereInGet($request->ids);
+            $this->removeService->removeAll($models);
+            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
+        }, 'lang.index', true);
     }
 }
