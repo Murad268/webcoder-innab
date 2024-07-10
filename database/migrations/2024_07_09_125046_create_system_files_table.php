@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('relation_id');
             $table->string('url');
             $table->string('model_type');
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

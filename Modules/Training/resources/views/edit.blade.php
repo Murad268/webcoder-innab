@@ -103,100 +103,102 @@
 
                             </div>
 
-                            @if($training->images->count()<1)
-                                <div class="mb-3">
-                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
-                                    <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                </div>
-                            @endif
+
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
+                                @if($training->images->count()<1) <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    @endif
+                            </div>
+
                             <div style="display: flex; column-gap: 35px">
                                 @foreach($training->files as $file)
-                                    <div style="position: relative; width: 250px; height: 250px;">
-                                        @if(in_array(pathinfo($file->url, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif', 'svg']))
-                                            <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $file->url) }}">
-                                                <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $file->url) }}" alt="">
-                                            </a>
-                                        @elseif(pathinfo($file->url, PATHINFO_EXTENSION) == 'pdf')
-                                            <iframe style="width: 100%; height: 100%;" src="{{ asset('storage/' . $file->url) }}"></iframe>
-                                            <button type="button" onclick="openPdf('{{ asset('storage/' . $file->url) }}')" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.5); color: white; padding: 10px; border: none; cursor: pointer;">
-                                                Open PDF
-                                            </button>
-                                        @endif
-                                        <a href="{{route('training.deleteFile', $file->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $file->id }}">
-                                            X
-                                        </a>
-                                    </div>
+                                <div style="position: relative; width: 250px; height: 250px;">
+                                    @if(in_array(pathinfo($file->url, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif', 'svg']))
+                                    <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $file->url) }}">
+                                        <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $file->url) }}" alt="">
+                                    </a>
+                                    @elseif(pathinfo($file->url, PATHINFO_EXTENSION) == 'pdf')
+                                    <iframe style="width: 100%; height: 100%;" src="{{ asset('storage/' . $file->url) }}"></iframe>
+                                    <button type="button" onclick="openPdf('{{ asset('storage/' . $file->url) }}')" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.5); color: white; padding: 10px; border: none; cursor: pointer;">
+                                        Open PDF
+                                    </button>
+                                    @endif
+                                    <a href="{{route('training.deleteFile', $file->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $file->id }}">
+                                        X
+                                    </a>
+                                </div>
                                 @endforeach
                             </div>
 
-                            @if($training->files->count()<1)
-                                <div class="mb-3">
-                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">Tədris planı</label>
-                                    <input multiple name="education_plan[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                </div>
-                            @endif
+                            <label for="textArea" class="inline-block mb-2 text-base font-medium">Tədris planı</label>
+                            @if($training->files->count()<1) <div class="mb-3">
 
-
-                            <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
-                                <div class="mb-3">
-                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">Seo linklər</label>
-                                    <textarea name="seo_links" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('seo_links', $training->seo_links) }}</textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">Seo skriptlər</label>
-                                    <textarea name="seo_scripts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('seo_scripts', $training->seo_scripts) }}</textarea>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <select name="category_id" class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                                    <option value="0">Heç bir kateqoriyası yoxdur</option>
-                                    @foreach($categories as $category)
-                                    <option value="{{$category->id}}" {{ old('category_id', $training->category_id) == $category->id ? 'selected' : '' }}>{{$category->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
-                                Yenilə
-                            </button>
-                        </form>
+                                <input multiple name="education_plan[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                @endif
                     </div>
+
+
+
+                    <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
+                        <div class="mb-3">
+                            <label for="textArea" class="inline-block mb-2 text-base font-medium">Seo linklər</label>
+                            <textarea name="seo_links" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('seo_links', $training->seo_links) }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="textArea" class="inline-block mb-2 text-base font-medium">Seo skriptlər</label>
+                            <textarea name="seo_scripts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('seo_scripts', $training->seo_scripts) }}</textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <select name="category_id" class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                            <option value="0">Heç bir kateqoriyası yoxdur</option>
+                            @foreach($categories as $category)
+                            <option value="{{$category->id}}" {{ old('category_id', $training->category_id) == $category->id ? 'selected' : '' }}>{{$category->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                        Yenilə
+                    </button>
+                    </form>
                 </div>
             </div>
         </div>
-        <!-- container-fluid -->
     </div>
-    @endsection
+    <!-- container-fluid -->
+</div>
+@endsection
 
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function openPdf(url) {
-            window.open(url, '_blank');
-        }
-        document.querySelectorAll('.ckeditortext').forEach((textarea) => {
-            CKEDITOR.replace(textarea);
-        });
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function openPdf(url) {
+        window.open(url, '_blank');
+    }
+    document.querySelectorAll('.ckeditortext').forEach((textarea) => {
+        CKEDITOR.replace(textarea);
+    });
 
-        document.querySelectorAll('.delete_image').forEach((button) => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault()
-                const href = this.getAttribute('href');
-                Swal.fire({
-                    title: 'Əminsiniz?',
-                    text: "Bu şəkli silmək istədiyinizdən əminsiniz?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Bəli, silin!',
-                    cancelButtonText: 'Xeyr, ləğv et!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = href;
-                    }
-                });
+    document.querySelectorAll('.delete_image').forEach((button) => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault()
+            const href = this.getAttribute('href');
+            Swal.fire({
+                title: 'Əminsiniz?',
+                text: "Bu şəkli silmək istədiyinizdən əminsiniz?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli, silin!',
+                cancelButtonText: 'Xeyr, ləğv et!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
             });
         });
-    </script>
+    });
+</script>
 
-    @endpush
+@endpush

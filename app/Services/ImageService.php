@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageService
 {
-    public function handleImages($file, $relation_id, $directory, $type, $model_type)
+    public function handleImages($file, $relation_id, $directory, $type, $model_type, $field=null)
     {
+
         $extension = $file->getClientOriginalExtension();
         $uniqueName = uniqid();
         $imagePath = 'images/' . $directory . '/' . $uniqueName . '.' . $extension;
@@ -33,7 +34,8 @@ class ImageService
             'url' => $imagePath,
             'file_type' => $type,
             'relation_id' => $relation_id,
-            'model_type' => $model_type
+            'model_type' => $model_type,
+            'type' => $field ? $field : ""
         ]);
     }
 
@@ -92,6 +94,7 @@ class ImageService
 
     public function saveImage($request, $fileField, $relation_id, $directory, $type, $model_type)
     {
+
         if ($request->hasFile($fileField)) {
             $files = $request->file($fileField);
 
@@ -100,7 +103,7 @@ class ImageService
             }
 
             foreach ($files as $file) {
-                $this->handleImages($file, $relation_id, $directory, $type, $model_type);
+                $this->handleImages($file, $relation_id, $directory, $type, $model_type, $fileField);
             }
         }
     }

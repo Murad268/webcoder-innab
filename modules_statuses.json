@@ -2,5 +2,6 @@
     "Lang": true,
     "TrainingCategory": true,
     "Training": true,
-    "Partners": true
+    "Partners": true,
+    "Project": true
 }

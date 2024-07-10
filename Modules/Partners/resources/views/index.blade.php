@@ -17,8 +17,8 @@
                         <div class="grid grid-cols-12 lg:grid-cols-12 gap-3">
                             <div class="self-center col-span-12 lg:col-span-6">
                                 <div style="display: flex; column-gap: 10px" class="dataTables_length" id="alternativePagination_length">
-                                    <a href="{{route('partners.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
-                                    <a data-link="{{route('api.partners.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
+                                    <a href="{{route('project.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
+                                    <a data-link="{{route('api.project.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
                                         seçilənləri sil
                                     </a>
                                     <label> @if (session('status'))
@@ -102,7 +102,7 @@
                                                             </svg>
                                                         </a>
                                                         @else
-                                                            <a href="{{route('partners.changeStatusFalse',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_false" type="link">
+                                                            <a href="{{route('project.changeStatusFalse',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_false" type="link">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-down">
                                                                     <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
                                                                     <polyline points="16 17 22 17 22 11" />
@@ -111,7 +111,7 @@
                                                         @endif
 
                                                     @else
-                                                        <a href="{{route('partners.changeStatusTrue',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_true" type="button">
+                                                        <a href="{{route('project.changeStatusTrue',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_true" type="button">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up">
                                                                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
                                                                 <polyline points="16 7 22 7 22 13" />
