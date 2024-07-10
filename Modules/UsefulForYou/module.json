@@ -1,0 +1,11 @@
+{
+    "name": "UsefulForYou",
+    "alias": "usefulforyou",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\UsefulForYou\\Providers\\UsefulForYouServiceProvider"
+    ],
+    "files": []
+}
