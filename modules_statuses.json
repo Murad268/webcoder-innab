@@ -9,5 +9,6 @@
     "TrainingSubject": true,
     "Room": true,
     "CourseFAQ": true,
-    "VideoLessonsCategory": true
+    "VideoLessonsCategory": true,
+    "VideoLessons": true
 }
