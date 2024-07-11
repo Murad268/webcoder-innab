@@ -1,0 +1,11 @@
+{
+    "name": "CourseFAQ",
+    "alias": "coursefaq",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CourseFAQ\\Providers\\CourseFAQServiceProvider"
+    ],
+    "files": []
+}

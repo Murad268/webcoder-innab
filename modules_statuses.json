@@ -7,5 +7,6 @@
     "UsefulForYou": true,
     "Customer": true,
     "TrainingSubject": true,
-    "Room": true
+    "Room": true,
+    "CourseFAQ": true
 }

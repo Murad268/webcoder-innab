@@ -1,0 +1,20 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Modules\CourseFAQ\Http\Controllers\CourseFAQController;
+
+/*
+ *--------------------------------------------------------------------------
+ * API Routes
+ *--------------------------------------------------------------------------
+ *
+ * Here is where you can register API routes for your application. These
+ * routes are loaded by the RouteServiceProvider within a group which
+ * is assigned the "api" middleware group. Enjoy building your API!
+ *
+*/
+
+Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+    Route::apiResource('coursefaq', CourseFAQController::class)->names('coursefaq');
+});
+Route::post('coursefaq/delete_selected_items', [CourseFAQController::class, 'delete_selected_items'])->name('coursefaq.delete_selected_items');
