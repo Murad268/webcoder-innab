@@ -8,7 +8,7 @@ class SimpleCrudService {
         public FileService $fileService
     ) {}
 
-    public function create($model, $request, $model_type)
+    public function create($model=null, $request=null, $model_type=null)
     {
         $data = $request->except(array_keys($request->file()));
 
@@ -21,7 +21,7 @@ class SimpleCrudService {
         $this->handleFilesAndImages($request, $entity->id, $model_type);
     }
 
-    public function update($model, $request, $model_type)
+    public function update($model=null, $request=null, $model_type=null)
     {
 
         $data = $request->except(array_keys($request->file()));
