@@ -6,5 +6,6 @@
     "Project": true,
     "UsefulForYou": true,
     "Customer": true,
-    "TrainingSubject": true
+    "TrainingSubject": true,
+    "Room": true
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Project\Http\Controllers;
+namespace Modules\Room\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ImageService;
@@ -10,11 +10,11 @@ use App\Services\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Modules\Project\Repositories\ModelRepository;
+use Modules\Room\Repositories\ModelRepository;
 use Modules\Lang\Repositories\ModelRepository as LangRepository;
-use Modules\Project\Models\Project;
+use Modules\Room\Models\Room;
 
-class ProjectController extends Controller
+class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class ProjectController extends Controller
         } else {
             $items = $this->repository->all(80);
         }
-        return view('project::index', compact('items', 'q', 'activeItemsCount'));
+        return view('room::index', compact('items', 'q', 'activeItemsCount'));
     }
     /**
      * Show the form for creating a new resource.
@@ -43,7 +43,7 @@ class ProjectController extends Controller
     public function create()
     {
         $languages = $this->langRepository->all_active();
-        return view('project::create', compact('languages'));
+        return view('room::create', compact('languages'));
     }
 
     /**
@@ -53,9 +53,9 @@ class ProjectController extends Controller
     {
 
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new Project(), $request, 'project');
-            return redirect()->route('project.index')->with('status', 'Layihə uğurla əlavə edildi');
-        }, 'project.index');
+            $this->crudService->create(new Room(), $request, 'project');
+            return redirect()->route('room.index')->with('status', 'Layihə uğurla əlavə edildi');
+        }, 'room.index');
     }
 
     /**
@@ -63,29 +63,29 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return view('project::show');
+        return view('room::show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit(Room $room)
     {
 
 
         $languages = $this->langRepository->all_active();
-        return view('project::edit', compact('project', 'languages'));
+        return view('room::edit', compact('room', 'languages'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project): RedirectResponse
+    public function update(Request $request, Room $room): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $project) {
-            $this->crudService->update($project, $request, 'project');
-            return redirect()->route('project.index')->with('status', 'Layihə uğurla əlavə edildi');
-        }, 'project.index');
+        return $this->executeSafely(function () use ($request, $room) {
+            $this->crudService->update($room, $request, 'project');
+            return redirect()->route('room.index')->with('status', 'Layihə uğurla əlavə edildi');
+        }, 'room.index');
     }
 
     /**
@@ -100,18 +100,18 @@ class ProjectController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new Project());
-            return redirect()->route('project.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
-        }, 'project.index');
+            $this->statusService->changeStatusTrue($model, new Room());
+            return redirect()->route('room.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
+        }, 'room.index');
     }
 
     public function changeStatusFalse($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new Project());
-            return redirect()->route('project.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
-        }, 'project.index');
+            $this->statusService->changeStatusFalse($model, new Room());
+            return redirect()->route('room.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
+        }, 'room.index');
     }
 
 
@@ -121,7 +121,7 @@ class ProjectController extends Controller
             $models = $this->repository->findWhereInGet($request->ids);
             $this->removeService->removeAll($models);
             return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'project.index', true);
+        }, 'room.index', true);
     }
 
     public function deleteFile($id)
@@ -130,6 +130,6 @@ class ProjectController extends Controller
             $this->imageService->deleteImage($id);
 
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, 'project.index', true);
+        }, 'room.index', true);
     }
 }

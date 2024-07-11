@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\TrainingSubject\Repositories;
+namespace Modules\Room\Repositories;
 
-use Modules\Training\Models\Training;
-use Modules\TrainingSubject\Models\TrainingSubject;
+
+use Modules\Room\Models\Room;
 
 class ModelRepository
 {
-    protected $modelClass = TrainingSubject::class;
+    protected $modelClass = Room::class;
 
 
     public function all_active()
@@ -21,9 +21,8 @@ class ModelRepository
     }
     public function search($query, $limit = 1)
     {
-        return $this->modelClass::where('title->' . app()->getLocale(), 'like', "%{$query}%")
-            ->orWhere('description->' . app()->getLocale(), 'like', "%{$query}%")
-
+        return $this->modelClass::where('name->' . app()->getLocale(), 'like', "%{$query}%")
+            ->orWhere('short_description->' . app()->getLocale(), 'like', "%{$query}%")
             ->paginate($limit);
     }
 

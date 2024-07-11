@@ -22,7 +22,6 @@ class ModelRepository
     public function search($query, $limit = 1)
     {
         return $this->modelClass::where('name->' . app()->getLocale(), 'like', "%{$query}%")
-            ->orWhere('short_description->' . app()->getLocale(), 'like', "%{$query}%")
             ->paginate($limit);
     }
 
