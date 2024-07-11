@@ -4,5 +4,7 @@
     "Training": true,
     "Partners": true,
     "Project": true,
-    "UsefulForYou": true
+    "UsefulForYou": true,
+    "Customer": true,
+    "TrainingSubject": true
 }

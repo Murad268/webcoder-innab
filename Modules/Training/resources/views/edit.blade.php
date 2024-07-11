@@ -100,7 +100,6 @@
                                     </div>
                                     @endforeach
                                 </div>
-
                             </div>
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
                                 <div class="mb-3">
