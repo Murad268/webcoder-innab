@@ -8,5 +8,6 @@
     "Customer": true,
     "TrainingSubject": true,
     "Room": true,
-    "CourseFAQ": true
+    "CourseFAQ": true,
+    "VideoLessonsCategory": true
 }

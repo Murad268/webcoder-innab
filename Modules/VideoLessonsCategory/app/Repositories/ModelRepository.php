@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\CourseFAQ\Repositories;
+namespace Modules\VideoLessonsCategory\Repositories;
 
-use Modules\CourseFAQ\Models\CourseFaq;
-
+use Modules\VideoLessonsCategory\Models\VideoLessonsCategory;
 
 class ModelRepository
 {
-    protected $modelClass = CourseFaq::class;
+    protected $modelClass = VideoLessonsCategory::class;
+
 
     public function all_active()
     {
@@ -20,8 +20,8 @@ class ModelRepository
     }
     public function search($query, $limit = 1)
     {
-        return $this->modelClass::where('question->' . app()->getLocale(), 'like', "%{$query}%")
-        -> orWhere('answer->' . app()->getLocale(), 'like', "%{$query}%")
+        return $this->modelClass::where('title->' . app()->getLocale(), 'like', "%{$query}%")
+
             ->paginate($limit);
     }
 

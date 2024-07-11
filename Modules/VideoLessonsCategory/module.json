@@ -1,0 +1,11 @@
+{
+    "name": "VideoLessonsCategory",
+    "alias": "videolessonscategory",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\VideoLessonsCategory\\Providers\\VideoLessonsCategoryServiceProvider"
+    ],
+    "files": []
+}

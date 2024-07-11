@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/videolessonscategory",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\VideoLessonsCategory\\": "app/",
+            "Modules\\VideoLessonsCategory\\Database\\Factories\\": "database/factories/",
+            "Modules\\VideoLessonsCategory\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\VideoLessonsCategory\\Tests\\": "tests/"
+        }
+    }
+}
