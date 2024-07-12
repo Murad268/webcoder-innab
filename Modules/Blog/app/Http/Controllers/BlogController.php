@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\VideoLessons\Http\Controllers;
+namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ImageService;
@@ -9,11 +9,12 @@ use App\Services\SimpleCrudService;
 use App\Services\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Modules\VideoLessons\Repositories\ModelRepository;
+use Illuminate\Http\Response;
+use Modules\Blog\Models\Blog;
+use Modules\Blog\Repositories\ModelRepository;
 use Modules\Lang\Repositories\ModelRepository as LangRepository;
-use Modules\VideoLessons\Models\VideoLessons;
-use Modules\VideoLessonsCategory\Repositories\ModelRepository as Category;
-class VideoLessonsController extends Controller
+use Modules\BlogCategory\Repositories\ModelRepository as Category;
+class BlogController extends Controller
 {
     public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public ImageService $imageService, public Category $category)
     {
@@ -30,7 +31,7 @@ class VideoLessonsController extends Controller
         } else {
             $items = $this->repository->all(80);
         }
-        return view('videolessons::index', compact('items', 'q', 'activeItemsCount'));
+        return view('blog::index', compact('items', 'q', 'activeItemsCount'));
     }
 
     /**
@@ -38,9 +39,9 @@ class VideoLessonsController extends Controller
      */
     public function create()
     {
-        $languages = $this->langRepository->all_active();
         $categories = $this->category->all_active();
-        return view('videolessons::create',  compact('languages', 'categories'));
+        $languages = $this->langRepository->all_active();
+        return view('blog::create',  compact('languages', 'categories'));
     }
 
     /**
@@ -49,9 +50,9 @@ class VideoLessonsController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new VideoLessons(), $request, 'videolesson');
-            return redirect()->route('videolessons.index')->with('status', 'Tərəfdaş uğurla əlavə edildi');
-        }, 'videolessons.index');
+            $this->crudService->create(new Blog(), $request, 'blog');
+            return redirect()->route('blog.index')->with('status', 'Tərəfdaş uğurla əlavə edildi');
+        }, 'blog.index');
     }
 
     /**
@@ -59,7 +60,7 @@ class VideoLessonsController extends Controller
      */
     public function show($id)
     {
-        return view('videolessons::show');
+        return view('blog::show');
     }
 
     /**
@@ -69,10 +70,10 @@ class VideoLessonsController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $categories = $this->category->all_active();
-            $videolesson = $this->repository->find($id);
+            $blog = $this->repository->find($id);
             $languages = $this->langRepository->all_active();
-            return view('videolessons::edit', compact('languages', 'videolesson', 'categories'));
-        }, 'videolessons.index');
+            return view('blog::edit', compact('languages', 'blog', 'categories'));
+        }, 'blog.index');
     }
 
     /**
@@ -82,9 +83,9 @@ class VideoLessonsController extends Controller
     {
         return $this->executeSafely(function () use ($request, $id) {
             $partner = $this->repository->find($id);
-            $this->crudService->update($partner, $request, 'videolesson');
-            return redirect()->route('videolessons.index')->with('status', 'Təlim uğurla əlavə edildi');
-        }, 'videolessons.index');
+            $this->crudService->update($partner, $request, 'blog');
+            return redirect()->route('blog.index')->with('status', 'Təlim uğurla əlavə edildi');
+        }, 'blog.index');
     }
 
     /**
@@ -100,18 +101,18 @@ class VideoLessonsController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new VideoLessons());
-            return redirect()->route('videolessons.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
-        }, 'videolessons.index');
+            $this->statusService->changeStatusTrue($model, new Blog());
+            return redirect()->route('blog.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
+        }, 'blog.index');
     }
 
     public function changeStatusFalse($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new VideoLessons());
-            return redirect()->route('videolessons.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
-        }, 'videolessons.index');
+            $this->statusService->changeStatusFalse($model, new Blog());
+            return redirect()->route('blog.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
+        }, 'blog.index');
     }
 
 
@@ -121,7 +122,7 @@ class VideoLessonsController extends Controller
             $models = $this->repository->findWhereInGet($request->ids);
             $this->removeService->removeAll($models);
             return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'videolessons.index', true);
+        }, 'blog.index', true);
     }
 
     public function deleteFile($id)
@@ -130,6 +131,6 @@ class VideoLessonsController extends Controller
             $this->imageService->deleteImage($id);
 
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, 'videolessons.index', true);
+        }, 'blog.index', true);
     }
 }

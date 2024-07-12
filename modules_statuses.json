@@ -14,5 +14,6 @@
     "VideoLessonsTitle": true,
     "Lessons": true,
     "Lesson": true,
-    "BlogCategory": true
+    "BlogCategory": true,
+    "Blog": true
 }

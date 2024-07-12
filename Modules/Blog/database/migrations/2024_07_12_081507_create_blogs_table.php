@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('video_lessons', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text("seo_keywords")->nullable();
             $table->text("seo_description")->nullable();
             $table->text("seo_links")->nullable();
-            $table->unsignedBigInteger("category_id")->nullable();
             $table->text("seo_scripts")->nullable();
+            $table->unsignedBigInteger("category_id")->nullable();
             $table->unsignedBigInteger('order')->default(0);
             $table->boolean('status')->default(1);
             $table->timestamps();
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('video_lessons');
+        Schema::dropIfExists('blogs');
     }
 };
