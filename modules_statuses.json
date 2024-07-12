@@ -16,5 +16,6 @@
     "Lesson": true,
     "BlogCategory": true,
     "Blog": true,
-    "BlogContent": true
+    "BlogContent": true,
+    "News": true
 }

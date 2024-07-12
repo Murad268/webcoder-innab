@@ -5,14 +5,14 @@
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16">Kurs əlavə et</h5>
+                <h5 class="text-16">Xəbər əlavə et</h5>
             </div>
         </div>
         <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-10">
             <div class="card col-span-2">
                 <div class="card-body">
                     <div>
-                        <form enctype="multipart/form-data" method="post" action="{{route('blog.store')}}">
+                        <form enctype="multipart/form-data" method="post" action="{{route('news.store')}}">
                             @csrf
                             <ul class="flex flex-wrap w-full text-sm font-medium text-center border-b border-slate-200 dark:border-zink-500 nav-tabs">
                                 @php
@@ -36,13 +36,26 @@
                                     @foreach($languages as $language)
                                     <div class="block tab-pane {{ $isFirst ? 'block' : 'hidden'}}" id="{{$language->code}}">
                                         <div class="mb-3">
-                                            <label for="inputText1" class="inline-block mb-2 text-base font-medium">Kurs adı ({{$language->code}})<span class="text-red-500">*</span></label>
+                                            <label for="inputText1" class="inline-block mb-2 text-base font-medium">Xəbər başlığı ({{$language->code}})<span class="text-red-500">*</span></label>
                                             <input type="text" id="inputText1" name="title[{{ $language->code }}]" value="{{ old('title.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                         </div>
                                         <div class="mb-3">
                                             <label for="textArea" class="inline-block mb-2 text-base font-medium">Qısa təsvir ({{$language->code}})</label>
                                             <textarea name="short_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('short_description.' . $language->code) }}</textarea>
                                         </div>
+
+
+                                        <div class="mb-3">
+                                            <label for="textArea" class="inline-block mb-2 text-base font-medium">Mətn ({{$language->code}})</label>
+                                            <textarea name="text[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('text.' . $language->code) }}</textarea>
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label for="page_title" class="inline-block mb-2 text-base font-medium">Səhifədəki başlıq ({{$language->code}})</label>
+                                            <input type="text" id="page_title" name="page_title[{{ $language->code }}]" value="{{ old('page_title.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                        </div>
+
                                         <div class="mb-3">
                                             <label for="seo_title" class="inline-block mb-2 text-base font-medium">SEO Title ({{$language->code}})</label>
                                             <input type="text" id="seo_title" name="seo_title[{{ $language->code }}]" value="{{ old('seo_title.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
@@ -74,15 +87,7 @@
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Şəkil</label>
                                 <input name="image" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                             </div>
-                            <div class="mb-3">
-                                <label for="inputText1" class="inline-block mb-2 text-base font-medium">Kateqoriya<span class="text-red-500">*</span></label>
-                                <select name="category_id" class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                                    <option value="0">Heç bir kateqoriyası yoxdur</option>
-                                    @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+
                             <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                                 Əlavə et
                             </button>

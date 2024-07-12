@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Blog\Repositories;
+namespace Modules\News\Repositories;
 
-use Modules\Blog\Models\Blog;
-use Modules\VideoLessons\Models\VideoLessons;
+use Modules\News\Models\News;
+use Modules\News\Models\VideoLessons;
 
 class ModelRepository
 {
-    protected $modelClass = Blog::class;
+    protected $modelClass = News::class;
 
 
     public function all_active()
