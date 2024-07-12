@@ -11,5 +11,7 @@
     "CourseFAQ": true,
     "VideoLessonsCategory": true,
     "VideoLessons": true,
-    "VideoLessonsTitle": true
+    "VideoLessonsTitle": true,
+    "Lessons": true,
+    "Lesson": true
 }

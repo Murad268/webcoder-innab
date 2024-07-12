@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\VideoLessonsTitle\Models;
+namespace Modules\Lesson\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\VideoLessonsTitle\Database\Factories\VideoLessonsTitleFactory;
+use Modules\Lesson\Database\Factories\LessonFactory;
 use Spatie\Translatable\HasTranslations;
 
-class VideoLessonsTitle extends Model
+class Lesson extends Model
 {
     use HasFactory, HasTranslations;
     protected $guarded = [];
@@ -27,13 +27,9 @@ class VideoLessonsTitle extends Model
         });
     }
 
-    /**
-     * The attributes that are mass assignable.
-     */
 
-
-    protected static function newFactory(): VideoLessonsTitleFactory
+    protected static function newFactory(): LessonFactory
     {
-        //return VideoLessonsTitleFactory::new();
+        //return LessonFactory::new();
     }
 }
