@@ -1,14 +1,13 @@
 <?php
 
-namespace Modules\Blog\Models;
+namespace Modules\BlogContent\Models;
 
-use App\Models\SystemFiles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Blog\Database\Factories\BlogFactory;
+use Modules\BlogContent\Database\Factories\BlogContentFactory;
 use Spatie\Translatable\HasTranslations;
 
-class Blog extends Model
+class BlogContent extends Model
 {
     use HasFactory, HasTranslations;
 
@@ -16,7 +15,7 @@ class Blog extends Model
      * The attributes that are mass assignable.
      */
     protected $guarded = [];
-    public $translatable = ['title', 'slug', 'short_description', 'seo_title', 'seo_keywords', 'seo_description'];
+    public $translatable = ['title', 'slug', 'text'];
 
     protected static function boot()
     {
@@ -28,13 +27,8 @@ class Blog extends Model
         });
     }
 
-
-    public function images()
+    protected static function newFactory(): BlogContentFactory
     {
-        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'blog')->where('file_type', 'image');
-    }
-    protected static function newFactory(): BlogFactory
-    {
-        //return BlogFactory::new();
+        //return BlogContentFactory::new();
     }
 }

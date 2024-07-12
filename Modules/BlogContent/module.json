@@ -1,0 +1,11 @@
+{
+    "name": "BlogContent",
+    "alias": "blogcontent",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BlogContent\\Providers\\BlogContentServiceProvider"
+    ],
+    "files": []
+}
