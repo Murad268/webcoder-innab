@@ -133,7 +133,7 @@
 
                             </table>
                             <div style="margin:0 auto; width: max-content; margin-top: 30px" class="pagination">
-                                {{$items->links()}}
+                                {{ $items->appends(['q' => request()->input('q')])->links() }}
                             </div>
                         </div>
                     </div>

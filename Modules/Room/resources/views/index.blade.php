@@ -80,7 +80,7 @@
                                                     <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
                                                         <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
                                                     </a>
-                                                 
+
                                                 </div>
                                                 @endforeach
                                             </div>
@@ -143,7 +143,7 @@
 
                             </table>
                             <div style="margin:0 auto; width: max-content; margin-top: 30px" class="pagination">
-                                {{$items->links()}}
+                                {{ $items->appends(['q' => request()->input('q')])->links() }}
                             </div>
                         </div>
                     </div>
