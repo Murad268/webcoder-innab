@@ -10,5 +10,6 @@
     "Room": true,
     "CourseFAQ": true,
     "VideoLessonsCategory": true,
-    "VideoLessons": true
+    "VideoLessons": true,
+    "VideoLessonsTitle": true
 }

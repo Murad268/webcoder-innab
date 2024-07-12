@@ -1,0 +1,11 @@
+{
+    "name": "VideoLessonsTitle",
+    "alias": "videolessonstitle",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\VideoLessonsTitle\\Providers\\VideoLessonsTitleServiceProvider"
+    ],
+    "files": []
+}
