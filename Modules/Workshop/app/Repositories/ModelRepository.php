@@ -21,7 +21,8 @@ class ModelRepository
     public function search($query, $limit = 1)
     {
         return $this->modelClass::where('title->' . app()->getLocale(), 'like', "%{$query}%")
-            ->orWhere('short_description->' . app()->getLocale(), 'like', "%{$query}%")
+            ->orWhere('spikers->' . app()->getLocale(), 'like', "%{$query}%")
+            ->orWhere('place->' . app()->getLocale(), 'like', "%{$query}%")
             ->paginate($limit);
     }
 
