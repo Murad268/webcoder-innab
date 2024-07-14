@@ -66,7 +66,7 @@ class CreateModule extends Command
         $this->createFile($controllerFilePath, $this->getControllerContent($name, $loweredName));
 
         // Create API routes file
-        $this->createFile($apiRoutesPath, $this->getApiRoutesContent($loweredName, $loweredName));
+        $this->createFile($apiRoutesPath, $this->getApiRoutesContent($name, $loweredName));
 
         // Create Web routes file
         $this->createFile($webRoutesPath, $this->getWebRoutesContent($name, $loweredName));

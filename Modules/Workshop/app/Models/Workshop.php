@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Vebinar\Models;
+namespace Modules\Workshop\Models;
 
 use App\Models\SystemFiles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Vebinar\Database\Factories\VebinarFactory;
+use Modules\Workshop\Database\Factories\WorkshopFactory;
 use Spatie\Translatable\HasTranslations;
 
-class Vebinar extends Model
+class Workshop extends Model
 {
     use HasFactory, HasTranslations;
 
@@ -30,11 +30,11 @@ class Vebinar extends Model
 
     public function images()
     {
-        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'vebinar')->where('file_type', 'image');
+        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'workshop')->where('file_type', 'image');
     }
 
-    protected static function newFactory(): VebinarFactory
+    protected static function newFactory(): WorkshopFactory
     {
-        //return VebinarFactory::new();
+        //return WorkshopFactory::new();
     }
 }

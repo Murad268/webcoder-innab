@@ -6,7 +6,7 @@
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16"> Vebinarlar </h5>
+                <h5 class="text-16"> Work-shoplar </h5>
             </div>
 
         </div>
@@ -17,8 +17,8 @@
                     <div class="grid grid-cols-12 lg:grid-cols-12 gap-3">
                         <div class="self-center col-span-12 lg:col-span-6">
                             <div style="display: flex; column-gap: 10px" class="dataTables_length" id="alternativePagination_length">
-                                <a href="{{route('vebinar.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
-                                <a data-link="{{route('api.vebinar.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
+                                <a href="{{route('workshop.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
+                                <a data-link="{{route('api.workshop.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
                                     seçilənləri sil
                                 </a>
                                 <label> @if (session('status'))
@@ -86,7 +86,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex">
-                                                <a href="{{route('vebinar.edit', $item->id)}}" class="btn btn-phoenix-success me-1 mb-1" type="button">
+                                                <a href="{{route('workshop.edit', $item->id)}}" class="btn btn-phoenix-success me-1 mb-1" type="button">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen">
                                                         <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                                         <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
@@ -102,7 +102,7 @@
                                                         </svg>
                                                         </a>
                                                         @else
-                                                        <a href="{{route('vebinar.changeStatusFalse',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_false" type="link">
+                                                        <a href="{{route('workshop.changeStatusFalse',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_false" type="link">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-down">
                                                                 <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
                                                                 <polyline points="16 17 22 17 22 11" />
@@ -111,7 +111,7 @@
                                                         @endif
 
                                                         @else
-                                                        <a href="{{route('vebinar.changeStatusTrue',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_true" type="button">
+                                                        <a href="{{route('workshop.changeStatusTrue',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_true" type="button">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up">
                                                                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
                                                                 <polyline points="16 7 22 7 22 13" />

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Vebinar\Http\Controllers;
+namespace Modules\Workshop\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ImageService;
@@ -9,11 +9,11 @@ use App\Services\SimpleCrudService;
 use App\Services\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Modules\Vebinar\Repositories\ModelRepository;
+use Modules\Workshop\Repositories\ModelRepository;
 use Modules\Lang\Repositories\ModelRepository as LangRepository;
-use Modules\Vebinar\Models\Vebinar;
+use Modules\Workshop\Models\Workshop;
 
-class VebinarController extends Controller
+class WorkshopController extends Controller
 {
     public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public ImageService $imageService)
     {
@@ -31,7 +31,7 @@ class VebinarController extends Controller
         } else {
             $items = $this->repository->all(80);
         }
-        return view('vebinar::index', compact('items', 'q', 'activeItemsCount'));
+        return view('workshop::index', compact('items', 'q', 'activeItemsCount'));
     }
 
     /**
@@ -40,7 +40,7 @@ class VebinarController extends Controller
     public function create()
     {
         $languages = $this->langRepository->all_active();
-        return view('vebinar::create', compact('languages'));
+        return view('workshop::create', compact('languages'));
     }
 
     /**
@@ -48,11 +48,10 @@ class VebinarController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new Vebinar(), $request, 'vebinar');
-            return redirect()->route('vebinar.index')->with('status', 'vebinar uğurla əlavə edildi');
-        }, 'vebinar.index');
+            $this->crudService->create(new Workshop(), $request, 'workshop');
+            return redirect()->route('workshop.index')->with('status', 'workshop uğurla əlavə edildi');
+        }, 'workshop.index');
     }
 
     /**
@@ -60,7 +59,7 @@ class VebinarController extends Controller
      */
     public function show($id)
     {
-        return view('vebinar::show');
+        return view('workshop::show');
     }
 
     /**
@@ -71,8 +70,8 @@ class VebinarController extends Controller
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
             $languages = $this->langRepository->all_active();
-            return view('vebinar::edit', compact('languages', 'model'));
-        }, 'vebinar.index');
+            return view('workshop::edit', compact('languages', 'model'));
+        }, 'workshop.index');
     }
 
     /**
@@ -82,9 +81,9 @@ class VebinarController extends Controller
     {
         return $this->executeSafely(function () use ($request, $id) {
             $model = $this->repository->find($id);
-            $this->crudService->update($model, $request, 'vebinar');
-            return redirect()->route('vebinar.index')->with('status', 'vebinar uğurla yeniləndi');
-        }, 'vebinar.index');
+            $this->crudService->update($model, $request, 'workshop');
+            return redirect()->route('workshop.index')->with('status', 'workshop uğurla yeniləndi');
+        }, 'workshop.index');
     }
 
     /**
@@ -99,18 +98,18 @@ class VebinarController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new Vebinar());
-            return redirect()->route('vebinar.index')->with('status', 'vebinar statusu uğurla yeniləndi');
-        }, 'vebinar.index');
+            $this->statusService->changeStatusTrue($model, new Workshop());
+            return redirect()->route('workshop.index')->with('status', 'workshop statusu uğurla yeniləndi');
+        }, 'workshop.index');
     }
 
     public function changeStatusFalse($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new Vebinar());
-            return redirect()->route('vebinar.index')->with('status', 'vebinar statusu uğurla yeniləndi');
-        }, 'vebinar.index');
+            $this->statusService->changeStatusFalse($model, new Workshop());
+            return redirect()->route('workshop.index')->with('status', 'workshop statusu uğurla yeniləndi');
+        }, 'workshop.index');
     }
 
     public function delete_selected_items(Request $request)
@@ -119,7 +118,7 @@ class VebinarController extends Controller
             $models = $this->repository->findWhereInGet($request->ids);
             $this->removeService->removeAll($models);
             return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'vebinar.index', true);
+        }, 'workshop.index', true);
     }
 
     public function deleteFile($id)
@@ -127,6 +126,6 @@ class VebinarController extends Controller
         return $this->executeSafely(function () use ($id) {
             $this->imageService->deleteImage($id);
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, 'vebinar.index', true);
+        }, 'workshop.index', true);
     }
 }

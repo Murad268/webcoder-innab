@@ -5,14 +5,14 @@
         <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Vebinarı yenilə</h5>
+                    <h5 class="text-16">Work-shopu yenilə</h5>
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-10">
                 <div class="card col-span-2">
                     <div class="card-body">
                         <div>
-                            <form enctype="multipart/form-data" method="post" action="{{route('vebinar.update', $model->id)}}">
+                            <form enctype="multipart/form-data" method="post" action="{{route('workshop.update', $model->id)}}">
                                 @method('PATCH')
                                 @csrf
                                 <ul class="flex flex-wrap w-full text-sm font-medium text-center border-b border-slate-200 dark:border-zink-500 nav-tabs">
