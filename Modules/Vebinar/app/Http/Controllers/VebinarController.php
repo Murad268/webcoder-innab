@@ -31,7 +31,7 @@ class VebinarController extends Controller
         } else {
             $items = $this->repository->all(80);
         }
-        return view('Vebinar::index', compact('items', 'q', 'activeItemsCount'));
+        return view('vebinar::index', compact('items', 'q', 'activeItemsCount'));
     }
 
     /**
@@ -40,7 +40,7 @@ class VebinarController extends Controller
     public function create()
     {
         $languages = $this->langRepository->all_active();
-        return view('Vebinar::create', compact('languages'));
+        return view('vebinar::create', compact('languages'));
     }
 
     /**
@@ -49,9 +49,9 @@ class VebinarController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new Vebinar(), $request, 'Vebinar');
-            return redirect()->route('Vebinar.index')->with('status', 'Vebinar uğurla əlavə edildi');
-        }, 'Vebinar.index');
+            $this->crudService->create(new Vebinar(), $request, 'vebinar');
+            return redirect()->route('vebinar.index')->with('status', 'vebinar uğurla əlavə edildi');
+        }, 'vebinar.index');
     }
 
     /**
@@ -59,7 +59,7 @@ class VebinarController extends Controller
      */
     public function show($id)
     {
-        return view('Vebinar::show');
+        return view('vebinar::show');
     }
 
     /**
@@ -70,8 +70,8 @@ class VebinarController extends Controller
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
             $languages = $this->langRepository->all_active();
-            return view('Vebinar::edit', compact('languages', 'model'));
-        }, 'Vebinar.index');
+            return view('vebinar::edit', compact('languages', 'model'));
+        }, 'vebinar.index');
     }
 
     /**
@@ -81,9 +81,9 @@ class VebinarController extends Controller
     {
         return $this->executeSafely(function () use ($request, $id) {
             $model = $this->repository->find($id);
-            $this->crudService->update($model, $request, 'Vebinar');
-            return redirect()->route('Vebinar.index')->with('status', 'Vebinar uğurla yeniləndi');
-        }, 'Vebinar.index');
+            $this->crudService->update($model, $request, 'vebinar');
+            return redirect()->route('vebinar.index')->with('status', 'vebinar uğurla yeniləndi');
+        }, 'vebinar.index');
     }
 
     /**
@@ -99,8 +99,8 @@ class VebinarController extends Controller
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
             $this->statusService->changeStatusTrue($model, new Vebinar());
-            return redirect()->route('Vebinar.index')->with('status', 'Vebinar statusu uğurla yeniləndi');
-        }, 'Vebinar.index');
+            return redirect()->route('vebinar.index')->with('status', 'vebinar statusu uğurla yeniləndi');
+        }, 'vebinar.index');
     }
 
     public function changeStatusFalse($id)
@@ -108,8 +108,8 @@ class VebinarController extends Controller
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
             $this->statusService->changeStatusFalse($model, new Vebinar());
-            return redirect()->route('Vebinar.index')->with('status', 'Vebinar statusu uğurla yeniləndi');
-        }, 'Vebinar.index');
+            return redirect()->route('vebinar.index')->with('status', 'vebinar statusu uğurla yeniləndi');
+        }, 'vebinar.index');
     }
 
     public function delete_selected_items(Request $request)
@@ -118,7 +118,7 @@ class VebinarController extends Controller
             $models = $this->repository->findWhereInGet($request->ids);
             $this->removeService->removeAll($models);
             return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'Vebinar.index', true);
+        }, 'vebinar.index', true);
     }
 
     public function deleteFile($id)
@@ -126,6 +126,6 @@ class VebinarController extends Controller
         return $this->executeSafely(function () use ($id) {
             $this->imageService->deleteImage($id);
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, 'Vebinar.index', true);
+        }, 'vebinar.index', true);
     }
 }

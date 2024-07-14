@@ -18,6 +18,8 @@ return new class extends Migration
             $table->longText('spikers')->nullable();
             $table->dateTime('event_datetime')->nullable();
             $table->text('place')->nullable();
+            $table->unsignedBigInteger('order')->default(0);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

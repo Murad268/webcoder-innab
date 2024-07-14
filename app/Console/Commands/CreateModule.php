@@ -63,7 +63,7 @@ class CreateModule extends Command
         $this->createFile($repositoryFilePath, $this->getRepositoryContent($name));
 
         // Create controller file
-        $this->createFile($controllerFilePath, $this->getControllerContent($name));
+        $this->createFile($controllerFilePath, $this->getControllerContent($name, $loweredName));
 
         // Create API routes file
         $this->createFile($apiRoutesPath, $this->getApiRoutesContent($loweredName, $loweredName));
@@ -215,7 +215,7 @@ class ModelRepository
     /**
      * Get content for the controller file.
      */
-    protected function getControllerContent($name)
+    protected function getControllerContent($name, $loweredName)
     {
         return "<?php
 
@@ -250,7 +250,7 @@ class {$name}Controller extends Controller
         } else {
             \$items = \$this->repository->all(80);
         }
-        return view('{$name}::index', compact('items', 'q', 'activeItemsCount'));
+        return view('{$loweredName}::index', compact('items', 'q', 'activeItemsCount'));
     }
 
     /**
@@ -259,7 +259,7 @@ class {$name}Controller extends Controller
     public function create()
     {
         \$languages = \$this->langRepository->all_active();
-        return view('{$name}::create', compact('languages'));
+        return view('{$loweredName}::create', compact('languages'));
     }
 
     /**
@@ -268,9 +268,9 @@ class {$name}Controller extends Controller
     public function store(Request \$request): RedirectResponse
     {
         return \$this->executeSafely(function () use (\$request) {
-            \$this->crudService->create(new $name(), \$request, '{$name}');
-            return redirect()->route('{$name}.index')->with('status', '{$name} uğurla əlavə edildi');
-        }, '{$name}.index');
+            \$this->crudService->create(new $name(), \$request, '{$loweredName}');
+            return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} uğurla əlavə edildi');
+        }, '{$loweredName}.index');
     }
 
     /**
@@ -278,7 +278,7 @@ class {$name}Controller extends Controller
      */
     public function show(\$id)
     {
-        return view('{$name}::show');
+        return view('{$loweredName}::show');
     }
 
     /**
@@ -289,8 +289,8 @@ class {$name}Controller extends Controller
         return \$this->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
             \$languages = \$this->langRepository->all_active();
-            return view('{$name}::edit', compact('languages', 'model'));
-        }, '{$name}.index');
+            return view('{$loweredName}::edit', compact('languages', 'model'));
+        }, '{$loweredName}.index');
     }
 
     /**
@@ -300,9 +300,9 @@ class {$name}Controller extends Controller
     {
         return \$this->executeSafely(function () use (\$request, \$id) {
             \$model = \$this->repository->find(\$id);
-            \$this->crudService->update(\$model, \$request, '{$name}');
-            return redirect()->route('{$name}.index')->with('status', '{$name} uğurla yeniləndi');
-        }, '{$name}.index');
+            \$this->crudService->update(\$model, \$request, '{$loweredName}');
+            return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} uğurla yeniləndi');
+        }, '{$loweredName}.index');
     }
 
     /**
@@ -318,8 +318,8 @@ class {$name}Controller extends Controller
         return \$this->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
             \$this->statusService->changeStatusTrue(\$model, new $name());
-            return redirect()->route('{$name}.index')->with('status', '{$name} statusu uğurla yeniləndi');
-        }, '{$name}.index');
+            return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} statusu uğurla yeniləndi');
+        }, '{$loweredName}.index');
     }
 
     public function changeStatusFalse(\$id)
@@ -327,8 +327,8 @@ class {$name}Controller extends Controller
         return \$this->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
             \$this->statusService->changeStatusFalse(\$model, new $name());
-            return redirect()->route('{$name}.index')->with('status', '{$name} statusu uğurla yeniləndi');
-        }, '{$name}.index');
+            return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} statusu uğurla yeniləndi');
+        }, '{$loweredName}.index');
     }
 
     public function delete_selected_items(Request \$request)
@@ -337,7 +337,7 @@ class {$name}Controller extends Controller
             \$models = \$this->repository->findWhereInGet(\$request->ids);
             \$this->removeService->removeAll(\$models);
             return response()->json(['success' => \$models, 'message' => \"məlumatlar uğurla silindilər\"]);
-        }, '{$name}.index', true);
+        }, '{$loweredName}.index', true);
     }
 
     public function deleteFile(\$id)
@@ -345,7 +345,7 @@ class {$name}Controller extends Controller
         return \$this->executeSafely(function () use (\$id) {
             \$this->imageService->deleteImage(\$id);
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, '{$name}.index', true);
+        }, '{$loweredName}.index', true);
     }
 }
 ";
