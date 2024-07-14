@@ -17,5 +17,6 @@
     "BlogCategory": true,
     "Blog": true,
     "BlogContent": true,
-    "News": true
+    "News": true,
+    "Vebinar": true
 }

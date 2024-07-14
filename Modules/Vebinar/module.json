@@ -1,0 +1,11 @@
+{
+    "name": "Vebinar",
+    "alias": "vebinar",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Vebinar\\Providers\\VebinarServiceProvider"
+    ],
+    "files": []
+}
