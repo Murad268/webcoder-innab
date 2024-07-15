@@ -3,22 +3,22 @@
 namespace Modules\CourseFAQ\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\ImageService;
-use App\Services\RemoveService;
-use App\Services\SimpleCrudService;
-use App\Services\StatusService;
+use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\CourseFAQ\Models\CourseFaq;
 use Modules\CourseFAQ\Repositories\ModelRepository;
-use Modules\Lang\Repositories\ModelRepository as LangRepository;
 use Modules\Training\Repositories\ModelRepository as TrainingRepository;
+
 class CourseFAQController extends Controller
 {
-    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public ImageService $imageService,public TrainingRepository $trainingRepository)
-    {
+    public function __construct(
+        public ServiceContainer $services,
+        public ModelRepository $repository,
+        public TrainingRepository $trainingRepository
+    ) {
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -40,8 +40,8 @@ class CourseFAQController extends Controller
     public function create()
     {
         $trainings = $this->trainingRepository->all_active();
-        $languages = $this->langRepository->all_active();
-        return view('coursefaq::create',  compact('languages', 'trainings'));
+        $languages = $this->services->langRepository->all_active();
+        return view('coursefaq::create', compact('languages', 'trainings'));
     }
 
     /**
@@ -49,9 +49,8 @@ class CourseFAQController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new CourseFaq(), $request, 'coursefaq');
+            $this->services->crudService->create(new CourseFaq(), $request, 'coursefaq');
             return redirect()->route('coursefaq.index')->with('status', 'Tərəfdaş uğurla əlavə edildi');
         }, 'coursefaq.index');
     }
@@ -69,10 +68,9 @@ class CourseFAQController extends Controller
      */
     public function edit($id)
     {
-
         return $this->executeSafely(function () use ($id) {
             $coursefaq = $this->repository->find($id);
-            $languages = $this->langRepository->all_active();
+            $languages = $this->services->langRepository->all_active();
             $trainings = $this->trainingRepository->all_active();
             return view('coursefaq::edit', compact('languages', 'coursefaq', 'trainings'));
         }, 'coursefaq.index');
@@ -83,10 +81,9 @@ class CourseFAQController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-
         return $this->executeSafely(function () use ($request, $id) {
             $coursefaq = $this->repository->find($id);
-            $this->crudService->update($coursefaq, $request, 'coursefaq');
+            $this->services->crudService->update($coursefaq, $request, 'coursefaq');
             return redirect()->route('coursefaq.index')->with('status', 'Təlim uğurla əlavə edildi');
         }, 'coursefaq.index');
     }
@@ -96,15 +93,14 @@ class CourseFAQController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Burada destroy metodunu implement edə bilərsiniz
     }
-
 
     public function changeStatusTrue($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new CourseFaq());
+            $this->services->statusService->changeStatusTrue($model, new CourseFaq());
             return redirect()->route('coursefaq.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
         }, 'coursefaq.index');
     }
@@ -113,17 +109,16 @@ class CourseFAQController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new CourseFaq());
+            $this->services->statusService->changeStatusFalse($model, new CourseFaq());
             return redirect()->route('coursefaq.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
         }, 'coursefaq.index');
     }
-
 
     public function delete_selected_items(Request $request)
     {
         return $this->executeSafely(function () use ($request) {
             $models = $this->repository->findWhereInGet($request->ids);
-            $this->removeService->removeAll($models);
+            $this->services->removeService->removeAll($models);
             return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
         }, 'coursefaq.index', true);
     }
@@ -131,10 +126,8 @@ class CourseFAQController extends Controller
     public function deleteFile($id)
     {
         return $this->executeSafely(function () use ($id) {
-            $this->imageService->deleteImage($id);
-
+            $this->services->imageService->deleteImage($id);
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
         }, 'coursefaq.index', true);
     }
 }
-

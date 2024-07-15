@@ -3,24 +3,24 @@
 namespace Modules\Training\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\ImageService;
-use App\Services\RemoveService;
-use App\Services\SimpleCrudService;
-use App\Services\StatusService;
+use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Training\Repositories\ModelRepository;
-use Modules\Lang\Repositories\ModelRepository as LangRepository;
 use Modules\Training\Models\Training;
-use Modules\TrainingCategory\Repositories\ModelRepository as TrainingCategory;
+use Modules\TrainingCategory\Repositories\ModelRepository as TrainingCategoryRepository;
+
 class TrainingController extends Controller
 {
+    public function __construct(
+        public ServiceContainer $services,
+        public ModelRepository $repository,
+        public TrainingCategoryRepository $trainingCategory
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
-    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public TrainingCategory $trainingCategory, public ImageService $imageService)
-    {
-    }
     public function index(Request $request)
     {
         $q = $request->q;
@@ -39,7 +39,7 @@ class TrainingController extends Controller
     public function create()
     {
         $categories = $this->trainingCategory->all_active();
-        $languages = $this->langRepository->all_active();
+        $languages = $this->services->langRepository->all_active();
         return view('training::create', compact('languages', 'categories'));
     }
 
@@ -49,11 +49,10 @@ class TrainingController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-           $this->crudService->create(new Training(), $request, 'training');
+            $this->services->crudService->create(new Training(), $request, 'training');
             return redirect()->route('training.index')->with('status', 'Təlim uğurla əlavə edildi');
         }, 'training.index');
     }
-
 
     /**
      * Show the specified resource.
@@ -69,11 +68,10 @@ class TrainingController extends Controller
     public function edit(Request $request, Training $training)
     {
         return $this->executeSafely(function () use ($request, $training) {
-            $languages = $this->langRepository->all_active();
+            $languages = $this->services->langRepository->all_active();
             $categories = $this->trainingCategory->all_active();
             return view('training::edit', compact('training', 'languages', 'categories'));
         }, 'training.index');
-
     }
 
     /**
@@ -82,23 +80,24 @@ class TrainingController extends Controller
     public function update(Request $request, Training $training): RedirectResponse
     {
         return $this->executeSafely(function () use ($request, $training) {
-            $this->crudService->update($training, $request, 'training');
-            return redirect()->route('training.index')->with('status', 'Təlim uğurla əlavə edildi');
+            $this->services->crudService->update($training, $request, 'training');
+            return redirect()->route('training.index')->with('status', 'Təlim uğurla yeniləndi');
         }, 'training.index');
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-
-
+    public function destroy($id)
+    {
+        // Burada destroy metodunu implement edə bilərsiniz
+    }
 
     public function changeStatusTrue($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new Training());
+            $this->services->statusService->changeStatusTrue($model, new Training());
             return redirect()->route('training.index')->with('status', 'Təlim statusu uğurla yeniləndi');
         }, 'training.index');
     }
@@ -107,26 +106,25 @@ class TrainingController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new Training());
+            $this->services->statusService->changeStatusFalse($model, new Training());
             return redirect()->route('training.index')->with('status', 'Təlim statusu uğurla yeniləndi');
         }, 'training.index');
     }
-
 
     public function delete_selected_items(Request $request)
     {
         return $this->executeSafely(function () use ($request) {
             $models = $this->repository->findWhereInGet($request->ids);
-            $this->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
+            $this->services->removeService->removeAll($models);
+            return response()->json(['success' => $models, 'message' => "Məlumatlar uğurla silindilər"]);
         }, 'training.index', true);
     }
 
-    public function deleteFile($id) {
+    public function deleteFile($id)
+    {
         return $this->executeSafely(function () use ($id) {
-            $this->imageService->deleteImage($id);
-
-            return redirect()->back()->with('success', 'şəkil uğurla silindi');
+            $this->services->imageService->deleteImage($id);
+            return redirect()->back()->with('success', 'Şəkil uğurla silindi');
         }, 'training.index', true);
     }
 }

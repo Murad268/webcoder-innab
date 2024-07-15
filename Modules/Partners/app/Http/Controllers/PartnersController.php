@@ -3,23 +3,19 @@
 namespace Modules\Partners\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\ImageService;
-use App\Services\RemoveService;
-use App\Services\SimpleCrudService;
-use App\Services\StatusService;
+use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Modules\Lang\Repositories\ModelRepository as LangRepository;
 use Modules\Partners\Models\Partners;
 use Modules\Partners\Repositories\ModelRepository;
-use Modules\TrainingCategory\Repositories\ModelRepository as TrainingCategory;
 
 class PartnersController extends Controller
 {
-    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public ImageService $imageService)
-    {
-    }
+    public function __construct(
+        public ServiceContainer $services,
+        public ModelRepository $repository
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -40,8 +36,8 @@ class PartnersController extends Controller
      */
     public function create()
     {
-        $languages = $this->langRepository->all_active();
-        return view('partners::create',  compact('languages'));
+        $languages = $this->services->langRepository->all_active();
+        return view('partners::create', compact('languages'));
     }
 
     /**
@@ -50,7 +46,7 @@ class PartnersController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new Partners(), $request, 'partner');
+            $this->services->crudService->create(new Partners(), $request, 'partner');
             return redirect()->route('partners.index')->with('status', 'Tərəfdaş uğurla əlavə edildi');
         }, 'partners.index');
     }
@@ -70,10 +66,9 @@ class PartnersController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $partner = $this->repository->find($id);
-            $languages = $this->langRepository->all_active();
+            $languages = $this->services->langRepository->all_active();
             return view('partners::edit', compact('languages', 'partner'));
         }, 'partners.index');
-
     }
 
     /**
@@ -83,7 +78,7 @@ class PartnersController extends Controller
     {
         return $this->executeSafely(function () use ($request, $id) {
             $partner = $this->repository->find($id);
-            $this->crudService->update($partner, $request, 'partner');
+            $this->services->crudService->update($partner, $request, 'partner');
             return redirect()->route('partners.index')->with('status', 'Təlim uğurla əlavə edildi');
         }, 'partners.index');
     }
@@ -93,15 +88,14 @@ class PartnersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Burada destroy metodunu implement edə bilərsiniz
     }
-
 
     public function changeStatusTrue($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new Partners());
+            $this->services->statusService->changeStatusTrue($model, new Partners());
             return redirect()->route('partners.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
         }, 'partners.index');
     }
@@ -110,25 +104,24 @@ class PartnersController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new Partners());
+            $this->services->statusService->changeStatusFalse($model, new Partners());
             return redirect()->route('partners.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
         }, 'partners.index');
     }
-
 
     public function delete_selected_items(Request $request)
     {
         return $this->executeSafely(function () use ($request) {
             $models = $this->repository->findWhereInGet($request->ids);
-            $this->removeService->removeAll($models);
+            $this->services->removeService->removeAll($models);
             return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
         }, 'partners.index', true);
     }
 
-    public function deleteFile($id) {
+    public function deleteFile($id)
+    {
         return $this->executeSafely(function () use ($id) {
-            $this->imageService->deleteImage($id);
-
+            $this->services->imageService->deleteImage($id);
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
         }, 'partners.index', true);
     }

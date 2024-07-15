@@ -3,21 +3,18 @@
 namespace Modules\Workshop\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\ImageService;
-use App\Services\RemoveService;
-use App\Services\SimpleCrudService;
-use App\Services\StatusService;
+use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Workshop\Repositories\ModelRepository;
-use Modules\Lang\Repositories\ModelRepository as LangRepository;
 use Modules\Workshop\Models\Workshop;
 
 class WorkshopController extends Controller
 {
-    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public ImageService $imageService)
-    {
-    }
+    public function __construct(
+        public ServiceContainer $services,
+        public ModelRepository $repository
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -39,7 +36,7 @@ class WorkshopController extends Controller
      */
     public function create()
     {
-        $languages = $this->langRepository->all_active();
+        $languages = $this->services->langRepository->all_active();
         return view('workshop::create', compact('languages'));
     }
 
@@ -49,8 +46,8 @@ class WorkshopController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new Workshop(), $request, 'workshop');
-            return redirect()->route('workshop.index')->with('status', 'workshop uğurla əlavə edildi');
+            $this->services->crudService->create(new Workshop(), $request, 'workshop');
+            return redirect()->route('workshop.index')->with('status', 'Workshop uğurla əlavə edildi');
         }, 'workshop.index');
     }
 
@@ -69,7 +66,7 @@ class WorkshopController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $languages = $this->langRepository->all_active();
+            $languages = $this->services->langRepository->all_active();
             return view('workshop::edit', compact('languages', 'model'));
         }, 'workshop.index');
     }
@@ -81,8 +78,8 @@ class WorkshopController extends Controller
     {
         return $this->executeSafely(function () use ($request, $id) {
             $model = $this->repository->find($id);
-            $this->crudService->update($model, $request, 'workshop');
-            return redirect()->route('workshop.index')->with('status', 'workshop uğurla yeniləndi');
+            $this->services->crudService->update($model, $request, 'workshop');
+            return redirect()->route('workshop.index')->with('status', 'Workshop uğurla yeniləndi');
         }, 'workshop.index');
     }
 
@@ -91,15 +88,15 @@ class WorkshopController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Burada destroy metodunu implement edə bilərsiniz
     }
 
     public function changeStatusTrue($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new Workshop());
-            return redirect()->route('workshop.index')->with('status', 'workshop statusu uğurla yeniləndi');
+            $this->services->statusService->changeStatusTrue($model, new Workshop());
+            return redirect()->route('workshop.index')->with('status', 'Workshop statusu uğurla yeniləndi');
         }, 'workshop.index');
     }
 
@@ -107,8 +104,8 @@ class WorkshopController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new Workshop());
-            return redirect()->route('workshop.index')->with('status', 'workshop statusu uğurla yeniləndi');
+            $this->services->statusService->changeStatusFalse($model, new Workshop());
+            return redirect()->route('workshop.index')->with('status', 'Workshop statusu uğurla yeniləndi');
         }, 'workshop.index');
     }
 
@@ -116,16 +113,16 @@ class WorkshopController extends Controller
     {
         return $this->executeSafely(function () use ($request) {
             $models = $this->repository->findWhereInGet($request->ids);
-            $this->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
+            $this->services->removeService->removeAll($models);
+            return response()->json(['success' => $models, 'message' => "Məlumatlar uğurla silindilər"]);
         }, 'workshop.index', true);
     }
 
     public function deleteFile($id)
     {
         return $this->executeSafely(function () use ($id) {
-            $this->imageService->deleteImage($id);
-            return redirect()->back()->with('success', 'şəkil uğurla silindi');
+            $this->services->imageService->deleteImage($id);
+            return redirect()->back()->with('success', 'Şəkil uğurla silindi');
         }, 'workshop.index', true);
     }
 }

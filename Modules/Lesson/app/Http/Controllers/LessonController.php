@@ -3,24 +3,21 @@
 namespace Modules\Lesson\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\RemoveService;
-use App\Services\SimpleCrudService;
-use App\Services\StatusService;
+use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\Lesson\Repositories\ModelRepository;
-use Modules\Lang\Repositories\ModelRepository as LangRepository;
 use Modules\Lesson\Models\Lesson;
 use Modules\VideoLessonsTitle\Repositories\ModelRepository as VideLessonsTitleRepository;
+
 class LessonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public VideLessonsTitleRepository $videLessonsTitleRepository)
-    {
-    }
+    public function __construct(
+        public ServiceContainer $services,
+        public ModelRepository $repository,
+        public VideLessonsTitleRepository $videLessonsTitleRepository
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -42,7 +39,7 @@ class LessonController extends Controller
     public function create()
     {
         $titles = $this->videLessonsTitleRepository->all_active();
-        $languages = $this->langRepository->all_active();
+        $languages = $this->services->langRepository->all_active();
         return view('lesson::create', compact('languages', 'titles'));
     }
 
@@ -52,7 +49,7 @@ class LessonController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new Lesson(), $request, 'lesson');
+            $this->services->crudService->create(new Lesson(), $request, 'lesson');
             return redirect()->route('lesson.index')->with('status', 'Dərs uğurla əlavə edildi');
         }, 'lesson.index');
     }
@@ -62,8 +59,7 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-
-        return view('lang::show');
+        return view('lesson::show');
     }
 
     /**
@@ -71,9 +67,9 @@ class LessonController extends Controller
      */
     public function edit(Request $request, Lesson $lesson)
     {
-        $languages = $this->langRepository->all_active();
+        $languages = $this->services->langRepository->all_active();
         $titles = $this->videLessonsTitleRepository->all_active();
-        return view('lesson::edit', compact('lesson', 'languages', 'titles', 'titles'));
+        return view('lesson::edit', compact('lesson', 'languages', 'titles'));
     }
 
     /**
@@ -82,7 +78,7 @@ class LessonController extends Controller
     public function update(Request $request, Lesson $lesson): RedirectResponse
     {
         return $this->executeSafely(function () use ($request, $lesson) {
-            $this->crudService->update($lesson, $request, 'image');
+            $this->services->crudService->update($lesson, $request, 'lesson');
             return redirect()->route('lesson.index')->with('status', 'Dərs uğurla yeniləndi');
         }, 'lesson.index');
     }
@@ -92,16 +88,14 @@ class LessonController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Burada destroy metodunu implement edə bilərsiniz
     }
-
-
 
     public function changeStatusTrue($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new Lesson());
+            $this->services->statusService->changeStatusTrue($model, new Lesson());
             return redirect()->route('lesson.index')->with('status', 'Dərs statusu uğurla yeniləndi');
         }, 'lesson.index');
     }
@@ -110,17 +104,16 @@ class LessonController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new Lesson());
+            $this->services->statusService->changeStatusFalse($model, new Lesson());
             return redirect()->route('lesson.index')->with('status', 'Dərs statusu uğurla yeniləndi');
         }, 'lesson.index');
     }
-
 
     public function delete_selected_items(Request $request)
     {
         return $this->executeSafely(function () use ($request) {
             $models = $this->repository->findWhereInGet($request->ids);
-            $this->removeService->removeAll($models);
+            $this->services->removeService->removeAll($models);
             return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
         }, 'lesson.index', true);
     }

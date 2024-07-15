@@ -17,7 +17,7 @@ class Room extends Model
     protected $guarded = [];
     public function images()
     {
-        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'project')->where('file_type', 'image');
+        return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'room')->where('file_type', 'image');
     }
     protected static function newFactory(): RoomFactory
     {

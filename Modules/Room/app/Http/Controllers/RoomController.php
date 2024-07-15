@@ -3,26 +3,19 @@
 namespace Modules\Room\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\ImageService;
-use App\Services\RemoveService;
-use App\Services\SimpleCrudService;
-use App\Services\StatusService;
+use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\Room\Repositories\ModelRepository;
-use Modules\Lang\Repositories\ModelRepository as LangRepository;
 use Modules\Room\Models\Room;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        public ServiceContainer $services,
+        public ModelRepository $repository
+    ) {}
 
-    public function __construct(public ModelRepository $repository, public SimpleCrudService $crudService, public LangRepository $langRepository, public StatusService $statusService, public RemoveService $removeService, public ImageService $imageService)
-    {
-    }
     /**
      * Display a listing of the resource.
      */
@@ -37,12 +30,13 @@ class RoomController extends Controller
         }
         return view('room::index', compact('items', 'q', 'activeItemsCount'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $languages = $this->langRepository->all_active();
+        $languages = $this->services->langRepository->all_active();
         return view('room::create', compact('languages'));
     }
 
@@ -51,9 +45,8 @@ class RoomController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-
         return $this->executeSafely(function () use ($request) {
-            $this->crudService->create(new Room(), $request, 'project');
+            $this->services->crudService->create(new Room(), $request, 'room');
             return redirect()->route('room.index')->with('status', 'Layihə uğurla əlavə edildi');
         }, 'room.index');
     }
@@ -71,9 +64,7 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-
-
-        $languages = $this->langRepository->all_active();
+        $languages = $this->services->langRepository->all_active();
         return view('room::edit', compact('room', 'languages'));
     }
 
@@ -83,8 +74,8 @@ class RoomController extends Controller
     public function update(Request $request, Room $room): RedirectResponse
     {
         return $this->executeSafely(function () use ($request, $room) {
-            $this->crudService->update($room, $request, 'project');
-            return redirect()->route('room.index')->with('status', 'Layihə uğurla əlavə edildi');
+            $this->services->crudService->update($room, $request, 'room');
+            return redirect()->route('room.index')->with('status', 'Layihə uğurla yeniləndi');
         }, 'room.index');
     }
 
@@ -93,15 +84,15 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Burada destroy metodunu implement edə bilərsiniz
     }
 
     public function changeStatusTrue($id)
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusTrue($model, new Room());
-            return redirect()->route('room.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
+            $this->services->statusService->changeStatusTrue($model, new Room());
+            return redirect()->route('room.index')->with('status', 'Otaq statusu uğurla yeniləndi');
         }, 'room.index');
     }
 
@@ -109,27 +100,25 @@ class RoomController extends Controller
     {
         return $this->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
-            $this->statusService->changeStatusFalse($model, new Room());
-            return redirect()->route('room.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
+            $this->services->statusService->changeStatusFalse($model, new Room());
+            return redirect()->route('room.index')->with('status', 'Otaq statusu uğurla yeniləndi');
         }, 'room.index');
     }
-
 
     public function delete_selected_items(Request $request)
     {
         return $this->executeSafely(function () use ($request) {
             $models = $this->repository->findWhereInGet($request->ids);
-            $this->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
+            $this->services->removeService->removeAll($models);
+            return response()->json(['success' => $models, 'message' => "Məlumatlar uğurla silindilər"]);
         }, 'room.index', true);
     }
 
     public function deleteFile($id)
     {
         return $this->executeSafely(function () use ($id) {
-            $this->imageService->deleteImage($id);
-
-            return redirect()->back()->with('success', 'şəkil uğurla silindi');
+            $this->services->imageService->deleteImage($id);
+            return redirect()->back()->with('success', 'Şəkil uğurla silindi');
         }, 'room.index', true);
     }
 }
