@@ -57,7 +57,7 @@ class CreateModule extends Command
         $this->ensureDirectory(dirname($indexViewPath));
 
         // Create model file
-        $this->createFile($modelFilePath, $this->getModelContent($name));
+        $this->createFile($modelFilePath, $this->getModelContent($name, $loweredName));
 
         // Create repository file
         $this->createFile($repositoryFilePath, $this->getRepositoryContent($name));
@@ -107,7 +107,7 @@ class CreateModule extends Command
     /**
      * Get content for the model file.
      */
-    protected function getModelContent($name)
+    protected function getModelContent($name, $lower)
     {
         return "<?php
 
@@ -127,7 +127,7 @@ class $name extends Model
      * The attributes that are mass assignable.
      */
     protected \$guarded = [];
-    public \$translatable = ['title', 'slug', 'page_title', 'text','short_description', 'seo_title', 'seo_keywords', 'seo_description'];
+    public \$translatable = [];
 
     protected static function boot()
     {
@@ -141,7 +141,7 @@ class $name extends Model
 
     public function images()
     {
-        return \$this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'news')->where('file_type', 'image');
+        return \$this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', {$lower})->where('file_type', 'image');
     }
 
     protected static function newFactory(): {$name}Factory

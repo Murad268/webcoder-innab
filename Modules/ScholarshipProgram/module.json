@@ -1,0 +1,11 @@
+{
+    "name": "ScholarshipProgram",
+    "alias": "scholarshipprogram",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ScholarshipProgram\\Providers\\ScholarshipProgramServiceProvider"
+    ],
+    "files": []
+}
