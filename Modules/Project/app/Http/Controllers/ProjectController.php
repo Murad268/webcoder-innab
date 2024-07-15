@@ -4,6 +4,7 @@ namespace Modules\Project\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Project\Repositories\ModelRepository;
@@ -13,6 +14,7 @@ class ProjectController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository
     ) {}
 
@@ -45,7 +47,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new Project(), $request, 'project');
             return redirect()->route('project.index')->with('status', 'Layihə uğurla əlavə edildi');
         }, 'project.index');
@@ -73,7 +75,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $project) {
+        return $this->commonService->executeSafely(function () use ($request, $project) {
             $this->services->crudService->update($project, $request, 'project');
             return redirect()->route('project.index')->with('status', 'Layihə uğurla yeniləndi');
         }, 'project.index');
@@ -89,36 +91,21 @@ class ProjectController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new Project());
-            return redirect()->route('project.index')->with('status', 'Layihə statusu uğurla yeniləndi');
-        }, 'project.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Project(), true, 'project.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new Project());
-            return redirect()->route('project.index')->with('status', 'Layihə statusu uğurla yeniləndi');
-        }, 'project.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Project(), false, 'project.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "Məlumatlar uğurla silindilər"]);
-        }, 'project.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'project.index');
     }
 
     public function deleteFile($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $this->services->imageService->deleteImage($id);
-            return redirect()->back()->with('success', 'Şəkil uğurla silindi');
-        }, 'project.index', true);
+        return $this->commonService->deleteFile($id, $this->services->imageService, 'project.index');
     }
 }

@@ -4,6 +4,7 @@ namespace Modules\Partners\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Partners\Models\Partners;
@@ -13,6 +14,7 @@ class PartnersController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository
     ) {}
 
@@ -45,7 +47,7 @@ class PartnersController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new Partners(), $request, 'partner');
             return redirect()->route('partners.index')->with('status', 'Tərəfdaş uğurla əlavə edildi');
         }, 'partners.index');
@@ -64,7 +66,7 @@ class PartnersController extends Controller
      */
     public function edit($id)
     {
-        return $this->executeSafely(function () use ($id) {
+        return $this->commonService->executeSafely(function () use ($id) {
             $partner = $this->repository->find($id);
             $languages = $this->services->langRepository->all_active();
             return view('partners::edit', compact('languages', 'partner'));
@@ -76,7 +78,7 @@ class PartnersController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $id) {
+        return $this->commonService->executeSafely(function () use ($request, $id) {
             $partner = $this->repository->find($id);
             $this->services->crudService->update($partner, $request, 'partner');
             return redirect()->route('partners.index')->with('status', 'Təlim uğurla əlavə edildi');
@@ -93,36 +95,21 @@ class PartnersController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new Partners());
-            return redirect()->route('partners.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
-        }, 'partners.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Partners(), true, 'partners.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new Partners());
-            return redirect()->route('partners.index')->with('status', 'Tərəfdaş statusu uğurla yeniləndi');
-        }, 'partners.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Partners(), false, 'partners.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'partners.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'partners.index');
     }
 
     public function deleteFile($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $this->services->imageService->deleteImage($id);
-            return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, 'partners.index', true);
+        return $this->commonService->deleteFile($id, $this->services->imageService, 'partners.index');
     }
 }

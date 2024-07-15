@@ -4,6 +4,7 @@ namespace Modules\BlogContent\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\BlogContent\Models\BlogContent as ModelsBlogContent;
@@ -14,10 +15,10 @@ class BlogContentController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository,
         public BlogRepository $blog
-    ) {
-    }
+    ) {}
 
     public function index(Request $request)
     {
@@ -77,37 +78,21 @@ class BlogContentController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new ModelsBlogContent());
-            return redirect()->route('blogcontent.index')->with('status', 'Kontent statusu uğurla yeniləndi');
-        }, 'blogcontent.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new ModelsBlogContent(), true, 'blogcontent.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new ModelsBlogContent());
-            return redirect()->route('blogcontent.index')->with('status', 'Kontent statusu uğurla yeniləndi');
-        }, 'blogcontent.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new ModelsBlogContent(), false, 'blogcontent.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'blogcontent.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'blogcontent.index');
     }
 
     public function deleteFile($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $this->services->imageService->deleteImage($id);
-            return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, 'blogcontent.index', true);
+        return $this->commonService->deleteFile($id, $this->services->imageService, 'blogcontent.index');
     }
 }
-

@@ -4,6 +4,7 @@ namespace Modules\TrainingCategory\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\TrainingCategory\Models\TrainingCategory;
@@ -13,6 +14,7 @@ class TrainingCategoryController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository
     ) {}
 
@@ -45,7 +47,7 @@ class TrainingCategoryController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new TrainingCategory(), $request);
             return redirect()->route('trainingcategory.index')->with('status', 'Kateqoriya uğurla əlavə edildi');
         }, 'trainingcategory.index');
@@ -73,7 +75,7 @@ class TrainingCategoryController extends Controller
      */
     public function update(Request $request, TrainingCategory $trainingcategory): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $trainingcategory) {
+        return $this->commonService->executeSafely(function () use ($request, $trainingcategory) {
             $this->services->crudService->update($trainingcategory, $request);
             return redirect()->route('trainingcategory.index')->with('status', 'Kateqoriya uğurla yeniləndi');
         }, 'trainingcategory.index');
@@ -89,28 +91,16 @@ class TrainingCategoryController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new TrainingCategory());
-            return redirect()->route('trainingcategory.index')->with('status', 'Kateqoriya statusu uğurla yeniləndi');
-        }, 'trainingcategory.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new TrainingCategory(), true, 'trainingcategory.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new TrainingCategory());
-            return redirect()->route('trainingcategory.index')->with('status', 'Kateqoriya statusu uğurla yeniləndi');
-        }, 'trainingcategory.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new TrainingCategory(), false, 'trainingcategory.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "Məlumatlar uğurla silindilər"]);
-        }, 'trainingcategory.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'trainingcategory.index');
     }
 }

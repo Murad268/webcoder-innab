@@ -4,6 +4,7 @@ namespace Modules\Lesson\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Lesson\Repositories\ModelRepository;
@@ -14,6 +15,7 @@ class LessonController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository,
         public VideLessonsTitleRepository $videLessonsTitleRepository
     ) {}
@@ -48,7 +50,7 @@ class LessonController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new Lesson(), $request, 'lesson');
             return redirect()->route('lesson.index')->with('status', 'Dərs uğurla əlavə edildi');
         }, 'lesson.index');
@@ -77,7 +79,7 @@ class LessonController extends Controller
      */
     public function update(Request $request, Lesson $lesson): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $lesson) {
+        return $this->commonService->executeSafely(function () use ($request, $lesson) {
             $this->services->crudService->update($lesson, $request, 'lesson');
             return redirect()->route('lesson.index')->with('status', 'Dərs uğurla yeniləndi');
         }, 'lesson.index');
@@ -93,28 +95,21 @@ class LessonController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new Lesson());
-            return redirect()->route('lesson.index')->with('status', 'Dərs statusu uğurla yeniləndi');
-        }, 'lesson.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Lesson(), true, 'lesson.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new Lesson());
-            return redirect()->route('lesson.index')->with('status', 'Dərs statusu uğurla yeniləndi');
-        }, 'lesson.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Lesson(), false, 'lesson.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'lesson.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'lesson.index');
+    }
+
+    public function deleteFile($id)
+    {
+        return $this->commonService->deleteFile($id, $this->services->imageService, 'lesson.index');
     }
 }

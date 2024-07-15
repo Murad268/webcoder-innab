@@ -4,6 +4,7 @@ namespace Modules\Training\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Training\Repositories\ModelRepository;
@@ -14,6 +15,7 @@ class TrainingController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository,
         public TrainingCategoryRepository $trainingCategory
     ) {}
@@ -48,7 +50,7 @@ class TrainingController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new Training(), $request, 'training');
             return redirect()->route('training.index')->with('status', 'Təlim uğurla əlavə edildi');
         }, 'training.index');
@@ -67,7 +69,7 @@ class TrainingController extends Controller
      */
     public function edit(Request $request, Training $training)
     {
-        return $this->executeSafely(function () use ($request, $training) {
+        return $this->commonService->executeSafely(function () use ($request, $training) {
             $languages = $this->services->langRepository->all_active();
             $categories = $this->trainingCategory->all_active();
             return view('training::edit', compact('training', 'languages', 'categories'));
@@ -79,7 +81,7 @@ class TrainingController extends Controller
      */
     public function update(Request $request, Training $training): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $training) {
+        return $this->commonService->executeSafely(function () use ($request, $training) {
             $this->services->crudService->update($training, $request, 'training');
             return redirect()->route('training.index')->with('status', 'Təlim uğurla yeniləndi');
         }, 'training.index');
@@ -95,36 +97,21 @@ class TrainingController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new Training());
-            return redirect()->route('training.index')->with('status', 'Təlim statusu uğurla yeniləndi');
-        }, 'training.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Training(), true, 'training.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new Training());
-            return redirect()->route('training.index')->with('status', 'Təlim statusu uğurla yeniləndi');
-        }, 'training.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Training(), false, 'training.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "Məlumatlar uğurla silindilər"]);
-        }, 'training.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'training.index');
     }
 
     public function deleteFile($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $this->services->imageService->deleteImage($id);
-            return redirect()->back()->with('success', 'Şəkil uğurla silindi');
-        }, 'training.index', true);
+        return $this->commonService->deleteFile($id, $this->services->imageService, 'training.index');
     }
 }

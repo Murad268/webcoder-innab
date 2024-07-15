@@ -4,6 +4,7 @@ namespace Modules\News\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\News\Repositories\ModelRepository;
@@ -13,6 +14,7 @@ class NewsController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository
     ) {}
 
@@ -45,7 +47,7 @@ class NewsController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new News(), $request, 'news');
             return redirect()->route('news.index')->with('status', 'Xəbər uğurla əlavə edildi');
         }, 'news.index');
@@ -64,7 +66,7 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        return $this->executeSafely(function () use ($id) {
+        return $this->commonService->executeSafely(function () use ($id) {
             $news = $this->repository->find($id);
             $languages = $this->services->langRepository->all_active();
             return view('news::edit', compact('languages', 'news'));
@@ -76,7 +78,7 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $id) {
+        return $this->commonService->executeSafely(function () use ($request, $id) {
             $news = $this->repository->find($id);
             $this->services->crudService->update($news, $request, 'news');
             return redirect()->route('news.index')->with('status', 'Xəbər uğurla yeniləndi');
@@ -93,36 +95,21 @@ class NewsController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new News());
-            return redirect()->route('news.index')->with('status', 'Xəbər statusu uğurla yeniləndi');
-        }, 'news.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new News(), true, 'news.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new News());
-            return redirect()->route('news.index')->with('status', 'Xəbər statusu uğurla yeniləndi');
-        }, 'news.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new News(), false, 'news.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'news.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'news.index');
     }
 
     public function deleteFile($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $this->services->imageService->deleteImage($id);
-            return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, 'news.index', true);
+        return $this->commonService->deleteFile($id, $this->services->imageService, 'news.index');
     }
 }

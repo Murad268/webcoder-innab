@@ -4,6 +4,7 @@ namespace Modules\VideoLessonsCategory\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Lang\Repositories\ModelRepository as LangRepository;
@@ -14,6 +15,7 @@ class VideoLessonsCategoryController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository
     ) {}
 
@@ -46,7 +48,7 @@ class VideoLessonsCategoryController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new VideoLessonsCategory(), $request);
             return redirect()->route('videolessonscategory.index')->with('status', 'Kateqoriya uğurla əlavə edildi');
         }, 'videolessonscategory.index');
@@ -74,7 +76,7 @@ class VideoLessonsCategoryController extends Controller
      */
     public function update(Request $request, VideoLessonsCategory $videolessonscategory): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $videolessonscategory) {
+        return $this->commonService->executeSafely(function () use ($request, $videolessonscategory) {
             $this->services->crudService->update($videolessonscategory, $request);
             return redirect()->route('videolessonscategory.index')->with('status', 'Kateqoriya uğurla yeniləndi');
         }, 'videolessonscategory.index');
@@ -90,28 +92,16 @@ class VideoLessonsCategoryController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new VideoLessonsCategory());
-            return redirect()->route('videolessonscategory.index')->with('status', 'Kateqoriya statusu uğurla yeniləndi');
-        }, 'videolessonscategory.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new VideoLessonsCategory(), true, 'videolessonscategory.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new VideoLessonsCategory());
-            return redirect()->route('videolessonscategory.index')->with('status', 'Kateqoriya statusu uğurla yeniləndi');
-        }, 'videolessonscategory.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new VideoLessonsCategory(), false, 'videolessonscategory.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'videolessonscategory.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'videolessonscategory.index');
     }
 }

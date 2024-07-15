@@ -4,6 +4,7 @@ namespace Modules\Vebinar\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Vebinar\Repositories\ModelRepository;
@@ -13,6 +14,7 @@ class VebinarController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository
     ) {}
 
@@ -45,9 +47,9 @@ class VebinarController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new Vebinar(), $request, 'vebinar');
-            return redirect()->route('vebinar.index')->with('status', 'vebinar uğurla əlavə edildi');
+            return redirect()->route('vebinar.index')->with('status', 'Vebinar uğurla əlavə edildi');
         }, 'vebinar.index');
     }
 
@@ -64,7 +66,7 @@ class VebinarController extends Controller
      */
     public function edit($id)
     {
-        return $this->executeSafely(function () use ($id) {
+        return $this->commonService->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
             $languages = $this->services->langRepository->all_active();
             return view('vebinar::edit', compact('languages', 'model'));
@@ -76,10 +78,10 @@ class VebinarController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $id) {
+        return $this->commonService->executeSafely(function () use ($request, $id) {
             $model = $this->repository->find($id);
             $this->services->crudService->update($model, $request, 'vebinar');
-            return redirect()->route('vebinar.index')->with('status', 'vebinar uğurla yeniləndi');
+            return redirect()->route('vebinar.index')->with('status', 'Vebinar uğurla yeniləndi');
         }, 'vebinar.index');
     }
 
@@ -93,36 +95,21 @@ class VebinarController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new Vebinar());
-            return redirect()->route('vebinar.index')->with('status', 'vebinar statusu uğurla yeniləndi');
-        }, 'vebinar.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Vebinar(), true, 'vebinar.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new Vebinar());
-            return redirect()->route('vebinar.index')->with('status', 'vebinar statusu uğurla yeniləndi');
-        }, 'vebinar.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Vebinar(), false, 'vebinar.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'vebinar.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'vebinar.index');
     }
 
     public function deleteFile($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $this->services->imageService->deleteImage($id);
-            return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, 'vebinar.index', true);
+        return $this->commonService->deleteFile($id, $this->services->imageService, 'vebinar.index');
     }
 }

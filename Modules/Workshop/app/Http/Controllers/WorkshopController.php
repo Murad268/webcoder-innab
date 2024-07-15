@@ -4,6 +4,7 @@ namespace Modules\Workshop\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Workshop\Repositories\ModelRepository;
@@ -13,7 +14,8 @@ class WorkshopController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
-        public ModelRepository $repository
+        public ModelRepository $repository,
+        public CommonService $commonService
     ) {}
 
     /**
@@ -45,7 +47,7 @@ class WorkshopController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request) {
+        return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new Workshop(), $request, 'workshop');
             return redirect()->route('workshop.index')->with('status', 'Workshop uğurla əlavə edildi');
         }, 'workshop.index');
@@ -64,7 +66,7 @@ class WorkshopController extends Controller
      */
     public function edit($id)
     {
-        return $this->executeSafely(function () use ($id) {
+        return $this->commonService->executeSafely(function () use ($id) {
             $model = $this->repository->find($id);
             $languages = $this->services->langRepository->all_active();
             return view('workshop::edit', compact('languages', 'model'));
@@ -76,7 +78,7 @@ class WorkshopController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        return $this->executeSafely(function () use ($request, $id) {
+        return $this->commonService->executeSafely(function () use ($request, $id) {
             $model = $this->repository->find($id);
             $this->services->crudService->update($model, $request, 'workshop');
             return redirect()->route('workshop.index')->with('status', 'Workshop uğurla yeniləndi');
@@ -93,36 +95,21 @@ class WorkshopController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new Workshop());
-            return redirect()->route('workshop.index')->with('status', 'Workshop statusu uğurla yeniləndi');
-        }, 'workshop.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Workshop(), true, 'workshop.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new Workshop());
-            return redirect()->route('workshop.index')->with('status', 'Workshop statusu uğurla yeniləndi');
-        }, 'workshop.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Workshop(), false, 'workshop.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "Məlumatlar uğurla silindilər"]);
-        }, 'workshop.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'workshop.index');
     }
 
     public function deleteFile($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $this->services->imageService->deleteImage($id);
-            return redirect()->back()->with('success', 'Şəkil uğurla silindi');
-        }, 'workshop.index', true);
+        return $this->commonService->deleteFile($id, $this->services->imageService, 'workshop.index');
     }
 }

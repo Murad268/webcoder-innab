@@ -4,6 +4,7 @@ namespace Modules\Lang\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
+use App\Services\CommonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Lang\Models\Lang;
@@ -13,6 +14,7 @@ class LangController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
+        public CommonService $commonService,
         public ModelRepository $repository
     ) {}
 
@@ -96,28 +98,16 @@ class LangController extends Controller
 
     public function changeStatusTrue($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusTrue($model, new Lang());
-            return redirect()->route('lang.index')->with('status', 'Dilin statusu uğurla yeniləndi');
-        }, 'lang.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Lang(), true, 'lang.index');
     }
 
     public function changeStatusFalse($id)
     {
-        return $this->executeSafely(function () use ($id) {
-            $model = $this->repository->find($id);
-            $this->services->statusService->changeStatusFalse($model, new Lang());
-            return redirect()->route('lang.index')->with('status', 'Dilin statusu uğurla yeniləndi');
-        }, 'lang.index');
+        return $this->commonService->changeStatus($id, $this->repository, $this->services->statusService, new Lang(), false, 'lang.index');
     }
 
     public function delete_selected_items(Request $request)
     {
-        return $this->executeSafely(function () use ($request) {
-            $models = $this->repository->findWhereInGet($request->ids);
-            $this->services->removeService->removeAll($models);
-            return response()->json(['success' => $models, 'message' => "məlumatlar uğurla silindilər"]);
-        }, 'lang.index', true);
+        return $this->commonService->deleteSelectedItems($this->repository, $request, $this->services->removeService, 'lang.index');
     }
 }
