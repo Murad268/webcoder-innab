@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 trait ExecuteSafely
 {
-    public function executeSafely(callable $callback, $route = null, $ajax = null)
+    public function executeSafely(callable $callback, $route = null, $ajax = null, $routeParams = [])
     {
         try {
             return $callback();
@@ -16,7 +16,7 @@ trait ExecuteSafely
             if ($ajax) {
                 return response()->json(['error' => 'Bir xəta baş verdi: ' . $e->getMessage()]);
             } else {
-                return redirect()->route($route)->with(['error' => 'Bir xəta baş verdi: ' . $e->getMessage()]);
+                return redirect()->route($route, $routeParams)->with(['error' => 'Bir xəta baş verdi: ' . $e->getMessage()]);
             }
         }
     }

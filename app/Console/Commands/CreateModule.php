@@ -141,7 +141,7 @@ class $name extends Model
 
     public function images()
     {
-        return \$this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', {$lower})->where('file_type', 'image');
+        return \$this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', '{$lower}')->where('file_type', 'image');
     }
 
     protected static function newFactory(): {$name}Factory
@@ -276,39 +276,20 @@ class {$name}Controller extends Controller
         //
     }
 
-    public function changeStatusTrue(\$id)
-    {
-        return \$this->executeSafely(function () use (\$id) {
-            \$model = \$this->repository->find(\$id);
-            \$this->services->statusService->changeStatusTrue(\$model, new $name());
-            return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} statusu uğurla yeniləndi');
-        }, '{$loweredName}.index');
-    }
 
     public function changeStatusFalse(\$id)
     {
-        return \$this->executeSafely(function () use (\$id) {
-            \$model = \$this->repository->find(\$id);
-            \$this->services->statusService->changeStatusFalse(\$model, new $name());
-            return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} statusu uğurla yeniləndi');
-        }, '{$loweredName}.index');
+        return \$this->commonService->changeStatus(\$id, \$this->repository, \$this->services->statusService, new ScholarshipProgram(), false, 'blog.index');
     }
 
     public function delete_selected_items(Request \$request)
     {
-        return \$this->executeSafely(function () use (\$request) {
-            \$models = \$this->repository->findWhereInGet(\$request->ids);
-            \$this->services->removeService->removeAll(\$models);
-            return response()->json(['success' => \$models, 'message' => \"məlumatlar uğurla silindilər\"]);
-        }, '{$loweredName}.index', true);
+        return \$this->commonService->deleteSelectedItems(\$this->repository, \$request, \$this->services->removeService, 'blog.index');
     }
 
     public function deleteFile(\$id)
     {
-        return \$this->executeSafely(function () use (\$id) {
-            \$this->services->imageService->deleteImage(\$id);
-            return redirect()->back()->with('success', 'şəkil uğurla silindi');
-        }, '{$loweredName}.index', true);
+        return \$this->commonService->deleteFile(\$id, \$this->services->imageService, 'blog.index');
     }
 }
 ";

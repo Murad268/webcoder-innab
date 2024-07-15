@@ -1,0 +1,11 @@
+{
+    "name": "Corporative",
+    "alias": "corporative",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Corporative\\Providers\\CorporativeServiceProvider"
+    ],
+    "files": []
+}

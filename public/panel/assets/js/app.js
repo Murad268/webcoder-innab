@@ -14,68 +14,11 @@ let scrollbarElement = '';
 var default_lang = "en"; // set Default Language
 var language = localStorage.getItem("language") ? localStorage.getItem("language") : default_lang;
 
-function initLanguage() {
-    // Set new language
-    (language === null) ? setLanguage(default_lang) : setLanguage(language);
-    var languages = document.getElementsByClassName("language");
-    languages && Array.from(languages).forEach(function (dropdown) {
-        dropdown.addEventListener("click", function (event) {
-            setLanguage(dropdown.getAttribute("data-lang"));
-        });
-    });
-}
 
-function setLanguage(lang) {
-    if (document.getElementById("header-lang-img")) {
-        if (lang == "en") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/us.svg";
-        } else if (lang == "sp") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/es.svg";
-        } else if (lang == "gr") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/de.svg";
-        } else if (lang == "it") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/it.svg";
-        } else if (lang == "ru") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/ru.svg";
-        } else if (lang == "ch") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/china.svg";
-        } else if (lang == "fr") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/fr.svg";
-        } else if (lang == "ar") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/ae.svg";
-        } else if (lang == "jp") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/jp.svg";
-        } else if (lang == "ar") {
-            document.getElementById("header-lang-img").src = "assets/images/flags/20/ae.svg";
-        }
-        localStorage.setItem("language", lang);
-        language = localStorage.getItem("language");
-        getLanguage();
-    }
-}
+
 
 // Multi language setting
-function getLanguage() {
-    language == null ? setLanguage(default_lang) : false;
-    var request = new XMLHttpRequest();
-    // Instantiating the request object
-    request.open("GET", "assets/lang/" + language + ".json");
-    // Defining event listener for readystatechange event
-    request.onreadystatechange = function () {
-        // Check if the request is compete and was successful
-        if (this.readyState === 4 && this.status === 200) {
-            var data = JSON.parse(this.responseText);
-            Object.keys(data).forEach(function (key) {
-                var elements = document.querySelectorAll("[data-key='" + key + "']");
-                Array.from(elements).forEach(function (elem) {
-                    elem.textContent = data[key];
-                });
-            });
-        }
-    };
-    // Sending the request to the server
-    request.send();
-}
+
 
 function updateHorizontalMenus() {
     const navbarMenu = document.querySelector(".app-menu");
@@ -894,7 +837,6 @@ function init() {
     resetLayout();
     updateHorizontalMenus();
     lightDarkMode();
-    initLanguage();
     initFilters();
     initMenuItemScroll()
 };

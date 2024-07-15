@@ -54,6 +54,10 @@
                                                 <textarea id="product_description_{{ $language->code }}" name="product_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('product_description.' . $language->code, $project->getTranslation('product_description', $language->code)) }}</textarea>
                                             </div>
                                             <div class="mb-3">
+                                                <label for="requirements_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Tələblər ({{ $language->code }})</label>
+                                                <textarea id="requirements_{{ $language->code }}" name="requirements[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('product_description.' . $language->code, $project->getTranslation('requirements', $language->code)) }}</textarea>
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="product_price_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Məhsul Qiyməti ({{ $language->code }})</label>
                                                 <input type="text" id="product_price_{{ $language->code }}" name="product_price[{{ $language->code }}]" value="{{ old('product_price.' . $language->code, $project->getTranslation('product_price', $language->code)) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                                             </div>
@@ -191,9 +195,8 @@
 
                             <div class="mb-3">
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Məhsul mobil rəsmi</label>
-                                @if($project->images->where('type', 'mobile_product_image')->count() < 1)
-                                <input multiple name="mobile_product_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                @endif
+                                @if($project->images->where('type', 'mobile_product_image')->count() < 1) <input multiple name="mobile_product_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    @endif
                             </div>
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
                                 <div class="mb-3">

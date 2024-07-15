@@ -53,32 +53,36 @@
                                                 <textarea id="product_description_{{ $language->code }}" name="product_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('product_description.' . $language) }}</textarea>
                                             </div>
                                             <div class="mb-3">
+                                                <label for="requirements_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Tələblər ({{ $language->code }})</label>
+                                                <textarea id="requirements_{{ $language->code }}" name="requirements[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('requirements.' . $language->code) }}</textarea>
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="product_price_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Məhsul Qiyməti ({{ $language->code }})</label>
-                                                <input type="text" id="product_price_{{ $language->code }}" name="product_price[{{ $language->code }}]" value="{{ old('product_price.' . $language) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                                <input type="text" id="product_price_{{ $language->code }}" name="product_price[{{ $language->code }}]" value="{{ old('product_price.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="mobile_title_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mobil Başlıq ({{ $language->code }})</label>
-                                                <input type="text" id="mobile_title_{{ $language->code }}" name="mobile_title[{{ $language->code }}]" value="{{ old('mobile_title.' . $language) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                                <input type="text" id="mobile_title_{{ $language->code }}" name="mobile_title[{{ $language->code }}]" value="{{ old('mobile_title.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="mobile_description_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mobil Təsviri ({{ $language->code }})</label>
-                                                <textarea id="mobile_description_{{ $language->code }}" name="mobile_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('mobile_description.' . $language) }}</textarea>
+                                                <textarea id="mobile_description_{{ $language->code }}" name="mobile_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('mobile_description.' . $language->code) }}</textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="mobile_qr_text_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mobil QR Mətn ({{ $language->code }})</label>
-                                                <textarea id="mobile_qr_text_{{ $language->code }}" name="mobile_qr_text[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('mobile_qr_text.' . $language) }}</textarea>
+                                                <textarea id="mobile_qr_text_{{ $language->code }}" name="mobile_qr_text[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('mobile_qr_text.' . $language->code) }}</textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="seo_title_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">SEO Başlıq ({{ $language->code }})</label>
-                                                <input type="text" id="seo_title_{{ $language->code }}" name="seo_title[{{ $language->code }}]" value="{{ old('seo_title.' . $language) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                                <input type="text" id="seo_title_{{ $language->code }}" name="seo_title[{{ $language->code }}]" value="{{ old('seo_title.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="meta_keywords_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Meta Açar Sözlər ({{ $language->code }})</label>
-                                                <textarea id="meta_keywords_{{ $language->code }}" name="meta_keywords[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('meta_keywords.' . $language) }}</textarea>
+                                                <textarea id="meta_keywords_{{ $language->code }}" name="meta_keywords[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('meta_keywords.' . $language->code) }}</textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="meta_description_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Meta Təsviri ({{ $language->code }})</label>
-                                                <textarea id="meta_description_{{ $language->code }}" name="meta_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('meta_description.' . $language) }}</textarea>
+                                                <textarea id="meta_description_{{ $language->code }}" name="meta_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('meta_description.' . $language->code) }}</textarea>
                                             </div>
                                         </div>
                                     </div>

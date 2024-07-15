@@ -22,5 +22,9 @@
     "Workshop": true,
     "Workshos": true,
     "Vacancy": true,
-    "ScholarshipProgram": true
+    "ScholarshipProgram": true,
+    "About": true,
+    "Corporative": true,
+    "Corporativerr": true,
+    "Privacy": true
 }

@@ -16,7 +16,7 @@ class ScholarshipProgram extends Model
      * The attributes that are mass assignable.
      */
     protected $guarded = [];
-    public $translatable = ['title', 'slug'];
+    public $translatable = ['name', 'short_description'];
 
     protected static function boot()
     {

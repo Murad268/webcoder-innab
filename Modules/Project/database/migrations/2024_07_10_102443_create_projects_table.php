@@ -23,6 +23,7 @@ return new class extends Migration
             $table->longText('mobile_description')->nullable();
             $table->text('mobile_qr_text')->nullable();
             $table->string('seo_title')->nullable();
+            $table->longText('requirements')->nullable();
             $table->longText('meta_keywords')->nullable();
             $table->longText('meta_description')->nullable();
             $table->longText('seo_links')->nullable();

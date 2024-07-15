@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/corporative",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Corporative\\": "app/",
+            "Modules\\Corporative\\Database\\Factories\\": "database/factories/",
+            "Modules\\Corporative\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Corporative\\Tests\\": "tests/"
+        }
+    }
+}

@@ -6,7 +6,7 @@
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16"> Təqaüd proqramları </h5>
+                <h5 class="text-16"> Haqqımızda bölmələri </h5>
             </div>
 
         </div>

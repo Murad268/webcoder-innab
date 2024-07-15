@@ -16,7 +16,7 @@ class Project extends Model
      */
     use HasFactory, HasTranslations;
     protected $guarded = [];
-    public $translatable = ['title', 'slug', 'card_description', 'text', 'product_description', 'product_price', 'mobile_title', 'mobile_description', 'mobile_qr_text', 'seo_title', 'meta_keywords', 'meta_description'];
+    public $translatable = ['title', 'slug', 'card_description', 'text', 'product_description', 'product_price', 'mobile_title', 'mobile_description', 'mobile_qr_text', 'seo_title', 'meta_keywords', 'meta_description', 'requirements'];
 
 
     public function images()
