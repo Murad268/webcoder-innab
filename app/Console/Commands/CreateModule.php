@@ -185,7 +185,7 @@ class ModelRepository extends Repository
         return "<?php
 
 namespace Modules\\$name\\Http\\Controllers;
-
+use App\Services\CommonService;
 use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
@@ -197,7 +197,8 @@ class {$name}Controller extends Controller
 {
     public function __construct(
         public ServiceContainer \$services,
-        public ModelRepository \$repository
+        public ModelRepository \$repository,
+        public CommonService \$commonService
     ) {}
 
     /**
@@ -229,7 +230,7 @@ class {$name}Controller extends Controller
      */
     public function store(Request \$request): RedirectResponse
     {
-        return \$this->services->commonService->executeSafely(function () use (\$request) {
+        return \$this->executeSafely(function () use (\$request) {
             \$this->services->crudService->create(new $name(), \$request, '{$loweredName}');
             return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} uğurla əlavə edildi');
         }, '{$loweredName}.index');
@@ -248,7 +249,7 @@ class {$name}Controller extends Controller
      */
     public function edit(\$id)
     {
-        return \$this->services->commonService->executeSafely(function () use (\$id) {
+        return \$this->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
             \$languages = \$this->services->langRepository->all_active();
             return view('{$loweredName}::edit', compact('languages', 'model'));
@@ -260,7 +261,7 @@ class {$name}Controller extends Controller
      */
     public function update(Request \$request, \$id): RedirectResponse
     {
-        return \$this->services->commonService->executeSafely(function () use (\$request, \$id) {
+        return \$this->executeSafely(function () use (\$request, \$id) {
             \$model = \$this->repository->find(\$id);
             \$this->services->crudService->update(\$model, \$request, '{$loweredName}');
             return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} uğurla yeniləndi');
@@ -277,7 +278,7 @@ class {$name}Controller extends Controller
 
     public function changeStatusTrue(\$id)
     {
-        return \$this->services->commonService->executeSafely(function () use (\$id) {
+        return \$this->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
             \$this->services->statusService->changeStatusTrue(\$model, new $name());
             return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} statusu uğurla yeniləndi');
@@ -286,7 +287,7 @@ class {$name}Controller extends Controller
 
     public function changeStatusFalse(\$id)
     {
-        return \$this->services->commonService->executeSafely(function () use (\$id) {
+        return \$this->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
             \$this->services->statusService->changeStatusFalse(\$model, new $name());
             return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} statusu uğurla yeniləndi');
@@ -295,7 +296,7 @@ class {$name}Controller extends Controller
 
     public function delete_selected_items(Request \$request)
     {
-        return \$this->services->commonService->executeSafely(function () use (\$request) {
+        return \$this->executeSafely(function () use (\$request) {
             \$models = \$this->repository->findWhereInGet(\$request->ids);
             \$this->services->removeService->removeAll(\$models);
             return response()->json(['success' => \$models, 'message' => \"məlumatlar uğurla silindilər\"]);
@@ -304,7 +305,7 @@ class {$name}Controller extends Controller
 
     public function deleteFile(\$id)
     {
-        return \$this->services->commonService->executeSafely(function () use (\$id) {
+        return \$this->executeSafely(function () use (\$id) {
             \$this->services->imageService->deleteImage(\$id);
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
         }, '{$loweredName}.index', true);
