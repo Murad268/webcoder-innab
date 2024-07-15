@@ -166,6 +166,9 @@
                                 </tbody>
 
                             </table>
+                            <div style="margin:0 auto; width: max-content; margin-top: 30px" class="pagination">
+                                {{ $items->appends(['q' => request()->input('q')])->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

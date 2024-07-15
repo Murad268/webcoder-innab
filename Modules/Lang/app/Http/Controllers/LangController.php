@@ -25,11 +25,11 @@ class LangController extends Controller
     {
         $q = $request->q;
         if ($q) {
-            $items = $this->repository->search($q);
+            $items = $this->repository->search($q, 80);
         } else {
-            $items = $this->repository->all();
+            $items = $this->repository->all(80);
         }
-        $activeLangsCount = $this->repository->all()->count();
+        $activeLangsCount = $this->repository->all_active()->count();
         return view('lang::index', compact('items', 'activeLangsCount', 'q'));
     }
 

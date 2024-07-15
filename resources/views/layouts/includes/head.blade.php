@@ -25,6 +25,17 @@
         .pagination .hidden>div:first-child {
             display: none !important;
         }
+        span[aria-current="page"] {
+            color: white;
+            background-color: #007bff;
+            font-weight: bold;
+            border: none;
+        }
+        span[aria-current="page"] span {
+            background-color: #007bff;
+            border: none;
+            color: white;
+        }
 
 
     </style>
