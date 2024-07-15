@@ -5,7 +5,7 @@
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16">Korporativ əlavə et</h5>
+                <h5 class="text-16">Korporativi redaktə et</h5>
                 <label> @if (session('status'))
                     <div style="width: max-content" class="px-4 py-3 text-sm text-green-500 bg-white border border-green-300 rounded-md dark:bg-zink-700 dark:border-green-500" role="alert">{{ session('status') }}</div>
                     @endif
