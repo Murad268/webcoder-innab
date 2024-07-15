@@ -19,5 +19,6 @@
     "BlogContent": true,
     "News": true,
     "Vebinar": true,
-    "Workshop": true
+    "Workshop": true,
+    "Workshos": true
 }
