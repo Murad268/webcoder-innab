@@ -187,21 +187,18 @@ class ModelRepository extends Repository
 namespace Modules\\$name\\Http\\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\ImageService;
-use App\Services\RemoveService;
-use App\Services\SimpleCrudService;
-use App\Services\StatusService;
+use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\\$name\\Repositories\ModelRepository;
-use Modules\\Lang\\Repositories\\ModelRepository as LangRepository;
 use Modules\\$name\\Models\\$name;
 
 class {$name}Controller extends Controller
 {
-    public function __construct(public ModelRepository \$repository, public SimpleCrudService \$crudService, public LangRepository \$langRepository, public StatusService \$statusService, public RemoveService \$removeService, public ImageService \$imageService)
-    {
-    }
+    public function __construct(
+        public ServiceContainer \$services,
+        public ModelRepository \$repository
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -223,7 +220,7 @@ class {$name}Controller extends Controller
      */
     public function create()
     {
-        \$languages = \$this->langRepository->all_active();
+        \$languages = \$this->services->langRepository->all_active();
         return view('{$loweredName}::create', compact('languages'));
     }
 
@@ -232,8 +229,8 @@ class {$name}Controller extends Controller
      */
     public function store(Request \$request): RedirectResponse
     {
-        return \$this->executeSafely(function () use (\$request) {
-            \$this->crudService->create(new $name(), \$request, '{$loweredName}');
+        return \$this->services->commonService->executeSafely(function () use (\$request) {
+            \$this->services->crudService->create(new $name(), \$request, '{$loweredName}');
             return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} uğurla əlavə edildi');
         }, '{$loweredName}.index');
     }
@@ -251,9 +248,9 @@ class {$name}Controller extends Controller
      */
     public function edit(\$id)
     {
-        return \$this->executeSafely(function () use (\$id) {
+        return \$this->services->commonService->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
-            \$languages = \$this->langRepository->all_active();
+            \$languages = \$this->services->langRepository->all_active();
             return view('{$loweredName}::edit', compact('languages', 'model'));
         }, '{$loweredName}.index');
     }
@@ -263,9 +260,9 @@ class {$name}Controller extends Controller
      */
     public function update(Request \$request, \$id): RedirectResponse
     {
-        return \$this->executeSafely(function () use (\$request, \$id) {
+        return \$this->services->commonService->executeSafely(function () use (\$request, \$id) {
             \$model = \$this->repository->find(\$id);
-            \$this->crudService->update(\$model, \$request, '{$loweredName}');
+            \$this->services->crudService->update(\$model, \$request, '{$loweredName}');
             return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} uğurla yeniləndi');
         }, '{$loweredName}.index');
     }
@@ -280,35 +277,35 @@ class {$name}Controller extends Controller
 
     public function changeStatusTrue(\$id)
     {
-        return \$this->executeSafely(function () use (\$id) {
+        return \$this->services->commonService->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
-            \$this->statusService->changeStatusTrue(\$model, new $name());
+            \$this->services->statusService->changeStatusTrue(\$model, new $name());
             return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} statusu uğurla yeniləndi');
         }, '{$loweredName}.index');
     }
 
     public function changeStatusFalse(\$id)
     {
-        return \$this->executeSafely(function () use (\$id) {
+        return \$this->services->commonService->executeSafely(function () use (\$id) {
             \$model = \$this->repository->find(\$id);
-            \$this->statusService->changeStatusFalse(\$model, new $name());
+            \$this->services->statusService->changeStatusFalse(\$model, new $name());
             return redirect()->route('{$loweredName}.index')->with('status', '{$loweredName} statusu uğurla yeniləndi');
         }, '{$loweredName}.index');
     }
 
     public function delete_selected_items(Request \$request)
     {
-        return \$this->executeSafely(function () use (\$request) {
+        return \$this->services->commonService->executeSafely(function () use (\$request) {
             \$models = \$this->repository->findWhereInGet(\$request->ids);
-            \$this->removeService->removeAll(\$models);
+            \$this->services->removeService->removeAll(\$models);
             return response()->json(['success' => \$models, 'message' => \"məlumatlar uğurla silindilər\"]);
         }, '{$loweredName}.index', true);
     }
 
     public function deleteFile(\$id)
     {
-        return \$this->executeSafely(function () use (\$id) {
-            \$this->imageService->deleteImage(\$id);
+        return \$this->services->commonService->executeSafely(function () use (\$id) {
+            \$this->services->imageService->deleteImage(\$id);
             return redirect()->back()->with('success', 'şəkil uğurla silindi');
         }, '{$loweredName}.index', true);
     }
