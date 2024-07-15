@@ -6,7 +6,7 @@
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16"> Tərəfdaşlar </h5>
+                <h5 class="text-16"> Kurslar </h5>
             </div>
 
         </div>
