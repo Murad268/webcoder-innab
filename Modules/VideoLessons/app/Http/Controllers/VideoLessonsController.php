@@ -28,25 +28,13 @@ class VideoLessonsController extends Controller
     public function index(Request $request)
     {
         $q = $request->q;
-        $category_id = $request->category_id;
-
         $activeItemsCount = $this->repository->all_active()->count();
-
         if ($q) {
-            if ($category_id) {
-                $items = $this->repository->searchWithCategory($q, 80, $category_id);
-            } else {
-                $items = $this->repository->search($q, 80);
-            }
+            $items = $this->repository->search($q, 80);
         } else {
-            if ($category_id) {
-                $items = $this->repository->getAllWidthCategory(80, $category_id);
-            } else {
-                $items = $this->repository->all(80);
-            }
+            $items = $this->repository->all(80);
         }
-
-        return view('videolessons::index', compact('items', 'q', 'activeItemsCount', 'category_id'));
+        return view('videolessons::index', compact('items', 'q', 'activeItemsCount'));
     }
 
 

@@ -26,26 +26,14 @@ class LessonController extends Controller
     public function index(Request $request)
     {
         $q = $request->q;
-        $title_id = $request->title_id;
-
         if ($q) {
-            if ($title_id) {
-                $items = $this->repository->searchWithTitle($q, 80, $title_id);
-            } else {
-                $items = $this->repository->search($q, 80);
-            }
+            $items = $this->repository->search($q, 80);
         } else {
-            if ($title_id) {
-                $items = $this->repository->getAllWithTitle(80, $title_id);
-            } else {
-                $items = $this->repository->all(80);
-            }
+            $items = $this->repository->all(80);
         }
-
         $activeLangsCount = $this->repository->all_active()->count();
-        return view('lesson::index', compact('items', 'activeLangsCount', 'q', 'title_id'));
+        return view('lesson::index', compact('items', 'activeLangsCount', 'q'));
     }
-
 
     /**
      * Show the form for creating a new resource.
