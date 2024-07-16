@@ -5,7 +5,7 @@
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16">dərs əlavə et</h5>
+                <h5 class="text-16">dərs başlığını əlavə et</h5>
             </div>
         </div>
         <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-10">

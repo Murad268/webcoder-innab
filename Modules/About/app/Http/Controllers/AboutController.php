@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ServiceContainer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Modules\About\Http\Requests\AboutRequest;
 use Modules\About\Repositories\ModelRepository;
 use Modules\About\Models\About;
 
@@ -44,11 +45,11 @@ class AboutController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(AboutRequest $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
             $this->services->crudService->create(new About(), $request, 'about');
-            return redirect()->route('about.index')->with('status', 'about uğurla əlavə edildi');
+            return redirect()->route('about.index')->with('status', 'Haqqımızda bölməsi uğurla əlavə edildi');
         }, 'about.index');
     }
 
@@ -75,12 +76,12 @@ class AboutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(AboutRequest $request, $id): RedirectResponse
     {
         return $this->executeSafely(function () use ($request, $id) {
             $model = $this->repository->find($id);
             $this->services->crudService->update($model, $request, 'about');
-            return redirect()->route('about.index')->with('status', 'about uğurla yeniləndi');
+            return redirect()->route('about.index')->with('status', 'Haqqımızda bölməsi uğurla yeniləndi');
         }, 'about.index');
     }
 

@@ -176,7 +176,7 @@
                             <div style="margin-bottom: 10px">
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($project->images->where('type', 'mobile_product_image') as $image)
-                                    <div style="position: relative; width: 250px; height: 250px;">
+                                    <div style="position: relative; width: 250px; height: 450px;">
                                         <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
                                             <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
                                         </a>

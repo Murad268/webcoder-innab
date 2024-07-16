@@ -16,4 +16,17 @@ class ModelRepository extends Repository
             ->orWhere('short_description->' . app()->getLocale(), 'like', "%{$query}%")
             ->paginate($limit);
     }
+
+        public function getAllWidthCategory($limit, $category_id) {
+            return $this->modelClass::orderBy('order')->where('category_id', $category_id)->paginate($limit);
+        }
+        public function searchWithCategory($query, $limit = 1, $category_id)
+        {
+            return $this->modelClass::where('category_id', $category_id)
+                ->where(function ($queryBuilder) use ($query) {
+                    $queryBuilder->where('title->' . app()->getLocale(), 'like', "%{$query}%")
+                        ->orWhere('short_description->' . app()->getLocale(), 'like', "%{$query}%");
+                })
+                ->paginate($limit);
+        }
 }

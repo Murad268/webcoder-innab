@@ -17,7 +17,9 @@
                     <div class="grid grid-cols-12 lg:grid-cols-12 gap-3">
                         <div class="self-center col-span-12 lg:col-span-6">
                             <div style="display: flex; column-gap: 10px" class="dataTables_length" id="alternativePagination_length">
+                                @if(!$blog_id)
                                 <a href="{{route('blogcontent.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
+                                @endif
                                 <a data-link="{{route('api.blogcontent.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
                                     seçilənləri sil
                                 </a>
@@ -69,7 +71,7 @@
 
 
                                         <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
-                                            {{$item->name}}
+                                            {{$item->title}}
                                         </td>
 
 
@@ -127,7 +129,7 @@
 
                             </table>
                             <div style="margin:0 auto; width: max-content; margin-top: 30px" class="pagination">
-                                {{ $items->appends(['q' => request()->input('q')])->links() }}
+                                {{ $items->appends(['q' => request()->input('q'),'blog_id' => request()->input('blog_id')])->links() }}
                             </div>
                         </div>
                     </div>

@@ -26,14 +26,26 @@ class VideoLessonsTitleController extends Controller
     public function index(Request $request)
     {
         $q = $request->q;
+        $video_lesson_id = $request->video_lesson_id;
+
         if ($q) {
-            $items = $this->repository->search($q, 80);
+            if ($video_lesson_id) {
+                $items = $this->repository->searchWithVideoLesson($q, 80, $video_lesson_id);
+            } else {
+                $items = $this->repository->search($q, 80);
+            }
         } else {
-            $items = $this->repository->all(80);
+            if ($video_lesson_id) {
+                $items = $this->repository->getAllWithVideoLesson(80, $video_lesson_id);
+            } else {
+                $items = $this->repository->all(80);
+            }
         }
+
         $activeLangsCount = $this->repository->all_active()->count();
-        return view('videolessonstitle::index', compact('items', 'activeLangsCount', 'q'));
+        return view('videolessonstitle::index', compact('items', 'activeLangsCount', 'q', 'video_lesson_id'));
     }
+
 
     /**
      * Show the form for creating a new resource.

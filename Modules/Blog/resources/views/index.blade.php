@@ -17,7 +17,9 @@
                     <div class="grid grid-cols-12 lg:grid-cols-12 gap-3">
                         <div class="self-center col-span-12 lg:col-span-6">
                             <div style="display: flex; column-gap: 10px" class="dataTables_length" id="alternativePagination_length">
-                                <a href="{{route('blog.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
+                                @if(!$category_id)
+                                    <a href="{{route('blog.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
+                                @endif
                                 <a data-link="{{route('api.blog.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
                                     seçilənləri sil
                                 </a>
@@ -34,13 +36,15 @@
                         <div class="self-center col-span-12 lg:col-span-6 lg:place-self-end">
                             <div id="alternativePagination_filter" class="dataTables_filter">
 
-                                <form action="">
-                                    <label>axtar
-                                        :
+                                <div id="alternativePagination_filter" class="dataTables_filter">
+                                    <form action="" method="get">
+                                        <label>axtar:</label>
+                                        <input name="q" type="search" value="{{$q}}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 inline-block w-auto ml-2" placeholder="" aria-controls="alternativePagination">
 
-                                    </label>
-                                    <input name="q" type="search" value="{{$q}}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 inline-block w-auto ml-2" placeholder="" aria-controls="alternativePagination">
-                                </form>
+                                        <input name="category_id" type="hidden" value="{{$category_id}}">
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                         <div class="my-2 col-span-12 overflow-x-auto lg:col-span-12">
@@ -51,7 +55,8 @@
                                         </th>
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 415.15px;" aria-label="Position: activate to sort column ascending">başlıq
                                         </th>
-
+                                        <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 415.15px;" aria-label="Position: activate to sort column ascending">kontentləri'
+                                        </th>
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 165.517px;" aria-label="Salary: activate to sort column ascending">status
                                         </th>
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 165.517px;" aria-label="Salary: activate to sort column ascending">əməliyyatlar
@@ -69,10 +74,39 @@
 
 
                                         <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
-                                            {{$item->name}}
+                                            {{$item->title}}
                                         </td>
 
-
+                                                 <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
+                                            <a href="{{route('blogcontent.index', ['blog_id' => $item->id])}}">
+                                                <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                            <svg fill="#000000" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                viewBox="0 0 512 512" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M475.582,164.418C489.021,177.858,512,168.339,512,149.333v-128C512,9.551,502.449,0,490.667,0h-128
+                                                        c-19.006,0-28.524,22.979-15.085,36.418l48.915,48.915l-66.335,66.335C309.238,136.766,283.641,128,256,128
+                                                        s-53.238,8.766-74.162,23.668l-66.335-66.335l48.915-48.915C177.858,22.979,168.339,0,149.333,0h-128C9.551,0,0,9.551,0,21.333
+                                                        v128c0,19.006,22.979,28.524,36.418,15.085l48.915-48.915l66.335,66.335C136.766,202.762,128,228.359,128,256
+                                                        s8.766,53.238,23.668,74.162l-66.335,66.335l-48.915-48.915C22.979,334.142,0,343.661,0,362.667v128
+                                                        C0,502.449,9.551,512,21.333,512h128c19.006,0,28.524-22.979,15.085-36.418l-48.915-48.915l66.335-66.335
+                                                        C202.762,375.234,228.359,384,256,384s53.238-8.766,74.162-23.668l66.335,66.335l-48.915,48.915
+                                                        C334.142,489.021,343.661,512,362.667,512h128c11.782,0,21.333-9.551,21.333-21.333v-128c0-19.006-22.979-28.524-36.418-15.085
+                                                        l-48.915,48.915l-66.335-66.335C375.234,309.238,384,283.641,384,256s-8.766-53.238-23.668-74.162l66.335-66.335L475.582,164.418z
+                                                        M42.667,42.667H97.83L42.667,97.83V42.667z M42.667,469.333V414.17l55.163,55.163H42.667z M469.333,469.333H414.17l55.163-55.163
+                                                        V469.333z M195.774,316.441c-0.036-0.036-0.066-0.077-0.102-0.113s-0.076-0.066-0.113-0.102
+                                                        c-15.38-15.435-24.892-36.721-24.892-60.226s9.512-44.791,24.892-60.226c0.036-0.036,0.077-0.066,0.113-0.102
+                                                        s0.066-0.076,0.102-0.113c15.435-15.38,36.721-24.892,60.226-24.892c23.3,0,44.414,9.355,59.815,24.5
+                                                        c0.165,0.176,0.312,0.363,0.484,0.535s0.359,0.319,0.535,0.484c15.145,15.401,24.5,36.514,24.5,59.815
+                                                        c0,23.475-9.489,44.737-24.836,60.167c-0.056,0.055-0.118,0.101-0.174,0.157s-0.102,0.117-0.157,0.174
+                                                        c-15.43,15.346-36.692,24.835-60.167,24.835C232.495,341.333,211.209,331.822,195.774,316.441z M469.333,42.667V97.83
+                                                        L414.17,42.667H469.333z"/>
+                                                </g>
+                                            </g>
+                                            </svg>
+                                            </a>
+                                        </td>
                                         <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
                                             @if($item->status)
                                             <div class="px-4 py-3 text-sm text-green-500 border border-transparent rounded-md bg-green-50 dark:bg-green-400/20">
@@ -127,7 +161,7 @@
 
                             </table>
                             <div style="margin:0 auto; width: max-content; margin-top: 30px" class="pagination">
-                                {{ $items->appends(['q' => request()->input('q')])->links() }}
+                                {{ $items->appends(['q' => request()->input('q'), 'category_id' => request()->input('category_id')])->links() }}
                             </div>
                         </div>
                     </div>

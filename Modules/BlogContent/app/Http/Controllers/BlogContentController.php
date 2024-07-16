@@ -18,19 +18,33 @@ class BlogContentController extends Controller
         public CommonService $commonService,
         public ModelRepository $repository,
         public BlogRepository $blog
-    ) {}
+    ) {
+    }
 
     public function index(Request $request)
     {
         $q = $request->q;
+        $blog_id = $request->blog_id;
+
         $activeItemsCount = $this->repository->all_active()->count();
+
         if ($q) {
-            $items = $this->repository->search($q, 80);
+            if ($blog_id) {
+                $items = $this->repository->searchWithBlog($q, 80, $blog_id);
+            } else {
+                $items = $this->repository->search($q, 80);
+            }
         } else {
-            $items = $this->repository->all(80);
+            if ($blog_id) {
+                $items = $this->repository->getAllWidthBlog(80, $blog_id);
+            } else {
+                $items = $this->repository->all(80);
+            }
         }
-        return view('blogcontent::index', compact('items', 'q', 'activeItemsCount'));
+
+        return view('blogcontent::index', compact('items', 'q', 'activeItemsCount', 'blog_id'));
     }
+
 
     public function create()
     {

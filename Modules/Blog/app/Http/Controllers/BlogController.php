@@ -20,18 +20,30 @@ class BlogController extends Controller
         public ModelRepository $repository
     ) {}
 
+    
     public function index(Request $request)
     {
         $q = $request->q;
+        $category_id = $request->category_id;
+
         $activeItemsCount = $this->repository->all_active()->count();
         if ($q) {
-            $items = $this->repository->search($q, 80);
+            if ($category_id) {
+                $items = $this->repository->searchWithCategory($q, 80, $category_id);
+            } else {
+                $items = $this->repository->search($q, 80);
+            }
         } else {
-            $items = $this->repository->all(80);
+            if ($category_id) {
+                $items = $this->repository->getAllWidthCategory(80, $category_id);
+            } else {
+                $items = $this->repository->all(80);
+            }
         }
 
-        return view('blog::index', compact('items', 'q', 'activeItemsCount'));
+        return view('blog::index', compact('items', 'q', 'activeItemsCount', 'category_id'));
     }
+
 
     public function create()
     {
@@ -44,7 +56,7 @@ class BlogController extends Controller
     {
         return $this->executeSafely(function () use ($request) {
             $this->services->crudService->create(new Blog(), $request, 'blog');
-            return redirect()->route('blog.index')->with('status', 'Tərəfdaş uğurla əlavə edildi');
+            return redirect()->route('blog.index')->with('status', 'Bloq uğurla əlavə edildi');
         }, 'blog.index');
     }
 
@@ -68,7 +80,7 @@ class BlogController extends Controller
         return $this->executeSafely(function () use ($request, $id) {
             $partner = $this->repository->find($id);
             $this->services->crudService->update($partner, $request, 'blog');
-            return redirect()->route('blog.index')->with('status', 'Təlim uğurla əlavə edildi');
+            return redirect()->route('blog.index')->with('status', 'Bloq uğurla əlavə edildi');
         }, 'blog.index');
     }
 

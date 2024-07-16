@@ -49,7 +49,7 @@ class VacancyController extends Controller
     {
         return $this->executeSafely(function () use ($request) {
             $this->services->crudService->create(new Vacancy(), $request, 'vacancy');
-            return redirect()->route('vacancy.index')->with('status', 'vacancy uğurla əlavə edildi');
+            return redirect()->route('vacancy.index')->with('status', 'vakansiyauğurla əlavə edildi');
         }, 'vacancy.index');
     }
 
@@ -81,7 +81,7 @@ class VacancyController extends Controller
         return $this->executeSafely(function () use ($request, $id) {
             $model = $this->repository->find($id);
             $this->services->crudService->update($model, $request, 'vacancy');
-            return redirect()->route('vacancy.index')->with('status', 'vacancy uğurla yeniləndi');
+            return redirect()->route('vacancy.index')->with('status', 'vakansiyauğurla yeniləndi');
         }, 'vacancy.index');
     }
 

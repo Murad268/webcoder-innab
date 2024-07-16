@@ -5,7 +5,7 @@
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16">Təlim əlavə et</h5>
+                <h5 class="text-16">Məlumatlarımız</h5>
             </div>
         </div>
         <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-10">
@@ -86,12 +86,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="map" class="inline-block mb-2 text-base font-medium">Xəritə</label>
-                                <textarea name="map" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="map" rows="3">{{ old('map', $model->map) }}</textarea>
+                                <textarea style="height: 200px" name="map" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="map" rows="3">{{ old('map', $model->map) }}</textarea>
                             </div>
                             <div style="margin-bottom: 10px">
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($model->images->where('type', 'nav_logo') as $image)
-                                    <div style="position: relative; width: 250px; height: 250px;">
+                                    <div style="position: relative; width: 250px; height: 100px;">
                                         <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
                                             <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
                                         </a>
@@ -112,7 +112,7 @@
                             <div style="margin-bottom: 10px">
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($model->images->where('type', 'footer_logo') as $image)
-                                    <div style="position: relative; width: 250px; height: 250px;">
+                                    <div style="position: relative; width: 250px; height: 100px;">
                                         <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
                                             <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
                                         </a>
