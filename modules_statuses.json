@@ -26,5 +26,7 @@
     "About": true,
     "Corporative": true,
     "Corporativerr": true,
-    "Privacy": true
+    "Privacy": true,
+    "Info": true,
+    "SiteInfo": true
 }

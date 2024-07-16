@@ -1,0 +1,11 @@
+{
+    "name": "SiteInfo",
+    "alias": "siteinfo",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\SiteInfo\\Providers\\SiteInfoServiceProvider"
+    ],
+    "files": []
+}
