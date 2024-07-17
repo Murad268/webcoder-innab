@@ -54,7 +54,7 @@
                                         </th>
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 415.15px;" aria-label="Position: activate to sort column ascending">şəkil
                                         </th>
-                                    
+
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 165.517px;" aria-label="Salary: activate to sort column ascending">status
                                         </th>
                                         <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 165.517px;" aria-label="Salary: activate to sort column ascending">əməliyyatlar
@@ -97,7 +97,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex">
-                                                <a href="{{route('about.edit', $item->id)}}" class="btn btn-phoenix-success me-1 mb-1" type="button">
+                                                <a href="{{route('about.edit',['about' =>  $item->id, 'page' => request()->input('page'), 'q' => request()->input('q')])}}" class="btn btn-phoenix-success me-1 mb-1" type="button">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen">
                                                         <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                                         <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
@@ -137,10 +137,12 @@
                                 </tbody>
 
                             </table>
-                            <div style="margin:0 auto; width: max-content; margin-top: 30px" class="pagination">
-                                {{$items->appends(['q' => request()->input('q')])->links() }}
-                            </div>
+
                         </div>
+
+                    </div>
+                    <div style="margin:0 auto; width: max-content; margin-top: 30px" class="pagination">
+                        {{$items->appends(['q' => request()->input('q')])->links() }}
                     </div>
                 </div>
             </div>

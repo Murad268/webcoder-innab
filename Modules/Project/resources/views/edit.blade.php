@@ -208,6 +208,18 @@
                                     <textarea name="seo_scripts" id="seo_scripts" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('seo_scripts', $project->seo_scripts) }}</textarea>
                                 </div>
                             </div>
+                            <div class="flex items-center gap-2">
+                                <input id="checkboxDefault21" class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zinc-600 dark:border-zinc-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" value="1" name="is_corporative" @checked($project->is_corporative == 1)>
+                                <label for="checkboxDefault21" class="align-middle">
+                                    Korporativ təlimdir
+                                </label>
+                            </div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <input id="checkboxDefault22" class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zinc-600 dark:border-zinc-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" value="1" name="is_project" @checked($project->is_project == 1)>
+                                <label for="checkboxDefault22" class="align-middle">
+                                    Layihədir
+                                </label>
+                            </div>
 
                             <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                                 Redaktə et

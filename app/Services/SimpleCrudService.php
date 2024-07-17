@@ -23,8 +23,10 @@ class SimpleCrudService {
 
     public function update($model=null, $request=null, $model_type=null)
     {
-
-        $data = $request->except(array_keys($request->file()));
+        $exept = array_keys($request->file());
+        $exept['page'] = 'page';
+        $exept['q'] = 'q';
+        $data = $request->except($exept);
 
         if (isset($data['title'])) {
             $data['slug'] = $this->slugService->sluggableArray($data['title']);
