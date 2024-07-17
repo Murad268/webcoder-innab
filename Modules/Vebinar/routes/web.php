@@ -14,7 +14,7 @@ use Modules\Vebinar\Http\Controllers\VebinarController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('vebinar', VebinarController::class)->names('vebinar');
     Route::get('/vebinar/changeStatusFalse/{id}', [VebinarController::class, 'changeStatusFalse'])->name('vebinar.changeStatusFalse');
     Route::get('/vebinar/changeStatusTrue/{id}', [VebinarController::class, 'changeStatusTrue'])->name('vebinar.changeStatusTrue');

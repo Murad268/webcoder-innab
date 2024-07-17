@@ -14,7 +14,7 @@ use Modules\Blog\Http\Controllers\BlogController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('blog', BlogController::class)->names('blog');
     Route::get('/blog/changeStatusFalse/{id}', [BlogController::class, 'changeStatusFalse'])->name('blog.changeStatusFalse');
     Route::get('/blog/changeStatusTrue/{id}', [BlogController::class, 'changeStatusTrue'])->name('blog.changeStatusTrue');

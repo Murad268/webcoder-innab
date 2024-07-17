@@ -14,7 +14,7 @@ use Modules\SiteInfo\Http\Controllers\SiteInfoController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('siteinfo', SiteInfoController::class)->names('siteinfo');
     Route::get('/siteinfo/changeStatusFalse/{id}', [SiteInfoController::class, 'changeStatusFalse'])->name('siteinfo.changeStatusFalse');
     Route::get('/siteinfo/changeStatusTrue/{id}', [SiteInfoController::class, 'changeStatusTrue'])->name('siteinfo.changeStatusTrue');

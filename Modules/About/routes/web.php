@@ -14,7 +14,7 @@ use Modules\About\Http\Controllers\AboutController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' => "admin", 'middleware' => 'auth'], function () {
     Route::resource('about', AboutController::class)->names('about');
     Route::get('/about/changeStatusFalse/{id}', [AboutController::class, 'changeStatusFalse'])->name('about.changeStatusFalse');
     Route::get('/about/changeStatusTrue/{id}', [AboutController::class, 'changeStatusTrue'])->name('about.changeStatusTrue');

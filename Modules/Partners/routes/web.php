@@ -14,7 +14,7 @@ use Modules\Partners\Http\Controllers\PartnersController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('partners', PartnersController::class)->names('partners');
     Route::get('/partners/changeStatusFalse/{id}', [PartnersController::class, 'changeStatusFalse'])->name('partners.changeStatusFalse');
     Route::get('/partners/changeStatusTrue/{id}', [PartnersController::class, 'changeStatusTrue'])->name('partners.changeStatusTrue');

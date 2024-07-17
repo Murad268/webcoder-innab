@@ -14,7 +14,7 @@ use Modules\ScholarshipProgram\Http\Controllers\ScholarshipProgramController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('scholarshipprogram', ScholarshipProgramController::class)->names('scholarshipprogram');
     Route::get('/scholarshipprogram/changeStatusFalse/{id}', [ScholarshipProgramController::class, 'changeStatusFalse'])->name('scholarshipprogram.changeStatusFalse');
     Route::get('/scholarshipprogram/changeStatusTrue/{id}', [ScholarshipProgramController::class, 'changeStatusTrue'])->name('scholarshipprogram.changeStatusTrue');

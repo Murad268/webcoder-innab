@@ -14,7 +14,7 @@ use Modules\Vacancy\Http\Controllers\VacancyController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('vacancy', VacancyController::class)->names('vacancy');
     Route::get('/vacancy/changeStatusFalse/{id}', [VacancyController::class, 'changeStatusFalse'])->name('vacancy.changeStatusFalse');
     Route::get('/vacancy/changeStatusTrue/{id}', [VacancyController::class, 'changeStatusTrue'])->name('vacancy.changeStatusTrue');

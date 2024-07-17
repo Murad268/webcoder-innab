@@ -14,7 +14,7 @@ use Modules\TrainingSubject\Http\Controllers\TrainingSubjectController;
 |
 */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' =>'admin', 'middleware' => 'auth'], function () {
     Route::resource('trainingsubject', TrainingSubjectController::class)->names('trainingsubject');
     Route::get('/trainingsubject/changeStatusFalse/{id}', [TrainingSubjectController::class, 'changeStatusFalse'])->name('trainingsubject.changeStatusFalse');
     Route::get('/trainingsubject/changeStatusTrue/{id}', [TrainingSubjectController::class, 'changeStatusTrue'])->name('trainingsubject.changeStatusTrue');

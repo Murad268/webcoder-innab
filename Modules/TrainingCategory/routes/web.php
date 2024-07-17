@@ -14,7 +14,7 @@ use Modules\TrainingCategory\Http\Controllers\TrainingCategoryController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('trainingcategory', TrainingCategoryController::class)->names('trainingcategory');
     Route::get('/trainingcategory/changeStatusFalse/{id}', [TrainingCategoryController::class, 'changeStatusFalse'])->name('trainingcategory.changeStatusFalse');
     Route::get('/trainingcategory/changeStatusTrue/{id}', [TrainingCategoryController::class, 'changeStatusTrue'])->name('trainingcategory.changeStatusTrue');

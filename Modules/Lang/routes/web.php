@@ -14,7 +14,7 @@ use Modules\Lang\Http\Controllers\LangController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('lang', LangController::class)->names('lang');
     Route::get('/lang/changeDefault/{id}', [LangController::class, 'changeDefault'])->name('lang.changeDefault');
     Route::get('/lang/changeStatusFalse/{id}', [LangController::class, 'changeStatusFalse'])->name('lang.changeStatusFalse');

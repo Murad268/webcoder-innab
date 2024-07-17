@@ -1,5 +1,7 @@
 <?php
 
+use App\Facades\ServiceFacade;
+
 return [
 
     /*
@@ -121,6 +123,12 @@ return [
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
+    // config/app.php
+
+    'aliases' => [
+
+        'ServiceFacade' => ServiceFacade::class,
     ],
 
 ];

@@ -14,7 +14,7 @@ use Modules\Customer\Http\Controllers\CustomerController;
 |
 */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' =>'admin', 'middleware' => 'auth'], function () {
     Route::resource('customer', CustomerController::class)->names('customer');
     Route::get('/customer/changeStatusFalse/{id}', [CustomerController::class, 'changeStatusFalse'])->name('customer.changeStatusFalse');
     Route::get('/customer/changeStatusTrue/{id}', [CustomerController::class, 'changeStatusTrue'])->name('customer.changeStatusTrue');

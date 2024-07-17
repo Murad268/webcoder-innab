@@ -14,7 +14,7 @@ use Modules\Project\Http\Controllers\ProjectController;
 |
 */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' =>'admin', 'middleware' => 'auth'], function () {
     Route::resource('project', ProjectController::class)->names('project');
     Route::get('/project/changeStatusFalse/{id}', [ProjectController::class, 'changeStatusFalse'])->name('project.changeStatusFalse');
     Route::get('/project/changeStatusTrue/{id}', [ProjectController::class, 'changeStatusTrue'])->name('project.changeStatusTrue');

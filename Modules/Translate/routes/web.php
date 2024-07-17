@@ -14,7 +14,7 @@ use Modules\Translate\Http\Controllers\TranslateController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('translate', TranslateController::class)->names('translate');
     Route::get('/translate/deleteFile/{id}', [TranslateController::class, 'deleteFile'])->name('translate.deleteFile');
 });

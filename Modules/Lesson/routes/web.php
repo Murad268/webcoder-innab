@@ -14,7 +14,7 @@ use Modules\Lesson\Http\Controllers\LessonController;
 |
 */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' =>'admin', 'middleware' => 'auth'], function () {
     Route::resource('lesson', LessonController::class)->names('lesson');
     Route::get('/lesson/changeStatusFalse/{id}', [LessonController::class, 'changeStatusFalse'])->name('lesson.changeStatusFalse');
     Route::get('/lesson/changeStatusTrue/{id}', [LessonController::class, 'changeStatusTrue'])->name('lesson.changeStatusTrue');

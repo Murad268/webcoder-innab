@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\ServiceContainer;
+use App\Services\SettingsService;
+use Modules\SiteInfo\Repositories\ModelRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(\App\Services\RemoveService::class),
                 $app->make(\App\Services\ImageService::class),
             );
+        });
+        $this->app->singleton(SettingsService::class, function ($app) {
+            return new SettingsService($app->make(ModelRepository::class));
         });
     }
 }

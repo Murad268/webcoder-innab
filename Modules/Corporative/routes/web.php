@@ -14,7 +14,7 @@ use Modules\Corporative\Http\Controllers\CorporativeController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('corporative', CorporativeController::class)->names('corporative');
     Route::get('/corporative/changeStatusFalse/{id}', [CorporativeController::class, 'changeStatusFalse'])->name('corporative.changeStatusFalse');
     Route::get('/corporative/changeStatusTrue/{id}', [CorporativeController::class, 'changeStatusTrue'])->name('corporative.changeStatusTrue');

@@ -14,7 +14,7 @@ use Modules\CourseFAQ\Http\Controllers\CourseFAQController;
 |
 */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' =>'admin', 'middleware' => 'auth'], function () {
     Route::resource('coursefaq', CourseFAQController::class)->names('coursefaq');
     Route::get('/coursefaq/changeStatusFalse/{id}', [CourseFAQController::class, 'changeStatusFalse'])->name('coursefaq.changeStatusFalse');
     Route::get('/coursefaq/changeStatusTrue/{id}', [CourseFAQController::class, 'changeStatusTrue'])->name('coursefaq.changeStatusTrue');

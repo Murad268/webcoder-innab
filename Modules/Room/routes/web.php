@@ -14,7 +14,7 @@ use Modules\Room\Http\Controllers\RoomController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('room', RoomController::class)->names('room');
     Route::get('/room/changeStatusFalse/{id}', [RoomController::class, 'changeStatusFalse'])->name('room.changeStatusFalse');
     Route::get('/room/changeStatusTrue/{id}', [RoomController::class, 'changeStatusTrue'])->name('room.changeStatusTrue');

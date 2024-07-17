@@ -14,7 +14,7 @@ use Modules\VideoLessonsCategory\Http\Controllers\VideoLessonsCategoryController
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('videolessonscategory', VideoLessonsCategoryController::class)->names('videolessonscategory');
     Route::get('/videolessonscategory/changeStatusFalse/{id}', [VideoLessonsCategoryController::class, 'changeStatusFalse'])->name('videolessonscategory.changeStatusFalse');
     Route::get('/videolessonscategory/changeStatusTrue/{id}', [VideoLessonsCategoryController::class, 'changeStatusTrue'])->name('videolessonscategory.changeStatusTrue');

@@ -14,7 +14,7 @@ use Modules\VideoLessons\Http\Controllers\VideoLessonsController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('videolessons', VideoLessonsController::class)->names('videolessons');
     Route::get('/videolessons/changeStatusFalse/{id}', [VideoLessonsController::class, 'changeStatusFalse'])->name('videolessons.changeStatusFalse');
     Route::get('/videolessons/changeStatusTrue/{id}', [VideoLessonsController::class, 'changeStatusTrue'])->name('videolessons.changeStatusTrue');

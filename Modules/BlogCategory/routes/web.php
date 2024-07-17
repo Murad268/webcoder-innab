@@ -14,7 +14,7 @@ use Modules\BlogCategory\Http\Controllers\BlogCategoryController;
 |
 */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' =>'admin', 'middleware' => 'auth'], function () {
     Route::resource('blogcategory', BlogCategoryController::class)->names('blogcategory');
     Route::get('/blogcategory/changeStatusFalse/{id}', [BlogCategoryController::class, 'changeStatusFalse'])->name('blogcategory.changeStatusFalse');
     Route::get('/blogcategory/changeStatusTrue/{id}', [BlogCategoryController::class, 'changeStatusTrue'])->name('blogcategory.changeStatusTrue');

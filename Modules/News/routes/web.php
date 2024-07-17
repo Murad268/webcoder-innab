@@ -14,7 +14,7 @@ use Modules\News\Http\Controllers\NewsController;
 |
 */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' =>'admin', 'middleware' => 'auth'], function () {
     Route::resource('news', NewsController::class)->names('news');
     Route::get('/news/changeStatusFalse/{id}', [NewsController::class, 'changeStatusFalse'])->name('news.changeStatusFalse');
     Route::get('/news/changeStatusTrue/{id}', [NewsController::class, 'changeStatusTrue'])->name('news.changeStatusTrue');

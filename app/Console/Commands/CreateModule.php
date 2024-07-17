@@ -333,7 +333,7 @@ use Modules\\$name\\Http\\Controllers\\{$name}Controller;
 |
 */
 
-Route::group(['prefix' => \"admin\"], function () {
+Route::group(['prefix' => \"admin\", 'middleware' => 'auth'], function () {
     Route::resource('$loweredName', {$name}Controller::class)->names('$loweredName');
     Route::get('/$loweredName/changeStatusFalse/{id}', [{$name}Controller::class, 'changeStatusFalse'])->name('$loweredName.changeStatusFalse');
     Route::get('/$loweredName/changeStatusTrue/{id}', [{$name}Controller::class, 'changeStatusTrue'])->name('$loweredName.changeStatusTrue');

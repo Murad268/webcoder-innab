@@ -14,7 +14,7 @@ use Modules\Workshop\Http\Controllers\WorkshopController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' => "admin", 'middleware' => 'auth'], function () {
     Route::resource('workshop', WorkshopController::class)->names('workshop');
     Route::get('/workshop/changeStatusFalse/{id}', [WorkshopController::class, 'changeStatusFalse'])->name('workshop.changeStatusFalse');
     Route::get('/workshop/changeStatusTrue/{id}', [WorkshopController::class, 'changeStatusTrue'])->name('workshop.changeStatusTrue');

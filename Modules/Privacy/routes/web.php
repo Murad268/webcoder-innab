@@ -14,7 +14,7 @@ use Modules\Privacy\Http\Controllers\PrivacyController;
 |
 */
 
-Route::group(['prefix' => "admin"], function () {
+Route::group(['prefix' =>"admin", 'middleware' => 'auth'], function () {
     Route::resource('privacy', PrivacyController::class)->names('privacy');
     Route::get('/privacy/changeStatusFalse/{id}', [PrivacyController::class, 'changeStatusFalse'])->name('privacy.changeStatusFalse');
     Route::get('/privacy/changeStatusTrue/{id}', [PrivacyController::class, 'changeStatusTrue'])->name('privacy.changeStatusTrue');

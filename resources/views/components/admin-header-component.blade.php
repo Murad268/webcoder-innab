@@ -192,6 +192,15 @@
                         </ul>
                     </div>
                 </li>
+                <div>
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+
+                    <a id="logout-button" href="#" class="relative flex items-center px-6 py-2 text-vertical-menu-item-font-size transition-all duration-75 ease-linear text-vertical-menu-sub-item hover:text-vertical-menu-sub-item-hover [&.active]:text-vertical-menu-sub-item-active before:absolute">
+                        Çıxış et
+                    </a>
+                </div>
             </ul>
         </div>
         <!-- Sidebar -->
@@ -524,3 +533,25 @@
         </div>
     </div>
 </header>
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('logout-button').addEventListener('click', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Əminsinizmi?',
+            text: "Çıxış etmək istəyirsiniz?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Bəli, çıxış et',
+            cancelButtonText: 'Xeyr'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    });
+</script>
+@endpush
