@@ -18,3 +18,5 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('news', NewsController::class)->names('news');
 });
 Route::post('news/delete_selected_items', [NewsController::class, 'delete_selected_items'])->name('news.delete_selected_items');
+Route::post('news/pin', [NewsController::class, 'pin'])->name('news.pin');
+Route::post('news/unpin', [NewsController::class, 'unpin'])->name('news.unpin');

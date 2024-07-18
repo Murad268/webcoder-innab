@@ -112,4 +112,29 @@ class NewsController extends Controller
     {
         return $this->commonService->deleteFile($id, $this->services->imageService, 'news.index');
     }
+    public function pin(Request $request)
+    {
+        $id = $request->id;
+        $item = $this->repository->find($id);
+
+        if ($item) {
+            $item->update(['pinned' => true]);
+            return response()->json(['data' => $id, 'message' => 'Uğurla pinləndi.']);
+        } else {
+            return response()->json(['message' => 'Tapılmadı!'], 404);
+        }
+    }
+
+    public function unpin(Request $request) {
+        $id = $request->id;
+        $item = $this->repository->find($id);
+
+        if ($item) {
+            $item->update(['pinned' => false]);
+            return response()->json(['data' => $id, 'message' => 'Uğurla pindən çıxarıldı.']);
+        } else {
+            return response()->json(['message' => 'Tapılmadı!'], 404);
+        }
+    }
+
 }

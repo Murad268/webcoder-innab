@@ -18,3 +18,4 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('project', ProjectController::class)->names('project');
 });
 Route::post('project/delete_selected_items', [ProjectController::class, 'delete_selected_items'])->name('project.delete_selected_items');
+

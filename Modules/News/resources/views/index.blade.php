@@ -69,7 +69,7 @@
 
 
                                         <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
-                                            {{$item->name}}
+                                            {{$item->title}}
                                         </td>
 
 
@@ -86,6 +86,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex">
+
                                                 <a href="{{route('news.edit', $item->id)}}" class="btn btn-phoenix-success me-1 mb-1" type="button">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen">
                                                         <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -118,6 +119,27 @@
                                                             </svg>
                                                         </a>
                                                         @endif
+
+                                                        <div class="pin_wrapper" style="display: inline-block">
+                                                            @if(!$item->pinned)
+                                                            <a style="cursor: pointer" data-id="{{$item->id}}" class="pin btn btn-phoenix-success me-1 mb-1">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin">
+                                                                    <path d="M12 17v5" />
+                                                                    <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z" />
+                                                                </svg>
+                                                            </a>
+                                                            @else
+                                                            <a style="cursor: pointer" data-id="{{$item->id}}" class="unpin btn btn-phoenix-success me-1 mb-1">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin-off">
+                                                                    <path d="M12 17v5" />
+                                                                    <path d="M15 9.34V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H7.89" />
+                                                                    <path d="m2 2 20 20" />
+                                                                    <path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h11" />
+                                                                </svg>
+                                                            </a>
+                                                            @endif
+                                                        </div>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -138,6 +160,8 @@
     <!-- container-fluid -->
 </div>
 @endsection
+
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -253,5 +277,169 @@
         }
     });
 </script>
+<script>
+    const pinBtns = document.querySelectorAll('.pin');
+    const unPinBtns = document.querySelectorAll('.unpin');
+    const pinWrapper = document.querySelectorAll('.pin_wrapper');
+
+    function createPinSvg(id, index) {
+        const a = document.createElement('a');
+        a.style.cursor = 'pointer';
+        a.className = 'pin btn btn-phoenix-success me-1 mb-1';
+        a.setAttribute('data-id', id);
+
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', '24');
+        svg.setAttribute('height', '24');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.className = 'lucide lucide-pin';
+
+        const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path1.setAttribute('d', 'M12 17v5');
+        svg.appendChild(path1);
+
+        const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path2.setAttribute('d', 'M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z');
+        svg.appendChild(path2);
+
+        a.appendChild(svg);
+
+        a.addEventListener('click', () => {
+            fetch('{{route("api.news.pin")}}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    a.remove();
+                    pinWrapper[index].appendChild(createUnpinSvg(id, index));
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+
+        return a;
+    }
+
+    function createUnpinSvg(id, index) {
+        const a = document.createElement('a');
+        a.style.cursor = 'pointer';
+        a.className = 'unpin btn btn-phoenix-success me-1 mb-1';
+        a.setAttribute('data-id', id);
+
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', '24');
+        svg.setAttribute('height', '24');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.className = 'lucide lucide-pin-off';
+
+        const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path1.setAttribute('d', 'M12 17v5');
+        svg.appendChild(path1);
+
+        const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path2.setAttribute('d', 'M15 9.34V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H7.89');
+        svg.appendChild(path2);
+
+        const path3 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path3.setAttribute('d', 'm2 2 20 20');
+        svg.appendChild(path3);
+
+        const path4 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path4.setAttribute('d', 'M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h11');
+        svg.appendChild(path4);
+
+        a.appendChild(svg);
+
+        a.addEventListener('click', () => {
+            fetch('{{route("api.news.unpin")}}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    a.remove();
+                    pinWrapper[index].appendChild(createPinSvg(id, index));
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+
+        return a;
+    }
+
+    pinBtns.forEach((btn, i) => {
+        btn.addEventListener("click", () => {
+            let id = btn.getAttribute("data-id");
+
+            fetch('{{route("api.news.pin")}}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    btn.remove();
+                    pinWrapper[i].appendChild(createUnpinSvg(id, i));
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+
+    unPinBtns.forEach((btn, i) => {
+        btn.addEventListener("click", () => {
+            let id = btn.getAttribute("data-id");
+
+            fetch('{{route("api.news.unpin")}}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    btn.remove();
+                    pinWrapper[i].appendChild(createPinSvg(id, i));
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
+
+
+
 
 @endpush

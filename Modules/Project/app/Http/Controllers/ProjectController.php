@@ -108,4 +108,7 @@ class ProjectController extends Controller
     {
         return $this->commonService->deleteFile($id, $this->services->imageService, 'project.index');
     }
+
+
+
 }

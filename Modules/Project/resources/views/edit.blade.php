@@ -45,18 +45,12 @@
                                                 <label for="card_description_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Kart Təsviri ({{ $language->code }})<span class="text-red-500">*</span></label>
                                                 <textarea id="card_description_{{ $language->code }}" name="card_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('card_description.' . $language->code, $project->getTranslation('card_description', $language->code)) }}</textarea>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="text_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mətn ({{ $language->code }})<span class="text-red-500">*</span></label>
-                                                <textarea id="text_{{ $language->code }}" name="text[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('text.' . $language->code, $project->getTranslation('text', $language->code)) }}</textarea>
-                                            </div>
+
                                             <div class="mb-3">
                                                 <label for="product_description_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Məhsul Təsviri ({{ $language->code }})</label>
                                                 <textarea id="product_description_{{ $language->code }}" name="product_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('product_description.' . $language->code, $project->getTranslation('product_description', $language->code)) }}</textarea>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="requirements_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Tələblər ({{ $language->code }})</label>
-                                                <textarea id="requirements_{{ $language->code }}" name="requirements[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('product_description.' . $language->code, $project->getTranslation('requirements', $language->code)) }}</textarea>
-                                            </div>
+
                                             <div class="mb-3">
                                                 <label for="product_price_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Məhsul Qiyməti ({{ $language->code }})</label>
                                                 <input type="text" id="product_price_{{ $language->code }}" name="product_price[{{ $language->code }}]" value="{{ old('product_price.' . $language->code, $project->getTranslation('product_price', $language->code)) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
@@ -84,6 +78,14 @@
                                             <div class="mb-3">
                                                 <label for="meta_description_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Meta Təsviri ({{ $language->code }})</label>
                                                 <textarea id="meta_description_{{ $language->code }}" name="meta_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('meta_description.' . $language->code, $project->getTranslation('meta_description', $language->code)) }}</textarea>
+                                            </div>
+                                                <div class="mb-3">
+                                                <label for="text_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mətn ({{ $language->code }})<span class="text-red-500">*</span></label>
+                                                <textarea id="text_{{ $language->code }}" name="text[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('text.' . $language->code, $project->getTranslation('text', $language->code)) }}</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="requirements_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Tələblər ({{ $language->code }})</label>
+                                                <textarea id="requirements_{{ $language->code }}" name="requirements[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('product_description.' . $language->code, $project->getTranslation('requirements', $language->code)) }}</textarea>
                                             </div>
                                         </div>
                                     </div>

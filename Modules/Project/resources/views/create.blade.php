@@ -44,18 +44,12 @@
                                                 <label for="card_description_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Kart Təsviri ({{ $language->code }})<span class="text-red-500">*</span></label>
                                                 <textarea id="card_description_{{ $language->code }}" name="card_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('card_description.' . $language) }}</textarea>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="text_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mətn ({{ $language->code }})<span class="text-red-500">*</span></label>
-                                                <textarea id="text_{{ $language->code }}" name="text[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('text.' . $language) }}</textarea>
-                                            </div>
+
                                             <div class="mb-3">
                                                 <label for="product_description_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Məhsul Təsviri ({{ $language->code }})</label>
                                                 <textarea id="product_description_{{ $language->code }}" name="product_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('product_description.' . $language) }}</textarea>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="requirements_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Tələblər ({{ $language->code }})</label>
-                                                <textarea id="requirements_{{ $language->code }}" name="requirements[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('requirements.' . $language->code) }}</textarea>
-                                            </div>
+
                                             <div class="mb-3">
                                                 <label for="product_price_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Məhsul Qiyməti ({{ $language->code }})</label>
                                                 <input type="text" id="product_price_{{ $language->code }}" name="product_price[{{ $language->code }}]" value="{{ old('product_price.' . $language->code) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
@@ -69,7 +63,7 @@
                                                 <textarea id="mobile_description_{{ $language->code }}" name="mobile_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('mobile_description.' . $language->code) }}</textarea>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="mobile_qr_text_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mobil QR Mətn ({{ $language->code }})</label>
+                                                <label for="mobile_qr_text_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mobil QR ({{ $language->code }})</label>
                                                 <textarea id="mobile_qr_text_{{ $language->code }}" name="mobile_qr_text[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('mobile_qr_text.' . $language->code) }}</textarea>
                                             </div>
                                             <div class="mb-3">
@@ -84,6 +78,14 @@
                                                 <label for="meta_description_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Meta Təsviri ({{ $language->code }})</label>
                                                 <textarea id="meta_description_{{ $language->code }}" name="meta_description[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('meta_description.' . $language->code) }}</textarea>
                                             </div>
+                                            <div class="mb-3">
+                                                <label for="text_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Mətn ({{ $language->code }})<span class="text-red-500">*</span></label>
+                                                <textarea id="text_{{ $language->code }}" name="text[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('text.' . $language) }}</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="requirements_{{ $language->code }}" class="inline-block mb-2 text-base font-medium">Tələblər ({{ $language->code }})</label>
+                                                <textarea id="requirements_{{ $language->code }}" name="requirements[{{ $language->code }}]" class="ckeditortext form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">{{ old('requirements.' . $language->code) }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
                                     @php
@@ -92,22 +94,26 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
-                                <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5">
+                                <div class="mb-3">
+                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
+                                    <input multiple name="image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">Məhsul rəsmi</label>
+                                    <input multiple name="product_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">Məhsul mobil QR</label>
+                                    <input multiple name="mobile_product_qr[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="textArea" class="inline-block mb-2 text-base font-medium">Məhsul mobil rəsmi</label>
+                                    <input multiple name="mobile_product_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Məhsul rəsmi</label>
-                                <input multiple name="product_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                            </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Məhsul mobil QR</label>
-                                <input multiple name="mobile_product_qr[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                            </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Məhsul mobil rəsmi</label>
-                                <input multiple name="mobile_product_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                            </div>
+
+
                             <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
                                 <div class="mb-3">
                                     <label for="seo_links" class="inline-block mb-2 text-base font-medium">SEO Linklər</label>
@@ -125,7 +131,7 @@
                                 </label>
                             </div>
                             <div class="flex items-center gap-2 mb-2">
-                                <input id="checkboxDefault22" class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" value="1" name="is_project" >
+                                <input id="checkboxDefault22" class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" value="1" name="is_project">
                                 <label for="checkboxDefault21" class="align-middle">
                                     Layihədir
                                 </label>
