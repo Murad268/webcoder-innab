@@ -16,6 +16,7 @@ class ServiceContainer
         public StatusService $statusService,
         public RemoveService $removeService,
         public ImageService $imageService,
+        public PinService $pinRepository
     ) {}
 }
 

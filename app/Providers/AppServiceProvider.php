@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(\App\Services\StatusService::class),
                 $app->make(\App\Services\RemoveService::class),
                 $app->make(\App\Services\ImageService::class),
+                $app->make(\App\Services\PinService::class),
             );
         });
         $this->app->singleton(SettingsService::class, function ($app) {

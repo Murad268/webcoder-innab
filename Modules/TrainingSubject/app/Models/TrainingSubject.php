@@ -4,6 +4,7 @@ namespace Modules\TrainingSubject\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Training\Models\Training;
 use Modules\TrainingSubject\Database\Factories\TrainingSubjectFactory;
 use Spatie\Translatable\HasTranslations;
 
@@ -25,6 +26,10 @@ class TrainingSubject extends Model
             $maxOrder = self::max('order');
             $model->order = $maxOrder !== null ? $maxOrder + 1 : 1;
         });
+    }
+
+    public function training() {
+        return $this->belongsTo(Training::class);
     }
     protected static function newFactory(): TrainingSubjectFactory
     {

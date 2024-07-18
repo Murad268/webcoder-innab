@@ -16,4 +16,8 @@ class ModelRepository extends Repository
             ->orWhere('short_description->' . app()->getLocale(), 'like', "%{$query}%")
             ->paginate($limit);
     }
+
+    public function getPinnedData() {
+        return $this->modelClass::where('pinned', 1)->get();
+    }
 }

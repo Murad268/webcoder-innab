@@ -16,7 +16,8 @@ class NewsController extends Controller
         public ServiceContainer $services,
         public CommonService $commonService,
         public ModelRepository $repository
-    ) {}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -25,12 +26,13 @@ class NewsController extends Controller
     {
         $q = $request->q;
         $activeItemsCount = $this->repository->all_active()->count();
+        $pinned = $this->repository->getPinnedData();
         if ($q) {
             $items = $this->repository->search($q, 80);
         } else {
             $items = $this->repository->all(80);
         }
-        return view('news::index', compact('items', 'q', 'activeItemsCount'));
+        return view('news::index', compact('items', 'q', 'activeItemsCount', 'pinned'));
     }
 
     /**
@@ -114,27 +116,22 @@ class NewsController extends Controller
     }
     public function pin(Request $request)
     {
-        $id = $request->id;
-        $item = $this->repository->find($id);
-
-        if ($item) {
-            $item->update(['pinned' => true]);
-            return response()->json(['data' => $id, 'message' => 'Uğurla pinləndi.']);
-        } else {
-            return response()->json(['message' => 'Tapılmadı!'], 404);
-        }
+        return $this->commonService->executeSafely(function () use ($request) {
+            $id = $request->id;
+            $item = $this->repository->find($id);
+            return $this->services->pinRepository->pin($item);
+        }, true);
     }
 
-    public function unpin(Request $request) {
-        $id = $request->id;
-        $item = $this->repository->find($id);
-
-        if ($item) {
-            $item->update(['pinned' => false]);
-            return response()->json(['data' => $id, 'message' => 'Uğurla pindən çıxarıldı.']);
-        } else {
-            return response()->json(['message' => 'Tapılmadı!'], 404);
-        }
+    public function unpin(Request $request)
+    {
+        return $this->commonService->executeSafely(function () use ($request) {
+            $id = $request->id;
+            $item = $this->repository->find($id);
+            return $this->services->pinRepository->unpin($item);
+        }, true);
     }
+
+
 
 }

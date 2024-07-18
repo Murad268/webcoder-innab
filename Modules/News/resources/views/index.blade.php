@@ -43,6 +43,66 @@
                                 </form>
                             </div>
                         </div>
+                        <table id="alternativePagination" class="display dataTable w-full text-sm align-middle whitespace-nowrap" style="width:100%" aria-describedby="alternativePagination_info">
+                            <thead class="border-b border-slate-200 dark:border-zink-500">
+                                <tr>
+                                    <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500 sorting_asc" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 270.867px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">seç
+                                    </th>
+                                    <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 415.15px;" aria-label="Position: activate to sort column ascending">başlıq
+                                    </th>
+
+                                    <th class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting px-3 py-4 text-slate-900 bg-slate-200/50 font-semibold text-left dark:text-zink-50 dark:bg-zink-600 dark:group-[.bordered]:border-zink-500" tabindex="0" aria-controls="alternativePagination" rowspan="1" colspan="1" style="width: 165.517px;" aria-label="Salary: activate to sort column ascending">əməliyyatlar
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="pinned_wrapper">
+
+
+                                @foreach($pinned as $item)
+                                <tr class="group-[.stripe]:even:bg-slate-50 group-[.stripe]:dark:even:bg-zink-600 transition-all duration-150 ease-linear group-[.hover]:hover:bg-slate-50 dark:group-[.hover]:hover:bg-zink-600 [&amp;.selected]:bg-custom-500 dark:[&amp;.selected]:bg-custom-500 [&amp;.selected]:text-custom-50 dark:[&amp;.selected]:text-custom-50">
+
+                                    <td class="p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500 sorting_1">
+                                        <input data-id='{{$item->id}}' id="checkboxCircle2" class="select-lang border rounded-full appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-green-500 checked:border-green-500 dark:checked:bg-green-500 dark:checked:border-green-500 checked:disabled:bg-green-400 checked:disabled:border-green-400" type="checkbox" value="">
+                                    </td>
+
+
+
+                                    <td class=" p-3 group-[.bordered]:border group-[.bordered]:border-slate-200 group-[.bordered]:dark:border-zink-500">
+                                        {{$item->title}}
+                                    </td>
+
+
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="pin_wrapper" style="display: inline-block">
+                                                @if(!$item->pinned)
+                                                <a style="cursor: pointer" data-id="{{$item->id}}" class="pin btn btn-phoenix-success me-1 mb-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin">
+                                                        <path d="M12 17v5" />
+                                                        <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z" />
+                                                    </svg>
+                                                </a>
+                                                @else
+                                                <a style="cursor: pointer" data-id="{{$item->id}}" class="unpin btn btn-phoenix-success me-1 mb-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin-off">
+                                                        <path d="M12 17v5" />
+                                                        <path d="M15 9.34V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H7.89" />
+                                                        <path d="m2 2 20 20" />
+                                                        <path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h11" />
+                                                    </svg>
+                                                </a>
+                                                @endif
+                                            </div>
+
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
                         <div class="my-2 col-span-12 overflow-x-auto lg:col-span-12">
                             <table id="alternativePagination" class="display dataTable w-full text-sm align-middle whitespace-nowrap" style="width:100%" aria-describedby="alternativePagination_info">
                                 <thead class="border-b border-slate-200 dark:border-zink-500">
@@ -407,6 +467,7 @@
                 .then(data => {
                     btn.remove();
                     pinWrapper[i].appendChild(createUnpinSvg(id, i));
+                    window.location.reload();
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -427,10 +488,14 @@
                         id: id
                     })
                 })
-                .then(response => response.json())
+                .then(response => {
+                    response.json()
+                    window.location.reload();
+                })
                 .then(data => {
                     btn.remove();
                     pinWrapper[i].appendChild(createPinSvg(id, i));
+
                 })
                 .catch((error) => {
                     console.error('Error:', error);
