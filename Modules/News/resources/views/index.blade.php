@@ -58,6 +58,7 @@
                             <tbody class="pinned_wrapper">
 
 
+                                @if($pinned->count() > 0)
                                 @foreach($pinned as $item)
                                 <tr class="group-[.stripe]:even:bg-slate-50 group-[.stripe]:dark:even:bg-zink-600 transition-all duration-150 ease-linear group-[.hover]:hover:bg-slate-50 dark:group-[.hover]:hover:bg-zink-600 [&amp;.selected]:bg-custom-500 dark:[&amp;.selected]:bg-custom-500 [&amp;.selected]:text-custom-50 dark:[&amp;.selected]:text-custom-50">
 
@@ -99,6 +100,11 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @else
+                                <tr>
+                                    <td class="pt-4"><span>Heç bir pinlənmiş xəbər yoxdur</span></td>
+                                </tr>
+                                @endif
 
                             </tbody>
 
