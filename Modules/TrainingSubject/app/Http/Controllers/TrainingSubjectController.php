@@ -25,6 +25,8 @@ class TrainingSubjectController extends Controller
      */
     public function index(Request $request)
     {
+        $trainings = $this->trainingRepository->getAll();
+        $selectedTrainings = $request->trainings;
         $q = $request->q;
         $activeItemsCount = $this->repository->all_active()->count();
         if ($q) {
@@ -32,7 +34,12 @@ class TrainingSubjectController extends Controller
         } else {
             $items = $this->repository->all(80);
         }
-        return view('trainingsubject::index', compact('items', 'q', 'activeItemsCount'));
+        if($selectedTrainings) {
+            $items = $this->repository->findWhereInGetPaginate($selectedTrainings, 80, 'training_id');
+        } else {
+            $selectedTrainings = [];
+        }
+        return view('trainingsubject::index', compact('items', 'q', 'activeItemsCount', 'trainings', 'selectedTrainings'));
     }
 
     /**

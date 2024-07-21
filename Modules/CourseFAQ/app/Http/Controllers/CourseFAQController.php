@@ -22,6 +22,8 @@ class CourseFAQController extends Controller
 
     public function index(Request $request)
     {
+        $trainings = $this->trainingRepository->getAll();
+        $selectedTrainings = $request->trainings;
         $q = $request->q;
         $activeItemsCount = $this->repository->all_active()->count();
         if ($q) {
@@ -29,7 +31,12 @@ class CourseFAQController extends Controller
         } else {
             $items = $this->repository->all(80);
         }
-        return view('coursefaq::index', compact('items', 'q', 'activeItemsCount'));
+        if($selectedTrainings) {
+            $items = $this->repository->findWhereInGetPaginate($selectedTrainings, 80, 'course_id');
+        } else {
+            $selectedTrainings = [];
+        }
+        return view('coursefaq::index', compact('items', 'q', 'activeItemsCount', 'trainings', 'selectedTrainings'));
     }
 
     public function create()
