@@ -23,26 +23,22 @@ class BlogContentController extends Controller
 
     public function index(Request $request)
     {
+        $blogs = $this->blog->getAll();
+        $selectedBlogs = $request->blogs;
         $q = $request->q;
-        $blog_id = $request->blog_id;
-
         $activeItemsCount = $this->repository->all_active()->count();
-
         if ($q) {
-            if ($blog_id) {
-                $items = $this->repository->searchWithBlog($q, 80, $blog_id);
-            } else {
-                $items = $this->repository->search($q, 80);
-            }
+            $items = $this->repository->search($q, 80);
         } else {
-            if ($blog_id) {
-                $items = $this->repository->getAllWidthBlog(80, $blog_id);
-            } else {
-                $items = $this->repository->all(80);
-            }
+            $items = $this->repository->all(80);
+        }
+        if($selectedBlogs) {
+            $items = $this->repository->findWhereInGetPaginate($selectedBlogs, 80, 'blog_id');
+        } else {
+            $selectedBlogs = [];
         }
 
-        return view('blogcontent::index', compact('items', 'q', 'activeItemsCount', 'blog_id'));
+        return view('blogcontent::index', compact('items', 'q', 'activeItemsCount', 'blogs', 'selectedBlogs'));
     }
 
 
@@ -81,7 +77,7 @@ class BlogContentController extends Controller
         return $this->executeSafely(function () use ($request, $id) {
             $partner = $this->repository->find($id);
             $this->services->crudService->update($partner, $request, 'blogcontent');
-            return redirect()->route('blogcontent.index')->with('status', 'Təlim uğurla əlavə edildi');
+            return redirect()->route('blogcontent.index')->with('status', 'Kontent uğurla yeniləndi');
         }, 'blogcontent.index');
     }
 

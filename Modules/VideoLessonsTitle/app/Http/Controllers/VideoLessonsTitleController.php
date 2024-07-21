@@ -25,6 +25,8 @@ class VideoLessonsTitleController extends Controller
      */
     public function index(Request $request)
     {
+        $videoLessons = $this->videoLessonsRepository->getAll();
+        $selectedLessons = $request->videolessons;
         $q = $request->q;
 
         if ($q) {
@@ -32,8 +34,13 @@ class VideoLessonsTitleController extends Controller
         } else {
             $items = $this->repository->all(80);
         }
+        if($selectedLessons) {
+            $items = $this->repository->findWhereInGetPaginate($selectedLessons, 80, 'lesson_id');
+        } else {
+            $selectedLessons = [];
+        }
         $activeLangsCount = $this->repository->all_active()->count();
-        return view('videolessonstitle::index', compact('items', 'activeLangsCount', 'q'));
+        return view('videolessonstitle::index', compact('items', 'activeLangsCount', 'q', 'selectedLessons', 'videoLessons'));
     }
 
 

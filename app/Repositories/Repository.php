@@ -11,7 +11,10 @@ abstract class Repository
     {
         return $this->modelClass::orderBy('order')->where('status', 1)->get();
     }
-
+    public function getAll()
+    {
+        return $this->modelClass::orderBy('order')->get();
+    }
     public function all($limit=1)
     {
         return $this-> modelClass::orderBy('order')->paginate($limit);
@@ -27,7 +30,10 @@ abstract class Repository
     {
         return $this->modelClass::whereIn('id', $data)->get();
     }
-
+    public function findWhereInGetPaginate(array $data, $limit, $relation_id)
+    {
+        return $this->modelClass::whereIn($relation_id, $data)->paginate($limit);
+    }
     public function getModel()
     {
         return $this->modelClass;

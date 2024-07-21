@@ -15,6 +15,7 @@
 
 
     <link rel="stylesheet" href="{{asset('panel/assets/css/tailwind2.css')}}">
+    @stack('styles')
     <style>
         th:after,
         th:before {
