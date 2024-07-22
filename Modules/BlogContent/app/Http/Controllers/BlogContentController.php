@@ -24,21 +24,12 @@ class BlogContentController extends Controller
     public function index(Request $request)
     {
         $blogs = $this->blog->getAll();
-        $selectedBlogs = $request->blogs;
-        $q = $request->q;
-        $activeItemsCount = $this->repository->all_active()->count();
-        if ($q) {
-            $items = $this->repository->search($q, 80);
-        } else {
-            $items = $this->repository->all(80);
-        }
-        if($selectedBlogs) {
-            $items = $this->repository->findWhereInGetPaginate($selectedBlogs, 80, 'blog_id');
-        } else {
-            $selectedBlogs = [];
-        }
+        $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'blog_id');
 
-        return view('blogcontent::index', compact('items', 'q', 'activeItemsCount', 'blogs', 'selectedBlogs'));
+        return view('blogcontent::index', array_merge($result, [
+            'blogs' => $blogs,
+            'activeItemsCount' => $this->repository->all_active()->count(),
+        ]));
     }
 
 

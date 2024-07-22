@@ -27,22 +27,15 @@ class VideoLessonsController extends Controller
      */
     public function index(Request $request)
     {
-        $categories =  $this->category->getAll();
-        $q = $request->q;
-        $activeItemsCount = $this->repository->all_active()->count();
-        $selectedCategories = $request->categories;
-        if ($q) {
-            $items = $this->repository->search($q, 80);
-        } else {
-            $items = $this->repository->all(80);
-        }
-        if($selectedCategories) {
-            $items = $this->repository->findWhereInGetPaginate($selectedCategories, 80, 'category_id');
-        } else {
-            $selectedCategories = [];
-        }
-        return view('videolessons::index', compact('items', 'q', 'activeItemsCount', 'categories', 'selectedCategories'));
+        $categories = $this->category->getAll();
+        $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'category_id');
+
+        return view('videolessons::index', array_merge($result, [
+            'categories' => $categories,
+            'activeItemsCount' => $this->repository->all_active()->count(),
+        ]));
     }
+
 
 
     /**

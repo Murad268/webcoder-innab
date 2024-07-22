@@ -25,11 +25,11 @@
                                     seçilənləri sil
                                 </a>
                                 <form action="">
-                                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 choices__input" name="titles[]" multiple="multiple" id="mySelect" style="width: 300px;">
+                                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 choices__input" name="selectedItems[]" multiple="multiple" id="mySelect" style="width: 300px;">
                                         @foreach($titles as $title)
-                                            <option @selected(in_array($title->id, $selectedTitles)) value="{{$title->id}}">
-                                                {{$title->title}}
-                                            </option>
+                                        <option @selected(in_array($title->id, $selectedItems)) value="{{$title->id}}">
+                                            {{$title->title}}
+                                        </option>
                                         @endforeach
                                     </select>
                                     <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Tap</button>
@@ -111,29 +111,29 @@
 
                                                 @if($item->status)
                                                 @if($activeLangsCount < 2) <a style="cursor: none" class="btn btn-phoenix-danger me-1 mb-1" type="link">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
-                                                            <circle cx="12" cy="12" r="10" />
-                                                            <path d="M12 16v-4" />
-                                                            <path d="M12 8h.01" />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
+                                                        <circle cx="12" cy="12" r="10" />
+                                                        <path d="M12 16v-4" />
+                                                        <path d="M12 8h.01" />
+                                                    </svg>
+                                                    </a>
+                                                    @else
+                                                    <a href="{{route('lesson.changeStatusFalse',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_false" type="link">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-down">
+                                                            <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
+                                                            <polyline points="16 17 22 17 22 11" />
                                                         </svg>
-                                                        </a>
-                                                        @else
-                                                        <a href="{{route('lesson.changeStatusFalse',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_false" type="link">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-down">
-                                                                <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
-                                                                <polyline points="16 17 22 17 22 11" />
-                                                            </svg>
-                                                        </a>
-                                                        @endif
+                                                    </a>
+                                                    @endif
 
-                                                        @else
-                                                        <a href="{{route('lesson.changeStatusTrue',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_true" type="button">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up">
-                                                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                                                                <polyline points="16 7 22 7 22 13" />
-                                                            </svg>
-                                                        </a>
-                                                        @endif
+                                                    @else
+                                                    <a href="{{route('lesson.changeStatusTrue',$item->id)}}" class="btn btn-phoenix-secondary me-1 mb-1 change_status_true" type="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up">
+                                                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                                                            <polyline points="16 7 22 7 22 13" />
+                                                        </svg>
+                                                    </a>
+                                                    @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -155,47 +155,49 @@
 </div>
 @endsection
 @push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <style>
-        .select2-container--default .select2-selection--multiple {
-            border: 1px solid #F0F3F7;
-            border-radius: 4px;
-        }
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--multiple {
+        border: 1px solid #F0F3F7;
+        border-radius: 4px;
+    }
 
-        .select2-container--default .select2-selection--multiple .select2-selection__choice {
-            background-color: #007bff;
-            border: 1px solid #007bff;
-            color: white;
-            border-radius: 4px;
-        }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #007bff;
+        border: 1px solid #007bff;
+        color: white;
+        border-radius: 4px;
+    }
 
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-            color: white;
-        }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: white;
+    }
 
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-            background-color: #0056b3;
-            color: white;
-        }
-        .dataTables_length {
-            align-items: center;
-        }
-        .dataTables_length form {
-            display: flex;
-            align-items: center;
-            column-gap: 10px;
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+        background-color: #0056b3;
+        color: white;
+    }
 
-        }
-    </style>
+    .dataTables_length {
+        align-items: center;
+    }
+
+    .dataTables_length form {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+
+    }
+</style>
 
 @endpush
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        $('#mySelect').select2();
+<script>
+    $('#mySelect').select2();
     document.querySelectorAll('.change_status_false, .change_status_true, .set_default_lang').forEach(link => {
         link.addEventListener('click', (e) => {
             if (e.target.matches('.change_status_false *')) {

@@ -23,22 +23,13 @@ class BlogController extends Controller
 
     public function index(Request $request)
     {
-
         $categories = $this->category->getAll();
-        $selectedCategory = $request->categories;
-        $q = $request->q;
-        $activeItemsCount = $this->repository->all_active()->count();
-        if ($q) {
-            $items = $this->repository->search($q, 80);
-        } else {
-            $items = $this->repository->all(80);
-        }
-        if($selectedCategory) {
-            $items = $this->repository->findWhereInGetPaginate($selectedCategory, 80, 'category_id');
-        } else {
-            $selectedCategory = [];
-        }
-        return view('blog::index', compact('items', 'q', 'activeItemsCount', 'categories', 'selectedCategory'));
+        $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'category_id');
+
+        return view('blog::index', array_merge($result, [
+            'categories' => $categories,
+            'activeItemsCount' => $this->repository->all_active()->count(),
+        ]));
     }
 
 

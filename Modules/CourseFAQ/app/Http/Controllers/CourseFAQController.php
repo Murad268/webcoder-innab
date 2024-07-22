@@ -23,20 +23,12 @@ class CourseFAQController extends Controller
     public function index(Request $request)
     {
         $trainings = $this->trainingRepository->getAll();
-        $selectedTrainings = $request->trainings;
-        $q = $request->q;
-        $activeItemsCount = $this->repository->all_active()->count();
-        if ($q) {
-            $items = $this->repository->search($q, 80);
-        } else {
-            $items = $this->repository->all(80);
-        }
-        if($selectedTrainings) {
-            $items = $this->repository->findWhereInGetPaginate($selectedTrainings, 80, 'course_id');
-        } else {
-            $selectedTrainings = [];
-        }
-        return view('coursefaq::index', compact('items', 'q', 'activeItemsCount', 'trainings', 'selectedTrainings'));
+        $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'course_id');
+
+        return view('coursefaq::index', array_merge($result, [
+            'trainings' => $trainings,
+            'activeItemsCount' => $this->repository->all_active()->count(),
+        ]));
     }
 
     public function create()

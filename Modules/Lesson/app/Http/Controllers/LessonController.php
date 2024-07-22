@@ -26,21 +26,12 @@ class LessonController extends Controller
     public function index(Request $request)
     {
         $titles = $this->videLessonsTitleRepository->getAll();
-        $selectedTitles = $request->titles;
+        $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'title_id');
 
-        $q = $request->q;
-        if ($q) {
-            $items = $this->repository->search($q, 80);
-        } else {
-            $items = $this->repository->all(80);
-        }
-        if($selectedTitles) {
-            $items = $this->repository->findWhereInGetPaginate($selectedTitles, 80, 'title_id');
-        } else {
-            $selectedTitles = [];
-        }
-        $activeLangsCount = $this->repository->all_active()->count();
-        return view('lesson::index', compact('items', 'activeLangsCount', 'q', 'titles', 'selectedTitles'));
+        return view('lesson::index', array_merge($result, [
+            'titles' => $titles,
+            'activeLangsCount' => $this->repository->all_active()->count(),
+        ]));
     }
 
     /**

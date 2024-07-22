@@ -26,23 +26,13 @@ class VideoLessonsTitleController extends Controller
     public function index(Request $request)
     {
         $videoLessons = $this->videoLessonsRepository->getAll();
-        $selectedLessons = $request->videolessons;
-        $q = $request->q;
+        $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'lesson_id');
 
-        if ($q) {
-            $items = $this->repository->search($q, 80);
-        } else {
-            $items = $this->repository->all(80);
-        }
-        if($selectedLessons) {
-            $items = $this->repository->findWhereInGetPaginate($selectedLessons, 80, 'lesson_id');
-        } else {
-            $selectedLessons = [];
-        }
-        $activeLangsCount = $this->repository->all_active()->count();
-        return view('videolessonstitle::index', compact('items', 'activeLangsCount', 'q', 'selectedLessons', 'videoLessons'));
+        return view('videolessonstitle::index', array_merge($result, [
+            'videoLessons' => $videoLessons,
+            'activeLangsCount' => $this->repository->all_active()->count(),
+        ]));
     }
-
 
     /**
      * Show the form for creating a new resource.
