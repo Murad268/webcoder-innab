@@ -31,7 +31,7 @@ class ImageService
         }
 
         SystemFiles::create([
-            'url' => $imagePath,
+            'url' => 'storage/'.$imagePath,
             'file_type' => $type,
             'relation_id' => $relation_id,
             'model_type' => $model_type,

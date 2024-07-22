@@ -23,7 +23,7 @@ class FileService
 
         // Save file information to the database
         SystemFiles::create([
-            'url' => $filePath,
+            'url' => 'storage/'.$filePath,
             'file_type' => $type,
             'relation_id' => $relation_id,
             'model_type' => $model_type

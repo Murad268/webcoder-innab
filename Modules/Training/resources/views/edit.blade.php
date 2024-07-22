@@ -91,8 +91,8 @@
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($training->images as $image)
                                     <div style="position: relative; width: 250px; height: 250px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
                                         </a>
                                         <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
                                             X
@@ -119,12 +119,12 @@
                                 @foreach($training->files as $file)
                                 <div style="position: relative; width: 250px; height: 250px;">
                                     @if(in_array(pathinfo($file->url, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif', 'svg']))
-                                    <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $file->url) }}">
-                                        <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $file->url) }}" alt="">
+                                    <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($file->url) }}">
+                                        <img style="width: 100%; height: 100%;" src="{{ asset($file->url) }}" alt="">
                                     </a>
                                     @elseif(pathinfo($file->url, PATHINFO_EXTENSION) == 'pdf')
-                                    <iframe style="width: 100%; height: 100%;" src="{{ asset('storage/' . $file->url) }}"></iframe>
-                                    <button type="button" onclick="openPdf('{{ asset('storage/' . $file->url) }}')" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.5); color: white; padding: 10px; border: none; cursor: pointer;">
+                                    <iframe style="width: 100%; height: 100%;" src="{{ asset($file->url) }}"></iframe>
+                                    <button type="button" onclick="openPdf('{{ asset($file->url) }}')" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.5); color: white; padding: 10px; border: none; cursor: pointer;">
                                         Open PDF
                                     </button>
                                     @endif

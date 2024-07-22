@@ -11,6 +11,10 @@ abstract class Repository
     {
         return $this->modelClass::orderBy('order')->where('status', 1)->get();
     }
+    public function all_activeWith($relations = [])
+    {
+        return $this->modelClass::orderBy('order')->with($relations)->where('status', 1)->get();
+    }
     public function getAll()
     {
         return $this->modelClass::orderBy('order')->get();
@@ -19,6 +23,7 @@ abstract class Repository
     {
         return $this->modelClass::orderBy('order')->paginate($limit);
     }
+
     abstract public function search($query, $limit = 1);
 
     public function find($id)

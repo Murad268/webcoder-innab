@@ -13,5 +13,4 @@ class ModelRepository extends Repository
         return $this->modelClass::where('description->' . app()->getLocale(), 'like', "%{$query}%")
             ->paginate($limit);
     }
-
 }

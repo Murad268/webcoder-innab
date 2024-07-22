@@ -38,10 +38,6 @@
 
                                     <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
                                         <div class="mb-3">
-                                            <label for="inputText1" class="inline-block mb-2 text-base font-medium">Statistika sayı ({{$language->code}})<span class="text-red-500">*</span></label>
-                                            <input type="text" id="inputText1" name="center_text[{{$language->code}}]" value="{{old('center_text', $model->getTranslation('center_text', $language->code))}}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                                        </div>
-                                        <div class="mb-3">
                                             <label for="inputText1" class="inline-block mb-2 text-base font-medium">Statistika başlığı ({{$language->code}})<span class="text-red-500">*</span></label>
                                             <input type="text" id="inputText1" name="sub_text[{{$language->code}}]" value="{{old('sub_text', $model->getTranslation('sub_text', $language->code))}}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                         </div>
@@ -59,11 +55,11 @@
                         <div style="margin-bottom: 10px">
                             <div style="display: flex; column-gap: 5px">
                                 @foreach($model->images as $image)
-                                <div style="position: relative; width: 250px; height: 250px;">
-                                    <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
-                                        <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
+                                <div style="position: relative; width: 50px; height: 50px;">
+                                    <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                        <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
                                     </a>
-                                    <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                    <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 1px;" class="delete_image" data-id="{{ $image->id }}">
                                         X
                                     </a>
                                 </div>
@@ -71,12 +67,17 @@
                             </div>
 
                         </div>
+
+
                         <div class="mb-3">
-                            <label for="textArea" class="inline-block mb-2 text-base font-medium">Şəkil</label>
+                            <label for="textArea" class="inline-block mb-2 text-base font-medium">Ikon</label>
                             @if($model->images->count()<1) <input name="image" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                                 @endif
                         </div>
-
+                        <div class="mb-3">
+                            <label for="inputText1" class="inline-block mb-2 text-base font-medium">Statistika sayı<span class="text-red-500">*</span></label>
+                            <input type="text" id="inputText1" name="center_text" value="{{old('center_text', $model->center_text)}}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                        </div>
                         <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                             əlavə et
                         </button>

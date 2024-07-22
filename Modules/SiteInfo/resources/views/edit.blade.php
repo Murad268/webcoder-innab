@@ -92,8 +92,8 @@
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($model->images->where('type', 'nav_logo') as $image)
                                     <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
                                         </a>
                                         <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
                                             X
@@ -113,8 +113,8 @@
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($model->images->where('type', 'footer_logo') as $image)
                                     <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset('storage/' . $image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset('storage/' . $image->url) }}" alt="">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
                                         </a>
                                         <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
                                             X
