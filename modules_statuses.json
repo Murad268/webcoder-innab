@@ -29,5 +29,6 @@
     "Privacy": true,
     "Info": true,
     "SiteInfo": true,
-    "Translate": true
+    "Translate": true,
+    "HeaderDatas": true
 }

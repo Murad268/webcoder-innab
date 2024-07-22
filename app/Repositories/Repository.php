@@ -15,9 +15,9 @@ abstract class Repository
     {
         return $this->modelClass::orderBy('order')->get();
     }
-    public function all($limit=1)
+    public function all($limit = 1)
     {
-        return $this-> modelClass::orderBy('order')->paginate($limit);
+        return $this->modelClass::orderBy('order')->paginate($limit);
     }
     abstract public function search($query, $limit = 1);
 
@@ -25,7 +25,6 @@ abstract class Repository
     {
         return $this->modelClass::findOrFail($id);
     }
-
     public function findWhereInGet(array $data)
     {
         return $this->modelClass::whereIn('id', $data)->get();
@@ -38,13 +37,12 @@ abstract class Repository
     {
         return $this->modelClass;
     }
-
     public function widthOrder($order)
     {
         return $this->modelClass::where('order', $order)->first();
     }
-
-    public function where($key, $value) {
+    public function where($key, $value)
+    {
         return $this->modelClass::where($key, $value);
     }
 }

@@ -276,20 +276,24 @@ class {$name}Controller extends Controller
         //
     }
 
+    public function changeStatusTrue(\$id)
+    {
+        return \$this->commonService->changeStatus(\$id, \$this->repository, \$this->services->statusService, new ScholarshipProgram(), true, '{$loweredName}.index');
+    }
 
     public function changeStatusFalse(\$id)
     {
-        return \$this->commonService->changeStatus(\$id, \$this->repository, \$this->services->statusService, new ScholarshipProgram(), false, 'blog.index');
+        return \$this->commonService->changeStatus(\$id, \$this->repository, \$this->services->statusService, new ScholarshipProgram(), false, '{$loweredName}.index');
     }
 
     public function delete_selected_items(Request \$request)
     {
-        return \$this->commonService->deleteSelectedItems(\$this->repository, \$request, \$this->services->removeService, 'blog.index');
+        return \$this->commonService->deleteSelectedItems(\$this->repository, \$request, \$this->services->removeService, '{$loweredName}.index');
     }
 
     public function deleteFile(\$id)
     {
-        return \$this->commonService->deleteFile(\$id, \$this->services->imageService, 'blog.index');
+        return \$this->commonService->deleteFile(\$id, \$this->services->imageService, '{$loweredName}.index');
     }
 }
 ";
