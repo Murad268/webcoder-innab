@@ -56,8 +56,8 @@ abstract class Repository
         return $this->modelClass::where('category_id', $categoryId)->orderBy('order')->where('status', 1)->get();
     }
 
-    public function getTrainingByCategoryWith($categoryId, $relations = [])
+    public function getTrainingByCategoryWith($relation, $categoryId, $relations = [])
     {
-        return $this->modelClass::where('category_id', $categoryId)->orderBy('order')->where('status', 1)->with($relations)->get();
+        return $this->modelClass::where($relation, $categoryId)->orderBy('order')->where('status', 1)->with($relations)->get();
     }
 }

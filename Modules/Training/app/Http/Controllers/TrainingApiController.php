@@ -18,7 +18,7 @@ class TrainingApiController extends Controller
     public function get_trainings(Request $request): JsonResponse
     {
         $category_id = $request->id;
-        $items = $this->repository->getTrainingByCategoryWith($category_id, ['image', 'file']);
+        $items = $this->repository->getTrainingByCategoryWith('category_id',$category_id, ['image', 'file']);
         $lang = $request->locale;
 
         if ($lang) {

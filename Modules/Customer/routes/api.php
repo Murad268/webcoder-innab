@@ -23,5 +23,5 @@ Route::post('customer/delete_selected_items', [CustomerController::class, 'delet
 
 
 Route::prefix('{locale}')->group(function () {
-    Route::get('/get_customers', [CustomerApiController::class, 'get_customers'])->name('partners.get_customers');
+    Route::get('/get_customers', [CustomerApiController::class, 'get_customers'])->name('customer.get_customers');
 });
