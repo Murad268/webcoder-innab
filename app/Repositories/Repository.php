@@ -50,4 +50,14 @@ abstract class Repository
     {
         return $this->modelClass::where($key, $value);
     }
+
+    public function getTrainingByCategory($categoryId)
+    {
+        return $this->modelClass::where('category_id', $categoryId)->orderBy('order')->where('status', 1)->get();
+    }
+
+    public function getTrainingByCategoryWith($categoryId, $relations = [])
+    {
+        return $this->modelClass::where('category_id', $categoryId)->orderBy('order')->where('status', 1)->with($relations)->get();
+    }
 }

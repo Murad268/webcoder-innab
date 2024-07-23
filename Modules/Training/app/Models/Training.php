@@ -41,10 +41,29 @@ class Training extends Model
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'training')->where('file_type', 'image');
     }
 
+
+    public function image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'training')->where('file_type', 'image')->select('url', 'relation_id');
+    }
+
+
+
+
+
+
     public function files()
     {
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'training')->where('file_type', 'application');
     }
+
+
+    public function file()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'training')->where('file_type', 'application')->select('url', 'relation_id');
+    }
+
+
     protected static function newFactory(): TrainingFactory
     {
         //return TrainingFactory::new();
