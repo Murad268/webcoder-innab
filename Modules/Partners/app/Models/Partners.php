@@ -34,6 +34,10 @@ class Partners extends Model
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'partner')->where('file_type', 'image');
     }
 
+    public function image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'partner')->where('file_type', 'image')->select('url', 'relation_id');
+    }
 
 
     protected static function newFactory(): PartnersFactory

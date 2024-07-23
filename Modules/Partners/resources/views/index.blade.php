@@ -18,7 +18,7 @@
                         <div class="self-center col-span-12 lg:col-span-6">
                             <div style="display: flex; column-gap: 10px" class="dataTables_length" id="alternativePagination_length">
                                 <a href="{{route('partners.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
-                                <a data-link="{{route('api.project.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
+                                <a data-link="{{route('api.partners.delete_selected_items')}}" style="cursor: pointer" type="button" class="delete-all px-4 py-3 text-sm text-purple-500 border border-purple-200 rounded-md bg-purple-50 dark:bg-purple-400/20 dark:border-purple-500/50">
                                     seçilənləri sil
                                 </a>
                                 <label> @if (session('status'))

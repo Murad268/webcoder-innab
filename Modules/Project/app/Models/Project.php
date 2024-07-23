@@ -24,6 +24,26 @@ class Project extends Model
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'project')->where('file_type', 'image');
     }
 
+    public function image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'project')->where('file_type', 'image')->select('url', 'relation_id')->where('type', 'image');
+    }
+
+    public function mobile_product_image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'project')->where('file_type', 'image')->select('url', 'relation_id')->where('type', 'mobile_product_image');
+    }
+    public function product_image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'project')->where('file_type', 'image')->select('url', 'relation_id')->where('type', 'product_image');
+    }
+
+    public function mobile_product_qr()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'project')->where('file_type', 'image')->select('url', 'relation_id')->where('type', 'mobile_product_qr');
+    }
+
+
 
     protected static function newFactory(): ProjectFactory
     {

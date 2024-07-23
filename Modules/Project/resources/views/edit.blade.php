@@ -105,11 +105,11 @@
                             <div style="margin-bottom: 10px">
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($project->images->where('type', 'image') as $image)
-                                    <div style="position: relative; width: 250px; height: 250px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                    <div style="position: relative; width: 50px; height: 50px;">
+                                        <a target="_blank" style="display: block; width: 50px; height: 50px;" href="{{ asset($image->url) }}">
                                             <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
                                         </a>
-                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding:1px;" class="delete_image" data-id="{{ $image->id }}">
                                             X
                                         </a>
                                     </div>
@@ -128,11 +128,11 @@
                             <div style="margin-bottom: 10px">
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($project->images->where('type', 'product_image') as $image)
-                                    <div style="position: relative; width: 250px; height: 250px;">
+                                    <div style="position: relative; width: 50px; height: 50px;">
                                         <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
                                             <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
                                         </a>
-                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 1px;" class="delete_image" data-id="{{ $image->id }}">
                                             X
                                         </a>
                                     </div>
@@ -152,11 +152,11 @@
                             <div style="margin-bottom: 10px">
                                 <div style="display: flex; column-gap: 5px">
                                     @foreach($project->images->where('type', 'mobile_product_qr') as $image)
-                                    <div style="position: relative; width: 250px; height: 250px;">
+                                    <div style="position: relative; width: 50px; height: 50px;">
                                         <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
                                             <img style="width: 100%; height: 100%;" src="{{ asset( $image->url) }}" alt="">
                                         </a>
-                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 1px;" class="delete_image" data-id="{{ $image->id }}">
                                             X
                                         </a>
                                     </div>
@@ -182,7 +182,7 @@
                                         <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
                                             <img style="width: 100%; height: 100%;" src="{{ asset( $image->url) }}" alt="">
                                         </a>
-                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                        <a href="{{route('training.deleteFile', $image->id)}}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 1px;" class="delete_image" data-id="{{ $image->id }}">
                                             X
                                         </a>
                                     </div>
