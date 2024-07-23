@@ -78,6 +78,10 @@
                             <label for="inputText1" class="inline-block mb-2 text-base font-medium">Statistika sayı<span class="text-red-500">*</span></label>
                             <input type="text" id="inputText1" name="center_text" value="{{old('center_text', $model->center_text)}}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                         </div>
+                        <div class="mb-3">
+                            <label for="inputText1" class="inline-block mb-2 text-base font-medium">Sıra<span class="text-red-500">*</span></label>
+                            <input type="text" id="inputText1" name="order" value="{{old('order', $model->order)}}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                        </div>
                         <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                             əlavə et
                         </button>

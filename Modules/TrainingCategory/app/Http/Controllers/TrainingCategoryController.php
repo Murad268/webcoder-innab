@@ -29,7 +29,7 @@ class TrainingCategoryController extends Controller
         } else {
             $items = $this->repository->all(80);
         }
-        $activeLangsCount = $this->repository->all()->count();
+        $activeLangsCount = $this->repository->all_active()->count();
         return view('trainingcategory::index', compact('items', 'activeLangsCount', 'q'));
     }
 

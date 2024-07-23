@@ -6,7 +6,7 @@
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
-                <h5 class="text-16"> Dillər </h5>
+                <h5 class="text-16"> Təlim kateqoriyaları </h5>
             </div>
 
         </div>
@@ -100,7 +100,7 @@
                                                 </a>
 
                                                 @if($item->status)
-                                                @if($activeLangsCount < 2 or $items->count() < 2) <a style="cursor: none" class="btn btn-phoenix-danger me-1 mb-1" type="link">
+                                                @if($activeLangsCount < 2) <a style="cursor: none" class="btn btn-phoenix-danger me-1 mb-1" type="link">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
                                                             <circle cx="12" cy="12" r="10" />
                                                             <path d="M12 16v-4" />
