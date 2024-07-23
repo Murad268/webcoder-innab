@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Customer\Http\Controllers\CustomerApiController;
 use Modules\Customer\Http\Controllers\CustomerController;
 
 /*
@@ -18,3 +19,9 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('customer', CustomerController::class)->names('customer');
 });
 Route::post('customer/delete_selected_items', [CustomerController::class, 'delete_selected_items'])->name('customer.delete_selected_items');
+
+
+
+Route::prefix('{locale}')->group(function () {
+    Route::get('/get_customers', [CustomerApiController::class, 'get_customers'])->name('partners.get_customers');
+});
