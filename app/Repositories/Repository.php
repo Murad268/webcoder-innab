@@ -30,6 +30,10 @@ abstract class Repository
     {
         return $this->modelClass::findOrFail($id);
     }
+    public function findWith($id, $relation = [])
+    {
+        return $this->modelClass::with($relation)->findOrFail($id);
+    }
     public function findWhereInGet(array $data)
     {
         return $this->modelClass::whereIn('id', $data)->get();

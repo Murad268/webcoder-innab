@@ -33,6 +33,16 @@ class Corporative extends Model
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'corporative')->where('file_type', 'image');
     }
 
+    public function image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'corporative')->where('file_type', 'image')->where('type', 'image')->select('url', 'relation_id');
+    }
+    public function banner()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'corporative')->where('file_type', 'image')->where('type', 'banner')->select('url', 'relation_id');
+    }
+
+
     protected static function newFactory(): CorporativeFactory
     {
         //return CorporativeFactory::new();
