@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Room\Http\Controllers\RoomApiController;
 use Modules\Room\Http\Controllers\RoomController;
 
 /*
@@ -18,3 +19,6 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('room', RoomController::class)->names('room');
 });
 Route::post('room/delete_selected_items', [RoomController::class, 'delete_selected_items'])->name('room.delete_selected_items');
+Route::prefix('{locale}')->group(function () {
+    Route::get('/get_rooms', [RoomApiController::class, 'get_rooms'])->name('room.get_rooms');
+});

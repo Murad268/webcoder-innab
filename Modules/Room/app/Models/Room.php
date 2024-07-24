@@ -19,6 +19,21 @@ class Room extends Model
     {
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'room')->where('file_type', 'image');
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $maxOrder = self::max('order');
+            $model->order = $maxOrder !== null ? $maxOrder + 1 : 1;
+        });
+    }
+
+    public function image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'room')->where('file_type', 'image');
+    }
+
     protected static function newFactory(): RoomFactory
     {
         //return RoomFactory::new();
