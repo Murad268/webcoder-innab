@@ -24,7 +24,9 @@ class News extends Model
 
         static::creating(function ($model) {
             $maxOrder = self::max('order');
+            $maxPinnedOrder = self::max('pinned_order');
             $model->order = $maxOrder !== null ? $maxOrder + 1 : 1;
+            $maxPinnedOrder->pinned_order = $maxPinnedOrder !== null ? $maxPinnedOrder + 1 : 1;
         });
     }
 
@@ -32,6 +34,11 @@ class News extends Model
     public function images()
     {
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'news')->where('file_type', 'image');
+    }
+
+    public function image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'news')->where('file_type', 'image');
     }
 
     protected static function newFactory(): NewsFactory

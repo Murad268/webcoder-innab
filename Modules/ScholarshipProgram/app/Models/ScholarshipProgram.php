@@ -33,6 +33,12 @@ class ScholarshipProgram extends Model
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'scholarshipprogram')->where('file_type', 'image');
     }
 
+    public function image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'scholarshipprogram')->where('file_type', 'image')->select('url', 'relation_id');
+    }
+
+
     protected static function newFactory(): ScholarshipProgramFactory
     {
         //return ScholarshipProgramFactory::new();

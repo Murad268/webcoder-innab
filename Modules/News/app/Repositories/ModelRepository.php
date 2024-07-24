@@ -18,6 +18,6 @@ class ModelRepository extends Repository
     }
 
     public function getPinnedData() {
-        return $this->modelClass::where('pinned', 1)->get();
+        return $this->modelClass::where('pinned', 1)->orderBy("pinned_order")->get();
     }
 }

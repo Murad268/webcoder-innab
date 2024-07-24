@@ -21,3 +21,9 @@ Route::post('news/delete_selected_items', [NewsController::class, 'delete_select
 Route::post('news/pin', [NewsController::class, 'pin'])->name('news.pin');
 Route::post('news/unpin', [NewsController::class, 'unpin'])->name('news.unpin');
 
+
+use Modules\News\Http\Controllers\NewsApiController;
+
+Route::prefix('{locale}')->group(function () {
+    Route::get('/get_news', [NewsApiController::class, 'get_news'])->name('news.get_news');
+});

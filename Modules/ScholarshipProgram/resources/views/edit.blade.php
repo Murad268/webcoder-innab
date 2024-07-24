@@ -12,8 +12,9 @@
             <div class="card col-span-2">
                 <div class="card-body">
                     <div>
-                        <form enctype="multipart/form-data" method="post" action="{{route('scholarshipprogram.store')}}">
+                        <form enctype="multipart/form-data" method="post" action="{{route('scholarshipprogram.update', $model->id)}}">
                             @csrf
+                            @method('PATCH')
                             <ul class="flex flex-wrap w-full text-sm font-medium text-center border-b border-slate-200 dark:border-zink-500 nav-tabs">
                                 @php
                                 $isFirst = true;
