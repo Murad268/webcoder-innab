@@ -32,7 +32,21 @@ class About extends Model
     {
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'about')->where('file_type', 'image');
     }
+    public function icon()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'about')->where('file_type', 'image')->where(
+            'type',
+            'icon'
+        )->select('url', 'relation_id');
+    }
 
+    public function image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'about')->where('file_type', 'image')->where(
+            'type',
+            'image'
+        )->select('url', 'relation_id');
+    }
     protected static function newFactory(): AboutFactory
     {
         //return AboutFactory::new();
