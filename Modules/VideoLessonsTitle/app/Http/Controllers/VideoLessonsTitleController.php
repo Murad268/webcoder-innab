@@ -51,7 +51,7 @@ class VideoLessonsTitleController extends Controller
     {
         return $this->commonService->executeSafely(function () use ($request) {
             $this->services->crudService->create(new VideoLessonsTitle(), $request, 'image');
-            return redirect()->route('videolessonstitle.index')->with('status', 'Kateqoriya uğurla əlavə edildi');
+            return redirect()->route('videolessonstitle.index')->with('status', 'Başlıq uğurla əlavə edildi');
         }, 'videolessonstitle.index');
     }
 
@@ -80,7 +80,7 @@ class VideoLessonsTitleController extends Controller
     {
         return $this->commonService->executeSafely(function () use ($request, $videolessonstitle) {
             $this->services->crudService->update($videolessonstitle, $request, 'image');
-            return redirect()->route('videolessonstitle.index')->with('status', 'Kateqoriya uğurla yeniləndi');
+            return redirect()->route('videolessonstitle.index')->with('status', 'Başlıq uğurla yeniləndi');
         }, 'videolessonstitle.index');
     }
 

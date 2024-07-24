@@ -1,23 +1,21 @@
 <?php
 
-namespace Modules\VideoLessons\Http\Controllers;
+namespace Modules\BlogCategory\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\VideoLessons\Repositories\ModelRepository;
+use Modules\BlogCategory\Repositories\ModelRepository;
 
-class VideoLessonsApiController extends Controller
+class BlogCategoryApiController extends Controller
 {
     public function __construct(private ModelRepository $repository)
     {
     }
 
-    public function get_videolessons(Request $request): JsonResponse
+    public function get_blogcategory(Request $request): JsonResponse
     {
-        $category_id = $request->id;
-        $items = $this->repository->getTrainingByCategoryWith('lesson_id', $category_id, ['image']);
-
+        $items = $this->repository->all_activeWith([]);
         $lang = $request->locale;
 
         if ($lang) {
@@ -30,15 +28,13 @@ class VideoLessonsApiController extends Controller
 
         $arr = $items->map(function ($item) {
             return [
-                'image' => $item->image ? config('app.url') . '/' . $item->image['url'] : null,
                 'title' => $item->title,
-                'slug' => $item->slug,
-                'short_description' => $item->short_description,
                 'seo_title' => $item->seo_title,
                 'seo_keywords' => $item->seo_keywords,
                 'seo_description' => $item->seo_description,
                 'seo_links' => $item->seo_links,
                 'seo_scripts' => $item->seo_scripts,
+                'slug' => $item->slug,
             ];
         });
 

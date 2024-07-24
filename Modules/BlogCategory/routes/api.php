@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\BlogCategory\Http\Controllers\BlogCategoryController;
 
+use Modules\BlogCategory\Http\Controllers\BlogCategoryApiController;
 /*
  *--------------------------------------------------------------------------
  * API Routes
@@ -18,3 +19,8 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('blogcategory', BlogCategoryController::class)->names('blogcategory');
 });
 Route::post('blogcategory/delete_selected_items', [BlogCategoryController::class, 'delete_selected_items'])->name('blogcategory.delete_selected_items');
+
+
+Route::prefix('{locale}')->group(function () {
+    Route::get('/get_blogcategory', [BlogCategoryApiController::class, 'get_blogcategory'])->name('blogcategory.get_name');
+});
