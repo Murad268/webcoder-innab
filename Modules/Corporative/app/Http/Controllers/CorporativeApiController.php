@@ -23,7 +23,7 @@ class CorporativeApiController extends Controller
             app()->setLocale($lang);
         }
 
-        if ($item) {
+        if (!$item) {
             return response()->json(['success' => false, 'message' => 'No data found'], 404);
         }
 
