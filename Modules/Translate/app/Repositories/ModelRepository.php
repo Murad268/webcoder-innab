@@ -23,4 +23,9 @@ class ModelRepository extends Repository
             ->orWhere('value->' . app()->getLocale(), 'like', "%{$query}%")
             ->paginate($limit);
     }
+
+
+    public function getTranslate($group, $keyword) {
+         $this->modelClass::where('group', $group)->where('keyword', $keyword)->first();
+    }
 }
