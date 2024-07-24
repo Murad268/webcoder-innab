@@ -75,7 +75,7 @@ class MakeApiCommand extends Command
         use Modules\\$name\\Http\\Controllers\\$controllerName;
 
         Route::prefix('{locale}')->group(function () {
-            Route::get('/get_$lowered', [$controllerName::class, '$methodName'])->name('$lowered.get_name');
+            Route::get('/get_$lowered', [$controllerName::class, '$methodName'])->name('$lowered.get_$lowered');
         });
         PHP;
 

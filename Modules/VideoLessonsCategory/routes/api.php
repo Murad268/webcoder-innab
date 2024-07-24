@@ -28,5 +28,5 @@ Route::post('videolessonscategory/delete_selected_items', [VideoLessonsCategoryC
 use Modules\VideoLessonsCategory\Http\Controllers\VideoLessonsCategoryApiController;
 
 Route::prefix('{locale}')->group(function () {
-    Route::get('/get_videolessonscategory', [VideoLessonsCategoryApiController::class, 'get_videolessonscategory'])->name('videolessonscategory.get_name');
+    Route::get('/get_videolessonscategory', [VideoLessonsCategoryApiController::class, 'get_videolessonscategory'])->name('videolessonscategory.get_videolessonscategory');
 });

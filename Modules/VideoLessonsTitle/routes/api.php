@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\VideoLessonsTitle\Http\Controllers\VideoLessonsTitleController;
+use Modules\VideoLessonsTitle\Http\Controllers\VideoLessonsTitleApiController;
 
 /*
  *--------------------------------------------------------------------------
@@ -18,3 +19,8 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('videolessonstitle', VideoLessonsTitleController::class)->names('videolessonstitle');
 });
 Route::post('videolessonstitle/delete_selected_items', [VideoLessonsTitleController::class, 'delete_selected_items'])->name('videolessonstitle.delete_selected_items');
+
+
+Route::prefix('{locale}')->group(function () {
+    Route::get('/get_videolessonstitle/{id}', [VideoLessonsTitleApiController::class, 'get_videolessonstitle'])->name('videolessonstitle.get_name');
+});
