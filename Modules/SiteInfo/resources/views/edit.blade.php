@@ -103,10 +103,22 @@
                                 </div>
                             </div>
 
+                            <div class="wrapper_image" style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
+
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
+                                            <img style="width: 100%; height: 100%;" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="mb-3">
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Yuxarıdakı loqo</label>
-                                @if($model->images->where('type', 'nav_logo')->count() < 1) <input multiple name="nav_logo[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                    @endif
+                                <input multiple name="nav_logo[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+
                             </div>
 
                             <div style="margin-bottom: 10px">
@@ -123,11 +135,20 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="wrapper_image" style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
 
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
+                                            <img style="width: 100%; height: 100%;" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mb-3">
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağıdakı loqo</label>
-                                @if($model->images->where('type', 'footer_logo')->count() < 1) <input multiple name="footer_logo[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                    @endif
+                                <input multiple name="footer_logo[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+
                             </div>
 
 
@@ -145,7 +166,16 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="wrapper_image" style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
 
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
+                                            <img style="width: 100%; height: 100%;" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mb-3">
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Seminar & Vebinar ikonu</label>
                                 @if($model->images->where('type', 'header_image')->count() < 1) <input multiple name="header_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
@@ -171,11 +201,20 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="wrapper_image" style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
 
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
+                                            <img style="width: 100%; height: 100%;" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mb-3">
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Workshop ikonu</label>
-                                @if($model->images->where('type', 'vebinar_icon')->count() < 1) <input multiple name="vebinar_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                    @endif
+                                <input multiple name="vebinar_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+
                             </div>
 
                             <div style="margin-bottom: 10px">
@@ -192,11 +231,20 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="wrapper_image" style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
 
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
+                                            <img style="width: 100%; height: 100%;" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mb-3">
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Təqaüd proqramları ikon</label>
-                                @if($model->images->where('type', 'workshop_icon')->count() < 1) <input multiple name="workshop_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                    @endif
+                                <input multiple name="workshop_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+
                             </div>
 
 
@@ -214,11 +262,20 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="wrapper_image" style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
 
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
+                                            <img style="width: 100%; height: 100%;" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mb-3">
                                 <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağıdakı loqo</label>
-                                @if($model->images->where('type', 'scholarship_icon')->count() < 1) <input multiple name="scholarship_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                    @endif
+                                <input multiple name="scholarship_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+
                             </div>
 
 
@@ -240,6 +297,22 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    const inputFiles = document.querySelectorAll('input[type=file]');
+    const wrappers = document.querySelectorAll('.wrapper_image img'); // Düzgün selector daxil edin
+
+    inputFiles.forEach((inputFile, i) => {
+        inputFile.addEventListener('change', (event) => {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    wrappers[i].src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+
     function openPdf(url) {
         window.open(url, '_blank');
     }
