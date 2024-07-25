@@ -8,7 +8,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class HandleImageJob implements ShouldQueue
+class CreateJob implements ShouldQueue
 {
     use Queueable;
 

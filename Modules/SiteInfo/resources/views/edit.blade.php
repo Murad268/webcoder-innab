@@ -131,6 +131,29 @@
                             </div>
 
 
+                            <div style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
+                                    @foreach($model->images->where('type', 'header_image') as $image)
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                        </a>
+                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                            X
+                                        </a>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağıdakı loqo</label>
+                                @if($model->images->where('type', 'header_image')->count() < 1) <input multiple name="header_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    @endif
+                            </div>
+
+
+
 
                             <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                                 Yenilə

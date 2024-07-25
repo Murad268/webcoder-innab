@@ -3,6 +3,7 @@
 namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\CreateJob;
 use App\Services\ServiceContainer;
 use App\Services\CommonService;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class BlogController extends Controller
         public CommonService $commonService,
         public Category $category,
         public ModelRepository $repository
-    ) {}
+    ) {
+    }
 
 
     public function index(Request $request)
@@ -32,7 +34,6 @@ class BlogController extends Controller
         ]));
     }
 
-
     public function create()
     {
         $categories = $this->category->all_active();
@@ -43,7 +44,8 @@ class BlogController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return $this->executeSafely(function () use ($request) {
-            $this->services->crudService->create(new Blog(), $request, 'blog');
+            $data = $request->all(); // Extract all necessary data from the request
+            CreateJob::dispatch(new Blog(), $data, 'blog');
             return redirect()->route('blog.index')->with('status', 'Bloq uğurla əlavə edildi');
         }, 'blog.index');
     }
@@ -67,7 +69,7 @@ class BlogController extends Controller
     {
         return $this->executeSafely(function () use ($request, $id) {
             $partner = $this->repository->find($id);
-            $this->services->crudService->update($partner, $request, 'blog');
+            $this->services->crudService->update($partner, $request->all(), 'blog');
             return redirect()->route('blog.index')->with('status', 'Bloq uğurla əlavə edildi');
         }, 'blog.index');
     }

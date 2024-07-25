@@ -37,6 +37,12 @@ class SiteInfo extends Model
     {
         return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image')->where('type', 'footer_logo')->select('url','relation_id');
     }
+
+    public function header_image()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image')->where('type', 'header_image')->select('url', 'relation_id');
+    }
+
     protected static function newFactory(): SiteInfoFactory
     {
         //return SiteInfoFactory::new();
