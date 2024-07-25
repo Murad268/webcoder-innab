@@ -147,8 +147,77 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağıdakı loqo</label>
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Seminar & Vebinar ikonu</label>
                                 @if($model->images->where('type', 'header_image')->count() < 1) <input multiple name="header_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    @endif
+                            </div>
+
+
+
+
+
+
+                            <div style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
+                                    @foreach($model->images->where('type', 'vebinar_icon') as $image)
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                        </a>
+                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                            X
+                                        </a>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Workshop ikonu</label>
+                                @if($model->images->where('type', 'vebinar_icon')->count() < 1) <input multiple name="vebinar_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    @endif
+                            </div>
+
+                            <div style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
+                                    @foreach($model->images->where('type', 'workshop_icon') as $image)
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                        </a>
+                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                            X
+                                        </a>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Təqaüd proqramları ikon</label>
+                                @if($model->images->where('type', 'workshop_icon')->count() < 1) <input multiple name="workshop_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    @endif
+                            </div>
+
+
+                            <div style="margin-bottom: 10px">
+                                <div style="display: flex; column-gap: 5px">
+                                    @foreach($model->images->where('type', 'scholarship_icon') as $image)
+                                    <div style="position: relative; width: 250px; height: 100px;">
+                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                        </a>
+                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                            X
+                                        </a>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağıdakı loqo</label>
+                                @if($model->images->where('type', 'scholarship_icon')->count() < 1) <input multiple name="scholarship_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                                     @endif
                             </div>
 

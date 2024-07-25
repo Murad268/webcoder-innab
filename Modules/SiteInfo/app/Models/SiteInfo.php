@@ -43,6 +43,21 @@ class SiteInfo extends Model
         return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image')->where('type', 'header_image')->select('url', 'relation_id');
     }
 
+    public function vebinar_icon()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image')->where('type', 'vebinar_icon')->select('url', 'relation_id');
+    }
+
+    public function workshop_icon()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image')->where('type', 'workshop_icon')->select('url', 'relation_id');
+    }
+
+    public function scholarship_icon()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image')->where('type', 'scholarship_icon')->select('url', 'relation_id');
+    }
+
     protected static function newFactory(): SiteInfoFactory
     {
         //return SiteInfoFactory::new();

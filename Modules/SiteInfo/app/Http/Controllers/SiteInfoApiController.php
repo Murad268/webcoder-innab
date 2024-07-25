@@ -15,7 +15,7 @@ class SiteInfoApiController extends Controller
 
     public function get_siteinfo(Request $request): JsonResponse
     {
-        $item = $this->repository->findWith(1, ['header_footer', 'header_top', 'header_image']);
+        $item = $this->repository->findWith(1, ['header_footer', 'header_top', 'header_image', 'vebinar_icon', 'workshop_icon', 'scholarship_icon']);
 
 
 
@@ -27,6 +27,9 @@ class SiteInfoApiController extends Controller
             'header_top' => $item->header_top ? config('app.url') . '/' . $item->header_top['url'] : null,
             'header_footer' => $item->header_footer ? config('app.url') . '/' . $item->header_footer['url'] : null,
             'header_image' => $item->header_image ? config('app.url') . '/' . $item->header_image['url'] : null,
+            'vebinar_icon' => $item->vebinar_icon ? config('app.url') . '/' . $item->vebinar_icon['url'] : null,
+            'workshop_icon' => $item->workshop_icon ? config('app.url') . '/' . $item->workshop_icon['url'] : null,
+            'scholarship_icon' => $item->scholarship_icon ? config('app.url') . '/' . $item->scholarship_icon['url'] : null,
             'instagram_link' => $item->instagram_link,
             'linkedin_link' => $item->linkedin_link,
             'twitter_link' => $item->twitter_link,
