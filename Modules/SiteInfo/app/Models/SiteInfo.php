@@ -29,7 +29,14 @@ class SiteInfo extends Model
     {
         return $this->hasMany(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image');
     }
-
+    public function header_top()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image')->where('type', 'nav_logo')->select('url','relation_id');
+    }
+    public function header_footer()
+    {
+        return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'siteinfo')->where('file_type', 'image')->where('type', 'footer_logo')->select('url','relation_id');
+    }
     protected static function newFactory(): SiteInfoFactory
     {
         //return SiteInfoFactory::new();

@@ -92,7 +92,7 @@ class TranslateController extends Controller
     }
 
 
-   
+
 
     public function delete_selected_items(Request $request)
     {

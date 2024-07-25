@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Support\Facades\DB;
+
 class SimpleCrudService {
     public function __construct(
         public SlugService $slugService,
@@ -10,31 +12,49 @@ class SimpleCrudService {
 
     public function create($model=null, $request=null, $model_type=null)
     {
-        $data = $request->except(array_keys($request->file()));
+        DB::beginTransaction();
 
-        if (isset($data['title'])) {
-            $data['slug'] = $this->slugService->sluggableArray($data['title']);
+        try {
+            $data = $request->except(array_keys($request->file()));
+
+            if (isset($data['title'])) {
+                $data['slug'] = $this->slugService->sluggableArray($data['title']);
+            }
+
+            $entity = $model::create($data);
+
+            $this->handleFilesAndImages($request, $entity->id, $model_type);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
-
-        $entity = $model::create($data);
-
-        $this->handleFilesAndImages($request, $entity->id, $model_type);
     }
 
     public function update($model=null, $request=null, $model_type=null)
     {
-        $exept = array_keys($request->file());
-        $exept['page'] = 'page';
-        $exept['q'] = 'q';
-        $data = $request->except($exept);
+        DB::beginTransaction();
 
-        if (isset($data['title'])) {
-            $data['slug'] = $this->slugService->sluggableArray($data['title']);
+        try {
+            $exept = array_keys($request->file());
+            $exept['page'] = 'page';
+            $exept['q'] = 'q';
+            $data = $request->except($exept);
+
+            if (isset($data['title'])) {
+                $data['slug'] = $this->slugService->sluggableArray($data['title']);
+            }
+
+            $model->update($data);
+
+            $this->handleFilesAndImages($request, $model->id, $model_type);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
-
-        $model->update($data);
-
-        $this->handleFilesAndImages($request, $model->id, $model_type);
     }
 
     private function handleFilesAndImages($request, $entityId, $folder)
@@ -53,7 +73,6 @@ class SimpleCrudService {
 
     private function processFile($file, $entityId, $folder, $field = null)
     {
-
         $mimeType = explode('/', $file->getClientMimeType())[0];
         if ($mimeType == "image") {
             $this->imageService->handleImages($file, $entityId, $folder, $mimeType, $folder, $field);

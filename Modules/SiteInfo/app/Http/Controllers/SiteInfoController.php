@@ -70,6 +70,7 @@ class SiteInfoController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
+
         return $this->executeSafely(function () use ($request, $id) {
             $model = $this->repository->find($id);
             $this->services->crudService->update($model, $request, 'siteinfo');
