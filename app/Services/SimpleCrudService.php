@@ -1,20 +1,21 @@
 <?php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 
-class SimpleCrudService {
+class SimpleCrudService
+{
     public function __construct(
         public SlugService $slugService,
         public ImageService $imageService,
         public FileService $fileService
-    ) {}
+    ) {
+    }
 
-    public function create($model=null, $request=null, $model_type=null)
+    public function create($model = null, $request = null, $model_type = null)
     {
-        DB::beginTransaction();
-
-        try {
+        DB::transaction(function () use ($model, $request, $model_type) {
             $data = $request->except(array_keys($request->file()));
 
             if (isset($data['title'])) {
@@ -24,19 +25,12 @@ class SimpleCrudService {
             $entity = $model::create($data);
 
             $this->handleFilesAndImages($request, $entity->id, $model_type);
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+        });
     }
 
-    public function update($model=null, $request=null, $model_type=null)
+    public function update($model = null, $request = null, $model_type = null)
     {
-        DB::beginTransaction();
-
-        try {
+        DB::transaction(function () use ($model, $request, $model_type) {
             $exept = array_keys($request->file());
             $exept['page'] = 'page';
             $exept['q'] = 'q';
@@ -49,12 +43,7 @@ class SimpleCrudService {
             $model->update($data);
 
             $this->handleFilesAndImages($request, $model->id, $model_type);
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+        });
     }
 
     private function handleFilesAndImages($request, $entityId, $folder)
