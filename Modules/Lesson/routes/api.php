@@ -18,10 +18,13 @@ use Modules\Lesson\Http\Controllers\LessonApiController;
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::post('lesson/delete_selected_items', [LessonController::class, 'delete_selected_items'])->name('lesson.delete_selected_items');
+
+
+    Route::post('lesson/get_titles', [LessonController::class, 'get_titles'])->name('lesson.get_titles');
 });
 
 
 
 Route::prefix('{locale}')->group(function () {
-    Route::get('/get_lesson/{id}', [LessonApiController::class, 'get_lesson'])->name('lesson.get_name');
+    Route::get('/get_lesson/{id}', [LessonApiController::class, 'get_lesson'])->name('lesson.get_lesson');
 });

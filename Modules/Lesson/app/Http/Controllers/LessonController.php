@@ -10,14 +10,15 @@ use Illuminate\Http\Request;
 use Modules\Lesson\Repositories\ModelRepository;
 use Modules\Lesson\Models\Lesson;
 use Modules\VideoLessonsTitle\Repositories\ModelRepository as VideLessonsTitleRepository;
-
+USE Modules\VideoLessons\Repositories\ModelRepository as VideoLessonRepository;
 class LessonController extends Controller
 {
     public function __construct(
         public ServiceContainer $services,
         public CommonService $commonService,
         public ModelRepository $repository,
-        public VideLessonsTitleRepository $videLessonsTitleRepository
+        public VideLessonsTitleRepository $videLessonsTitleRepository,
+        public VideoLessonRepository $videoLessonRepository
     ) {}
 
     /**
@@ -25,12 +26,17 @@ class LessonController extends Controller
      */
     public function index(Request $request)
     {
-        $titles = $this->videLessonsTitleRepository->getAll();
-        $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'title_id');
+        $first = $this->videoLessonRepository->first();
 
+        $titles = $this->videLessonsTitleRepository->getTrainingByCategoryWith('lesson_id',$first->id);
+
+        $videoLessons = $this->videoLessonRepository->getAll();
+
+        $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'title_id');
         return view('lesson::index', array_merge($result, [
             'titles' => $titles,
             'activeLangsCount' => $this->repository->all_active()->count(),
+            'videoLessons' => $videoLessons
         ]));
     }
 
@@ -110,5 +116,11 @@ class LessonController extends Controller
     public function deleteFile($id)
     {
         return $this->commonService->deleteFile($id, $this->services->imageService, 'lesson.index');
+    }
+
+
+    public function get_titles(Request $request) {
+        $videoLesson = $this->videoLessonRepository->findWith($request->id, ['titles']);
+        return response()->json(['data' => $videoLesson->titles]);
     }
 }

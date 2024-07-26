@@ -25,13 +25,21 @@
                                     seçilənləri sil
                                 </a>
                                 <form action="">
-                                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 choices__input" name="selectedItems[]" multiple="multiple" id="mySelect" style="width: 300px;">
+                                    <select class="mySelect form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 choices__input" name="selectedItems[]" multiple="multiple" id="mySelect" style="width: 300px;">
                                         @foreach($titles as $title)
                                         <option @selected(in_array($title->id, $selectedItems)) value="{{$title->id}}">
                                             {{$title->title}}
                                         </option>
                                         @endforeach
                                     </select>
+                                    <select class="lesson_select select2-searchable form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="selectedVideoLessons" style="width: 300px;">
+                                        @foreach($videoLessons as $lesson)
+                                        <option @selected(in_array($lesson->id, $selectedItems)) value="{{$lesson->id}}">
+                                            {{$lesson->title}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+
                                     <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Tap</button>
                                 </form>
                                 <label> @if (session('status'))
@@ -197,7 +205,12 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    $('#mySelect').select2();
+    $('.mySelect').each(function() {
+        $(this).select2();
+    });
+    $(document).ready(function() {
+        $('.select2-searchable').select2();
+    });
     document.querySelectorAll('.change_status_false, .change_status_true, .set_default_lang').forEach(link => {
         link.addEventListener('click', (e) => {
             if (e.target.matches('.change_status_false *')) {
@@ -307,6 +320,30 @@
         } else {
             Swal.fire("heç bir data seçilməyib", "", "info");
         }
+    });
+
+
+    $('.lesson_select').on('change', function() {
+        let value = $(this).val();
+        $.ajax({
+            url: '{{route("api.lesson.get_titles")}}', // Update this to your actual API endpoint
+            type: 'POST', // Changed to POST
+            contentType: 'application/json', // Ensure the content type is JSON
+            data: JSON.stringify({
+                id: value
+            }),
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token
+            },
+            success: function(response) {
+                let data = response.data;
+                alert()
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                alert('Error fetching titles');
+            }
+        });
     });
 </script>
 

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 abstract class Repository
 {
     protected $modelClass = Model::class;
+    public function first()
+    {
+        return $this->modelClass::first();
+    }
     public function all_active()
     {
         return $this->modelClass::orderBy('order')->where('status', 1)->get();
@@ -60,8 +64,8 @@ abstract class Repository
         return $this->modelClass::where('category_id', $categoryId)->orderBy('order')->where('status', 1)->get();
     }
 
-    public function getTrainingByCategoryWith($relation, $categoryId, $relations = [])
+    public function getTrainingByCategoryWith($relation, $relation_id, $relations = [])
     {
-        return $this->modelClass::where($relation, $categoryId)->orderBy('order')->where('status', 1)->with($relations)->get();
+        return $this->modelClass::where($relation, $relation_id)->orderBy('order')->where('status', 1)->with($relations)->get();
     }
 }

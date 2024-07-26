@@ -6,6 +6,7 @@ use App\Models\SystemFiles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\VideoLessons\Database\Factories\VideoLessonsFactory;
+use Modules\VideoLessonsTitle\Models\VideoLessonsTitle;
 use Spatie\Translatable\HasTranslations;
 
 class VideoLessons extends Model
@@ -38,6 +39,9 @@ class VideoLessons extends Model
         return $this->hasOne(SystemFiles::class, 'relation_id')->where('model_type', 'videolesson')->where('file_type', 'image')->select('url', 'relation_id');
     }
 
+    public function titles() {
+        return $this->hasMany(VideoLessonsTitle::class, 'lesson_id');
+    }
 
     protected static function newFactory(): VideoLessonsFactory
     {
