@@ -15,10 +15,11 @@ use Modules\CourseFAQ\Http\Controllers\CourseFAQController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('coursefaq', CourseFAQController::class)->names('coursefaq');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('coursefaq/delete_selected_items', [CourseFAQController::class, 'delete_selected_items'])->name('coursefaq.delete_selected_items');
 });
-Route::post('coursefaq/delete_selected_items', [CourseFAQController::class, 'delete_selected_items'])->name('coursefaq.delete_selected_items');
+
 
 
 Route::prefix('{locale}')->group(function () {

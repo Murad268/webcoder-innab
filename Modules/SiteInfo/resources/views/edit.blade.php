@@ -35,8 +35,8 @@
                                 @endphp
                                 @foreach($languages as $language)
                                 <div class="tab-pane {{ $isFirst ? 'block' : 'hidden' }}" id="{{ $language->code }}">
-                                    <div class="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
-                                        <div class="mb-3">
+                                    <div class="flex flex-wrap gap-5">
+                                        <div class="mb-3 flex-1">
                                             <label for="textArea" class="inline-block mb-2 text-base font-medium">Ünvan ({{ $language->code }})</label>
                                             <textarea name="address[{{ $language->code }}]" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="textArea" rows="3">{{ old('address.' . $language->code, $model->getTranslation('address', $language->code)) }}</textarea>
                                         </div>
@@ -48,238 +48,190 @@
                                 @endforeach
                             </div>
 
-                            <div class="mb-3">
-                                <label for="facebook_link" class="inline-block mb-2 text-base font-medium">Facebook linki</label>
-                                <input type="text" id="facebook_link" name="facebook_link" value="{{ old('facebook_link', $model->facebook_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="instagram_link" class="inline-block mb-2 text-base font-medium">Instagram linki</label>
-                                <input type="text" id="instagram_link" name="instagram_link" value="{{ old('instagram_link', $model->instagram_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="linkedin_link" class="inline-block mb-2 text-base font-medium">LinkedIn linki</label>
-                                <input type="text" id="linkedin_link" name="linkedin_link" value="{{ old('linkedin_link', $model->linkedin_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="twitter_link" class="inline-block mb-2 text-base font-medium">Twitter linki</label>
-                                <input type="text" id="twitter_link" name="twitter_link" value="{{ old('twitter_link', $model->twitter_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="youtube_link" class="inline-block mb-2 text-base font-medium">YouTube linki</label>
-                                <input type="text" id="youtube_link" name="youtube_link" value="{{ old('youtube_link', $model->youtube_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone1" class="inline-block mb-2 text-base font-medium">Telefon 1</label>
-                                <input type="text" id="phone1" name="phone1" value="{{ old('phone1', $model->phone1) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone2" class="inline-block mb-2 text-base font-medium">Telefon 2</label>
-                                <input type="text" id="phone2" name="phone2" value="{{ old('phone2', $model->phone2) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email1" class="inline-block mb-2 text-base font-medium">E-poçt 1</label>
-                                <input type="email" id="email1" name="email1" value="{{ old('email1', $model->email1) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email2" class="inline-block mb-2 text-base font-medium">E-poçt 2</label>
-                                <input type="email" id="email2" name="email2" value="{{ old('email2', $model->email2) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                            </div>
-                            <div class="mb-3">
-                                <label for="map" class="inline-block mb-2 text-base font-medium">Xəritə</label>
-                                <textarea style="height: 200px" name="map" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="map" rows="3">{{ old('map', $model->map) }}</textarea>
-                            </div>
-                            <div style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-                                    @foreach($model->images->where('type', 'nav_logo') as $image)
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
-                                        </a>
-                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
-                                            X
-                                        </a>
-                                    </div>
-                                    @endforeach
+                            <div class="flex flex-wrap gap-5">
+                                <div class="mb-3 flex-1">
+                                    <label for="facebook_link" class="inline-block mb-2 text-base font-medium">Facebook linki</label>
+                                    <input type="text" id="facebook_link" name="facebook_link" value="{{ old('facebook_link', $model->facebook_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                </div>
+                                <div class="mb-3 flex-1">
+                                    <label for="instagram_link" class="inline-block mb-2 text-base font-medium">Instagram linki</label>
+                                    <input type="text" id="instagram_link" name="instagram_link" value="{{ old('instagram_link', $model->instagram_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                 </div>
                             </div>
 
-                            <div class="wrapper_image" style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
-                                            <img style="width: 100%; height: 100%;" alt="">
-                                        </a>
-                                    </div>
+                            <div class="flex flex-wrap gap-5">
+                                <div class="mb-3 flex-1">
+                                    <label for="linkedin_link" class="inline-block mb-2 text-base font-medium">LinkedIn linki</label>
+                                    <input type="text" id="linkedin_link" name="linkedin_link" value="{{ old('linkedin_link', $model->linkedin_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                </div>
+                                <div class="mb-3 flex-1">
+                                    <label for="twitter_link" class="inline-block mb-2 text-base font-medium">Twitter linki</label>
+                                    <input type="text" id="twitter_link" name="twitter_link" value="{{ old('twitter_link', $model->twitter_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                 </div>
                             </div>
 
-
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Yuxarıdakı loqo</label>
-                                <input multiple name="nav_logo[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-
-                            </div>
-
-                            <div style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-                                    @foreach($model->images->where('type', 'footer_logo') as $image)
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
-                                        </a>
-                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
-                                            X
-                                        </a>
-                                    </div>
-                                    @endforeach
+                            <div class="flex flex-wrap gap-5">
+                                <div class="mb-3 flex-1">
+                                    <label for="youtube_link" class="inline-block mb-2 text-base font-medium">YouTube linki</label>
+                                    <input type="text" id="youtube_link" name="youtube_link" value="{{ old('youtube_link', $model->youtube_link) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                </div>
+                                <div class="mb-3 flex-1">
+                                    <label for="phone1" class="inline-block mb-2 text-base font-medium">Telefon 1</label>
+                                    <input type="text" id="phone1" name="phone1" value="{{ old('phone1', $model->phone1) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                 </div>
                             </div>
-                            <div class="wrapper_image" style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
 
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
-                                            <img style="width: 100%; height: 100%;" alt="">
-                                        </a>
-                                    </div>
+                            <div class="flex flex-wrap gap-5">
+                                <div class="mb-3 flex-1">
+                                    <label for="phone2" class="inline-block mb-2 text-base font-medium">Telefon 2</label>
+                                    <input type="text" id="phone2" name="phone2" value="{{ old('phone2', $model->phone2) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                </div>
+                                <div class="mb-3 flex-1">
+                                    <label for="email1" class="inline-block mb-2 text-base font-medium">E-poçt 1</label>
+                                    <input type="email" id="email1" name="email1" value="{{ old('email1', $model->email1) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağıdakı loqo</label>
-                                <input multiple name="footer_logo[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
 
-                            </div>
-
-
-                            <div style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-                                    @foreach($model->images->where('type', 'header_image') as $image)
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
-                                        </a>
-                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
-                                            X
-                                        </a>
-                                    </div>
-                                    @endforeach
+                            <div class="flex flex-wrap gap-5">
+                                <div class="mb-3 flex-1">
+                                    <label for="email2" class="inline-block mb-2 text-base font-medium">E-poçt 2</label>
+                                    <input type="email" id="email2" name="email2" value="{{ old('email2', $model->email2) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                </div>
+                                <div class="mb-3 flex-1">
+                                    <label for="map" class="inline-block mb-2 text-base font-medium">Xəritə</label>
+                                    <textarea style="height: 200px" name="map" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="map" rows="3">{{ old('map', $model->map) }}</textarea>
                                 </div>
                             </div>
-                            <div class="wrapper_image" style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
 
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
-                                            <img style="width: 100%; height: 100%;" alt="">
-                                        </a>
+                            <div class="flex flex-wrap gap-5">
+                                <div class="mb-3 flex-1">
+                                    <label for="nav_logo" class="inline-block mb-2 text-base font-medium">Yuxarıdakı loqo</label>
+                                        <div class="wrapper_image relative w-64 h-24">
+                                            @foreach($model->images->where('type', 'nav_logo') as $image)
+                                            <div class="relative w-64 h-24">
+                                                <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                                    <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                                </a>
+                                                <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                                    X
+                                                </a>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="mt-3">
+                                            <input multiple name="nav_logo[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                        </div>
+
+                                </div>
+
+                                <div class="mb-3 flex-1">
+                                    <label for="footer_logo" class="inline-block mb-2 text-base font-medium">Aşağıdakı loqo</label>
+
+                                    <div class="wrapper_image relative w-64 h-24">
+                                        @foreach($model->images->where('type', 'footer_logo') as $image)
+                                        <div class="relative w-64 h-24">
+                                            <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                                <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                            </a>
+                                            <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                                X
+                                            </a>
+                                        </div>
+                                        @endforeach
                                     </div>
+                                    <div class="mt-3">
+                                        <input multiple name="footer_logo[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Seminar & Vebinar ikonu</label>
-                                @if($model->images->where('type', 'header_image')->count() < 1) <input multiple name="header_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-                                    @endif
-                            </div>
 
-
-
-
-
-
-                            <div style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-                                    @foreach($model->images->where('type', 'vebinar_icon') as $image)
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
-                                        </a>
-                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
-                                            X
-                                        </a>
+                            <div class="flex flex-wrap gap-5">
+                                <div class="mb-3 flex-1">
+                                    <label for="header_image" class="inline-block mb-2 text-base font-medium">Banner şəkli</label>
+                                    <div class="wrapper_image relative w-64 h-24">
+                                        @foreach($model->images->where('type', 'header_image') as $image)
+                                        <div class="relative w-64 h-24">
+                                            <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                                <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                            </a>
+                                            <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                                X
+                                            </a>
+                                        </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
+                                    <div class="mt-3">
+                                        <input multiple name="header_image[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    </div>
+
+
+                                </div>
+
+                                <div class="mb-3 flex-1">
+                                    <label for="vebinar_icon" class="inline-block mb-2 text-base font-medium">Seminar və vebinarlar ikonu</label>
+
+                                    <div class="wrapper_image relative w-64 h-24">
+                                        @foreach($model->images->where('type', 'vebinar_icon') as $image)
+                                        <div class="relative w-64 h-24">
+                                            <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                                <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                            </a>
+                                            <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                                X
+                                            </a>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="mt-3">
+                                        <input multiple name="vebinar_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="wrapper_image" style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
 
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
-                                            <img style="width: 100%; height: 100%;" alt="">
-                                        </a>
+                            <div class="flex flex-wrap gap-5">
+                                <div class="mb-3 flex-1">
+                                    <label for="workshop_icon" class="inline-block mb-2 text-base font-medium">Workshop ikonu</label>
+
+                                    <div class="wrapper_image relative w-64 h-24">
+                                        @foreach($model->images->where('type', 'workshop_icon') as $image)
+                                        <div class="relative w-64 h-24">
+                                            <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                                <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                            </a>
+                                            <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                                X
+                                            </a>
+                                        </div>
+                                        @endforeach
                                     </div>
+                                    <div class="mt-3">
+                                        <input multiple name="workshop_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    </div>
+
+                                </div>
+
+                                <div class="mb-3 flex-1">
+                                    <label for="scholarship_icon" class="inline-block mb-2 text-base font-medium">Təqaüd proqramları ikonu</label>
+                                    <div class="wrapper_image relative w-64 h-24">
+                                        @foreach($model->images->where('type', 'scholarship_icon') as $image)
+                                        <div class="relative w-64 h-24">
+                                            <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
+                                                <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
+                                            </a>
+                                            <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
+                                                X
+                                            </a>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="mt-3">
+                                        <input multiple name="scholarship_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Workshop ikonu</label>
-                                <input multiple name="vebinar_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-
-                            </div>
-
-                            <div style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-                                    @foreach($model->images->where('type', 'workshop_icon') as $image)
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
-                                        </a>
-                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
-                                            X
-                                        </a>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="wrapper_image" style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
-                                            <img style="width: 100%; height: 100%;" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Təqaüd proqramları ikon</label>
-                                <input multiple name="workshop_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-
-                            </div>
-
-
-                            <div style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-                                    @foreach($model->images->where('type', 'scholarship_icon') as $image)
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="{{ asset($image->url) }}">
-                                            <img style="width: 100%; height: 100%;" src="{{ asset($image->url) }}" alt="">
-                                        </a>
-                                        <a href="{{ route('training.deleteFile', $image->id) }}" style="cursor: pointer; position: absolute; top: 0; right: 0; background-color: red; color: white; padding: 6px;" class="delete_image" data-id="{{ $image->id }}">
-                                            X
-                                        </a>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="wrapper_image" style="margin-bottom: 10px">
-                                <div style="display: flex; column-gap: 5px">
-
-                                    <div style="position: relative; width: 250px; height: 100px;">
-                                        <a target="_blank" style="display: block; width: 100%; height: 100%;" href="">
-                                            <img style="width: 100%; height: 100%;" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Aşağıdakı loqo</label>
-                                <input multiple name="scholarship_icon[]" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
-
-                            </div>
-
-
-
 
                             <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                                 Yenilə

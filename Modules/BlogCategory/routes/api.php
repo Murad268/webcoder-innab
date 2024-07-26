@@ -15,10 +15,13 @@ use Modules\BlogCategory\Http\Controllers\BlogCategoryApiController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('blogcategory', BlogCategoryController::class)->names('blogcategory');
+
+
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('blogcategory/delete_selected_items', [BlogCategoryController::class, 'delete_selected_items'])->name('blogcategory.delete_selected_items');
 });
-Route::post('blogcategory/delete_selected_items', [BlogCategoryController::class, 'delete_selected_items'])->name('blogcategory.delete_selected_items');
+
 
 
 Route::prefix('{locale}')->group(function () {

@@ -15,10 +15,9 @@ use Modules\Training\Http\Controllers\TrainingController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('training', TrainingController::class)->names('training');
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('training/delete_selected_items', [TrainingController::class, 'delete_selected_items'])->name('training.delete_selected_items');
 });
-Route::post('training/delete_selected_items', [TrainingController::class, 'delete_selected_items'])->name('training.delete_selected_items');
 
 
 Route::prefix('{locale}')->group(function () {

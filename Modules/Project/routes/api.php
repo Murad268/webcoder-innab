@@ -15,10 +15,10 @@ use Modules\Project\Http\Controllers\ProjectController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('project', ProjectController::class)->names('project');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('project/delete_selected_items', [ProjectController::class, 'delete_selected_items'])->name('project.delete_selected_items');
 });
-Route::post('project/delete_selected_items', [ProjectController::class, 'delete_selected_items'])->name('project.delete_selected_items');
 
 Route::prefix('{locale}')->group(function () {
     Route::get('/get_projects', [ProjectApiController::class, 'get_projects'])->name('project.get_projects');

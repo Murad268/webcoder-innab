@@ -15,10 +15,11 @@ use Modules\Partners\Http\Controllers\PartnersController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('partners', PartnersController::class)->names('partners');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('partners/delete_selected_items', [PartnersController::class, 'delete_selected_items'])->name('partners.delete_selected_items');
 });
-Route::post('partners/delete_selected_items', [PartnersController::class, 'delete_selected_items'])->name('partners.delete_selected_items');
+
 
 Route::prefix('{locale}')->group(function () {
     Route::get('/get_partners', [PartnersApiController::class, 'get_partners'])->name('partners.get_partners');

@@ -14,7 +14,8 @@ use Modules\TrainingSubject\Http\Controllers\TrainingSubjectController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('trainingsubject', TrainingSubjectController::class)->names('trainingsubject');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('trainingsubject/delete_selected_items', [TrainingSubjectController::class, 'delete_selected_items'])->name('trainingsubject.delete_selected_items');
 });
-Route::post('trainingsubject/delete_selected_items', [TrainingSubjectController::class, 'delete_selected_items'])->name('trainingsubject.delete_selected_items');
+

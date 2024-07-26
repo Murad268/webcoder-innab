@@ -14,10 +14,11 @@ use Modules\BlogContent\Http\Controllers\BlogContentApiController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('blogcontent', BlogContentController::class)->names('blogcontent');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('blogcontent/delete_selected_items', [BlogContentController::class, 'delete_selected_items'])->name('blogcontent.delete_selected_items');
 });
-Route::post('blogcontent/delete_selected_items', [BlogContentController::class, 'delete_selected_items'])->name('blogcontent.delete_selected_items');
+
 
 
 

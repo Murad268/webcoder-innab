@@ -4,10 +4,11 @@ use Illuminate\Support\Facades\Route;
 use Modules\ScholarshipProgram\Http\Controllers\ScholarshipProgramController;
 use Modules\ScholarshipProgram\Http\Controllers\ScholarshipProgramApiController;
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('scholarshipprogram', ScholarshipProgramController::class)->names('scholarshipprogram');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('scholarshipprogram/delete_selected_items', [ScholarshipProgramController::class, 'delete_selected_items'])->name('scholarshipprogram.delete_selected_items');
 });
-Route::post('scholarshipprogram/delete_selected_items', [ScholarshipProgramController::class, 'delete_selected_items'])->name('scholarshipprogram.delete_selected_items');
+
 
 
 Route::prefix('{locale}')->group(function () {

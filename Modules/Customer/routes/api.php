@@ -15,10 +15,11 @@ use Modules\Customer\Http\Controllers\CustomerController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('customer', CustomerController::class)->names('customer');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('customer/delete_selected_items', [CustomerController::class, 'delete_selected_items'])->name('customer.delete_selected_items');
 });
-Route::post('customer/delete_selected_items', [CustomerController::class, 'delete_selected_items'])->name('customer.delete_selected_items');
+
 
 
 

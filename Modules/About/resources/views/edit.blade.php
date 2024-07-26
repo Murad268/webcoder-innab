@@ -91,7 +91,7 @@
 
                             </div>
                             <div class="mb-3">
-                                <label for="textArea" class="inline-block mb-2 text-base font-medium">Şəkil</label>
+                                <label for="textArea" class="inline-block mb-2 text-base font-medium">İkon</label>
                                 @if($model->images->where('type', 'icon')->count()<1) <input name="icon" type="file" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
                                     @endif
                                     @error('icon')

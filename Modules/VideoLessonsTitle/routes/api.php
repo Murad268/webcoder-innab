@@ -15,10 +15,11 @@ use Modules\VideoLessonsTitle\Http\Controllers\VideoLessonsTitleApiController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('videolessonstitle', VideoLessonsTitleController::class)->names('videolessonstitle');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('videolessonstitle/delete_selected_items', [VideoLessonsTitleController::class, 'delete_selected_items'])->name('videolessonstitle.delete_selected_items');
 });
-Route::post('videolessonstitle/delete_selected_items', [VideoLessonsTitleController::class, 'delete_selected_items'])->name('videolessonstitle.delete_selected_items');
+
 
 
 Route::prefix('{locale}')->group(function () {
