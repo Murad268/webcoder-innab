@@ -16,7 +16,7 @@
                 <div id="alternativePagination_wrapper" class="dataTables_wrapper dt-tailwindcss">
                     <div class="grid grid-cols-12 lg:grid-cols-12 gap-3">
                         <div class="self-center col-span-12 lg:col-span-6">
-                            <div style="display: flex; column-gap: 10px" class="dataTables_length" id="alternativePagination_length">
+                            <div style="display: flex; column-gap: 10px; width: max-content" class="dataTables_length" id="alternativePagination_length">
 
                                 <a href="{{route('lesson.create')}}" style="display: flex; justify-content: center; align-items: center; cursor: pointer" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">əlavə et</a>
 
@@ -26,13 +26,10 @@
                                 </a>
                                 <form action="">
                                     <select class="mySelect title_select form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 choices__input" name="selectedItems[]" multiple="multiple" id="mySelect" style="width: 300px;">
-                                        @foreach($titles as $title)
-                                        <option @selected(in_array($title->id, $selectedItems)) value="{{$title->id}}">
-                                            {{$title->title}}
-                                        </option>
-                                        @endforeach
+
                                     </select>
                                     <select class="lesson_select select2-searchable form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="selectedVideoLessons" style="width: 300px;">
+                                        <option>Dərsi seçin</option>
                                         @foreach($videoLessons as $lesson)
                                         <option @selected(in_array($lesson->id, $selectedItems)) value="{{$lesson->id}}">
                                             {{$lesson->title}}
@@ -250,12 +247,19 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    $('.mySelect').each(function() {
-        $(this).select2();
+    const title_select = document.querySelector('.title_select');
+    const spinnerOverlay = document.getElementById('spinner-overlay');
+    const title_select_options = document.querySelectorAll('.title_select option');
+    $('.mySelect').select2({
+        placeholder: "dərs mövzusunu seçin(ilk öncə dərsi seçin)",
+        allowClear: true
     });
-    $(document).ready(function() {
-        $('.select2-searchable').select2();
+
+    $('.select2-searchable').select2({
+        placeholder: "Dərs seçin",
+        allowClear: true
     });
+
     document.querySelectorAll('.change_status_false, .change_status_true, .set_default_lang').forEach(link => {
         link.addEventListener('click', (e) => {
             if (e.target.matches('.change_status_false *')) {
@@ -367,8 +371,7 @@
         }
     });
 
-    const title_select = document.querySelector('.title_select');
-    const spinnerOverlay = document.getElementById('spinner-overlay');
+
 
     function showSpinner() {
         spinnerOverlay.style.display = 'flex';

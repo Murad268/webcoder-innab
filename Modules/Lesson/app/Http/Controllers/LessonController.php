@@ -26,15 +26,9 @@ class LessonController extends Controller
      */
     public function index(Request $request)
     {
-        $first = $this->videoLessonRepository->first();
-
-        $titles = $this->videLessonsTitleRepository->getTrainingByCategoryWith('lesson_id',$first->id);
-
         $videoLessons = $this->videoLessonRepository->getAll();
-
         $result = $this->services->generalService->handleIndex($request, $this->repository, 80, 'title_id');
         return view('lesson::index', array_merge($result, [
-            'titles' => $titles,
             'activeLangsCount' => $this->repository->all_active()->count(),
             'videoLessons' => $videoLessons
         ]));

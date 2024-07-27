@@ -37,7 +37,9 @@
             border: none;
             color: white;
         }
+        .alternativePagination_length {
+            width: max-content !important;
+        }
 
-        
     </style>
 </head>
