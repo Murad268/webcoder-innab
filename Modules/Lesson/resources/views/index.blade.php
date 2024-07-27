@@ -25,7 +25,7 @@
                                     seçilənləri sil
                                 </a>
                                 <form action="">
-                                    <select class="mySelect form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 choices__input" name="selectedItems[]" multiple="multiple" id="mySelect" style="width: 300px;">
+                                    <select class="mySelect title_select form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 choices__input" name="selectedItems[]" multiple="multiple" id="mySelect" style="width: 300px;">
                                         @foreach($titles as $title)
                                         <option @selected(in_array($title->id, $selectedItems)) value="{{$title->id}}">
                                             {{$title->title}}
@@ -161,6 +161,10 @@
     </div>
     <!-- container-fluid -->
 </div>
+<div id="spinner-overlay" style="display:none;">
+    <div class="spinner"></div>
+</div>
+
 @endsection
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -196,6 +200,47 @@
         column-gap: 10px;
 
     }
+    #spinner-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .spinner {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
 </style>
 
 @endpush
@@ -297,24 +342,24 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({
-                                ids: selectedLangs
-                            })
-                        }).then(response => response.json())
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            ids: selectedLangs
+                        })
+                    }).then(response => response.json())
                         .then(data => {
                             console.log(data);
                             Swal.fire(data.message, "", "success").then(() => {
                                 location.reload();
                             });
                         }).catch(error => {
-                            console.error('Error:', error);
-                            Swal.fire('Error', "", "error");
-                        });
+                        console.error('Error:', error);
+                        Swal.fire('Error', "", "error");
+                    });
                 }
             });
         } else {
@@ -322,9 +367,20 @@
         }
     });
 
+    const title_select = document.querySelector('.title_select');
+    const spinnerOverlay = document.getElementById('spinner-overlay');
+
+    function showSpinner() {
+        spinnerOverlay.style.display = 'flex';
+    }
+
+    function hideSpinner() {
+        spinnerOverlay.style.display = 'none';
+    }
 
     $('.lesson_select').on('change', function() {
         let value = $(this).val();
+        showSpinner();
         $.ajax({
             url: '{{route("api.lesson.get_titles")}}', // Update this to your actual API endpoint
             type: 'POST', // Changed to POST
@@ -337,14 +393,25 @@
             },
             success: function(response) {
                 let data = response.data;
-                alert()
+                console.log(data);
+                title_select.innerHTML = "";
+                data.forEach(item => {
+                    let option = document.createElement('option');
+                    option.value = item.id;
+                    option.text = item.title.az;
+                    title_select.appendChild(option);
+                });
+                $(title_select).trigger('change'); // Refresh the select2 dropdown
+                hideSpinner();
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
                 alert('Error fetching titles');
+                hideSpinner();
             }
         });
     });
 </script>
+
 
 @endpush
