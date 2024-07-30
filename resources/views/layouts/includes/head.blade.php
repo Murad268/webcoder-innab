@@ -1,12 +1,12 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Analytics | Tailwick - Admin & Dashboard Template</title>
+    <title>Innab admin panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="Themesdesign" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('panel/assets/images/favicon.ico')}}">
+    <link rel="shortcut icon" href="{{ env('APP_URL') .'/'.ServiceFacade::getData()->header_top->url }}">
     <!-- Layout config Js -->
     <script src="{{asset('panel/assets/js/layout.js')}}"></script>
     <!-- Icons CSS -->

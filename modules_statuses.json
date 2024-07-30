@@ -30,5 +30,6 @@
     "Info": true,
     "SiteInfo": true,
     "Translate": true,
-    "HeaderDatas": true
+    "HeaderDatas": true,
+    "Menu": true
 }
